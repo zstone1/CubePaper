@@ -1,0 +1,106 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{preamble}[2026/07/20 Shared styling for the cube-chains paper]
+
+% --- Encoding & fonts ---------------------------------------------------
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+
+% --- Page layout --------------------------------------------------------
+\RequirePackage[margin=1in]{geometry}
+\RequirePackage{parskip}
+
+% --- Math ---------------------------------------------------------------
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+\RequirePackage{mathtools}
+\RequirePackage{stmaryrd}
+
+% --- Diagrams -----------------------------------------------------------
+\RequirePackage{tikz}
+\RequirePackage{tikz-cd}
+\usetikzlibrary{arrows.meta, calc, positioning, decorations.pathmorphing, cd}
+
+% --- Lists --------------------------------------------------------------
+\RequirePackage{enumitem}
+\setlist{topsep=2pt, itemsep=2pt, parsep=0pt}
+
+% --- Colour, links, bibliography, cross-references -----------------------
+% Order matters: xcolor -> hyperref -> biblatex -> cleveref (cleveref last).
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=MidnightBlue,
+  urlcolor=MidnightBlue,
+  citecolor=MidnightBlue,
+}
+\RequirePackage[backend=biber, style=alphabetic, maxbibnames=10]{biblatex}
+\addbibresource{references.bib}
+\RequirePackage[capitalize,noabbrev]{cleveref}
+
+% --- Theorem environments -----------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{convention}[theorem]{Convention}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{note}{Note}
+
+\crefname{theorem}{Theorem}{Theorems}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{proposition}{Proposition}{Propositions}
+\crefname{corollary}{Corollary}{Corollaries}
+\crefname{definition}{Definition}{Definitions}
+\crefname{construction}{Construction}{Constructions}
+\crefname{example}{Example}{Examples}
+
+% --- Generic math shortcuts ---------------------------------------------
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\inv}{^{-1}}
+
+% --- Category theory ----------------------------------------------------
+\newcommand{\cat}[1]{\mathcal{#1}}              % a generic category
+\newcommand{\op}{^{\mathrm{op}}}                % opposite category
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Ob}{Ob}
+\DeclareMathOperator*{\colim}{colim}
+
+% --- Project notation ---------------------------------------------------
+% Cube-chains / precubical notation lives here so every section subfile
+% shares it. This block is expected to grow as the paper does; keep new
+% notation together and documented with a short comment.
+%
+%   \cube{n}   standard n-cube  (Box^n)
+%   \Ch        the cube-chain category  Ch(-)
+%   \Run       the run subcategory / run presheaf
+%
+\newcommand{\cube}[1]{\square^{#1}}
+\newcommand{\Ch}{\mathrm{Ch}}
+\newcommand{\Run}{\mathrm{Run}}
