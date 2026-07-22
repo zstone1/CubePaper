@@ -12,13 +12,302 @@
 \maketitle
 
 \begin{abstract}
-% TODO: abstract.
+Precubical sets are a standard tool in the study of concurrent programs.
+A 2021 paper by Paliga and Ziemiański showed that the fundamental groupoid path space for 
+the final precubical set was exactly the category Braid. 
+However, they also showed induced braid subgroups for euclidean sets trivialized. 
+In the world of hyperplane arrangements, this kind of trivialization can be resolved
+by working in the ``complexified'' space. 
+We use this same approach, to build a new, complexified version of the path space, $\Chs$. 
+This is homotopy equivalent to the Salvetti Complex of the braid arrangement in for the cube,
+but defined over any precubical set. By Salvetti's theorem, then, $\pi_1|\Chs(\square^n)|$ is
+is the pure braid group. This gives us a new braid invariant for concurrent programs.
 \end{abstract}
 
 \tableofcontents
 \bigskip
 
-\subfile{sections/introduction}
+\section{Introduction}
+This work is in 3 parts. First we'll recap the relevant material in brief.
+Second, we will perform the construction of the ``complexified'' path space.
+Third, we will study some of its properties.
+
+
+To begin let's fix some notation, let $\Cube$ be the category of cubes, with face embeddings as morphisms.
+Let $\square$ be the precubical sets, defined as the presheaf topos over $\Cube$.
+A $\square$ set then has, for each $n \in \N$, a set of $n$-cells denoted $K[n]$.
+And, for each $n \in \N$, a face map $d_i^\epsilon$, where $i$ indicates the direction,
+and $\epsilon$ is a boolean, with coherence laws. Let $\square^n$ be the standard n-cube.
+
+Furthermore, we often want to consider precubical sets with designated start and end points.
+That is bipointed precubical sets, notated $\BPSet$. That is, sets with a start and end.
+
+\section{Stardard Build}
+There are three essential structures on $\BPSet$. The first is the wedge product, $\lor$. 
+Given two $\BPSet, P,Q$, we define $P,Q$ as the pushout 
+%TODO: draw the pushout diagram of a single point
+Wedging cubes together turns out to be very useful. We define the serial wedge $\bigvee [a_1,...,a_n]$
+as the wedge of the $a_i$ cubes.
+Then, the second critical construction is, $\Ch(K)$, the category of serialWedge maps into $K$,
+with morphisms as $\square$ maps from $\bigvee a \longrightarrow \bigvee b$ that commute in a triangle with $K$.
+And then a third construction, $\Refine(K)$. A chain in $K$ is a finite sequence of cells of K, 
+$[c_1,...,c_n]$ such that $c_i$'s endpoint is $c_{i+1}$'s initial point, and $c_1$'s start 
+agrees with $K$'s start, and $c_n$'s end agrees with $K$'s end.
+A refinement is a list substitution so that each  
+
+Futhermore, there are a few very helpful properties: Admits Altitude, and Non Self Linked.
+Look at the Configuration Spaces paper for details
+
+A few things to note 
+\begin{lemma}
+  The $\lor$ operator is a monoidal product on $\BPSet$.
+\end{lemma}
+\begin{lemma}
+  The $\Ch$ construction is a lax monoidal functor on $\BPSet \Rightarrow Cat$ with $Cat$'s cartesian product.
+\end{lemma}
+
+\begin{lemma}
+  The categories $\Ch(K)$ and $\Refine(K)$ are equivalent as categories when $K$ admits altitudes and is NSL
+  In this setting $\Ch$ is a strict monoidal functor.
+\end{lemma}
+
+\begin{lemma}
+  Serial wedges admit altitudes, and are NSL
+\end{lemma}
+This is all the foundational material we need
+
+\section{Wedge Machinery}
+We will end up several times in a situtation where we know what to do on cubes, but want to work with serial wedges.
+In an effort to keep our proofs better factored, we build some machinery here will enables
+a more elegant lifting stategy.
+
+\begin{lemma}
+  Let $P$ be a functor $\Cube \Rightarrow Cat$. Then there is an extension
+
+   \[ 
+   W(P) : (\BPSet, \lor, 0) \Rightarrow (Cat, \oplus, \emptyset)
+   \]
+   which is a lax monoid functor extending P via coyoneda.
+   Moreover, if $P \square^0$ is empty, then for any serial wedge $\bigvee a$ we get an isomorphism 
+   \[
+     W(P)(\bigvee a) \simeq \Sigma_i P(\square^{a_i})
+   \]
+\end{lemma}
+\begin{proof}
+  The extension is, essentially, the Coend on $\square$. The isomorphism goes by induction.
+  At each point, since $P(\square^0)$ is empty, apply $W(P)$ to the pushout diagram trivializes
+  the shared point, so we end up with exactly the diagram of a coproduct. 
+\end{proof}
+
+\begin{lemma}
+  Let $P$ be a functor $\Cube^{op} \Rightarrow Cat$, such that $P \square^0$ is a singleton. Then there is a
+   \[ 
+   W(P) : (\BPSet, \lor, 0) \Rightarrow (Cat, \times, 1)
+   \]
+   is a lax monoidal functor extending P via yoneda. 
+   Moreover, if $P(\square^0)$ is a singleton, then for any serial wedge $\bigvee a$, we get an isomorphism
+   \[ 
+     W(P)(\bigvee a) \simeq \Pi_i P(\square^{a_i})
+   \]
+\end{lemma}
+\begin{proof}
+  The dual construction. Observe this time that if $P(\square^0)$ is unique, the coherence requirements
+  for a wedge are trivial. 
+\end{proof}
+Together, these give us tools for lifting and decomposing cube maps to tensor maps.
+
+So let us define the cases we care about 
+\begin{definition}
+  Let $\Coord : \Cube \Rightarrow Cat$ send $\square^n \mapsto [n]$, and a map 
+  $f :\square^n \rightarrow \square^m$ is a face inclusion which induces a $[n] \rightarrow [m]$.
+  This is a functor. And $[0]$ is empty, so it satisfies the lifting condition.
+  This gives us $coordMap: (\bigvee a \longrightarrow \bigvee b) \rightarrow (\Sigma_i [a_i] \rightarrow \Sigma_j [b_j])$
+  directly as a monoidal functor.
+  This tells us how coordinate positions in $\bigvee a$ translate to positions in $\bigvee b$.
+\end{definition}
+
+\begin{lemma}
+  For any $f:\bigvee a \longrightarrow \bigvee b$, the function $coordMap(f)$ is bijective.
+\end{lemma}
+\begin{proof}
+  The proof needs first breaks up easily via $\lor$, so it suffices to show it for 
+  a map $\bigvee a \longrightarrow \square^b$. Then we prove this is an injection by 
+  an induction over the wedge, observing that in the cube, if a 0-cell $x$ can reach a 0-cell $y$, 
+  it always has more $1$s in its coordinates.
+\end{proof}
+
+Critically, this means that every coordinate in $\square^n$ only flips from $0$ to $1$ once 
+for each $\bigvee a \longrightarrow \square^n$ as witnessed by $coordMap^{-1}$.
+This is the key property that will make our braids well-defined.
+
+\section{The Complexification Construction}
+The construction starts by observing that one dimensional serial wedges behave like topes,
+or chambers, from the hyperplane configuration world. 
+That is, they are the maximally refined elements. Let's start by reviewing the story on the 
+braid arrangement side. 
+
+Following Paris, but specifically for the braid arrangement. 
+The $n-1$ braid arrangement is a family of hyperplanes in $\R^{n}$ of $\{x_i = x_j\}$ for $0 <= i < j <= n$.
+The idea is to give each plane an orientation, so that we can break up $\R^n$ into faces represented as 
+functions $\mathbf{Face}:=[n] \rightarrow \{-1,0,1\}$, the covectors. We can order covectors
+\[
+  x \leq y := \forall i, x(i) = 0 \lor x(i) = y(i)
+\]
+which gives an order on $\mathbf{Face}$. 
+Maximal elements of this order are covectors that are never 0, which are precisely the complement of the hyperplanes.
+We call these maximal elements \textbf{topes}.
+
+The main issue with $\mathbf{Face}$ is that it is both interesting and contractible.
+The goal of Salvetti's theorem is to build a structure on top of the same covectors that captures
+essentially the same information, but with a richer structure. Repeat the process, but with $\C$ instead of $\R$.
+We end up with the Salvetti Poset $\Sal$. 
+\[
+  \Sal = \{(F,C) \in \mathbf{Face} \times \mathbf{Face} \;|\; C \text{ is a tope}\land F \leq C\}
+\]
+We need one more definition: the composition of two faces 
+\[
+F \circ G := i \mapsto \text{ if F(i) = 0} \text{ then }Y(i) \text{ else } X(i)
+\]
+For a tope $C$ and face $F$, we define $C_F$ as the 
+\[
+  (F,C) \preceq (F',C') := F \leq F' \land C' = F' \circ C
+\]
+This poset induces a complex, and Salvetti's theorem tells us that it is isomorphic to the configuration space of $n$ points.
+So, its fundamental group is pure braids. Intuitively, each face get annotated with a direction, indicated by the tope.
+So when we paths cross through faces, they can cause orientation changes. 
+These changes are what the braid words represent. 
+And in fact, this direction information is what the Configuration Spaces paper retains as well, essentially breaking every tie 
+at a face in every possible way.
+
+This construction abstracts a bit, in a way that will make it convienent to construct for us. 
+In particular, there's a functor $Tope: Face \Rightarrow \{X \in Face, X \text{ is a tope}\}$
+where each face maps to its neighboring topes. And functions between faces induce orientation-preserving maps of topes.
+Then the salvetti poset is $\int Tope$. 
+
+To rebuild this generically on the precubical side, let's start with the first positive indicator. 
+
+\begin{definition}
+  $\Ch(\square^n) \simeq \mathbf{Face} $
+\end{definition}
+
+\begin{definition}
+  A serial wedge is \textbf{one dimensional} if all its entries are 1
+\end{definition}
+
+\begin{definition}
+  Let $\Run(K)$ be the full subcategory of $\Ch(K)$ such that 
+  the domains are one dimensional serial wedges.
+\end{definition}
+
+\begin{lemma}
+  Being one dimensional is preserved under $\lor$, so $\Run(K)$ is a monoidal functor. 
+  And in paritcular $List \N \Rightarrow \Run(\bigvee \cdot)$ is a lax monoidal functor.
+\end{lemma}
+
+Now, the morphisms we want to build are a bit unusual, because they are built from
+degenerecies, which are not morphisms in Precubical. That is, we want to build a map
+from an op arrow in $\Ch(K)$ to runs that respect its's coordinate wise projections.
+\[
+  (\bigvee a \longrightarrow \bigvee b) \rightarrow (\Run(\bigvee b) 
+  \rightarrow \Run(\bigvee a) )
+\]
+Doing this directly is rather painful, so we build a bit a machinery to lift
+a cube-level operations to wedge level operations.
+
+So specifically, let $\Edge(K)$ be the chains in $\Refine(K)$ with each cell 1 dimensional.
+Then $\Run(K) = \Edge(K)$. 
+
+
+Now, given a face embedding $(f : \square^n \longrightarrow \square^m)$, it defines a unique
+projection of cells of $m$ to cells of $n$, non-increasing on dimension. Call it $\hat{f}$.
+So we define
+\[
+ \rho: (f : \square^n \longrightarrow \square^m) \rightarrow (\Run[\square^m] \rightarrow (\Run[\square^n]))
+\]
+via 
+\[
+ \rho': (f : \square^n \longrightarrow \square^m) \rightarrow (\Refine_1[\square^m] \rightarrow (\Refine_1[\square^n]))
+\]
+by 
+\[
+  [c_1,...,c_k] \mapsto [\hat{f}(c_1), ...,\hat{f}(c_k)]
+\]
+Note that this is indeed a one dimensional chain in $\square^n$ because $\hat{f}$ 
+never increases dimension, and every projection respects initial/final points.
+
+Now, $\rho$ is a nice. In particular, 
+\begin{lemma}
+  $\rho : \Cube^{op} \Rightarrow Set$ is a functor, and $\rho (\square^0)$ is a singleton
+\end{lemma}
+\begin{proof}
+  The proof of functorality mostly just exploits the fact that cubes are NSL and admit altitudes.
+  So $\Refine_1(\square^n) \simeq \Run(\square^n)$ as sets.
+  First, $\rho$ preserves identities, as the projection for with the identity embedding is also the identity.
+  Second, if $f : \square^n \rightarrow \square^m$ and $g : \square^m \rightarrow \square^n$ 
+  are face embeddings, then their corresponding projections respect composition.
+
+  For the singleton, observe that there $\rho(\square^0) = \Run[\square^0]$, 
+  but the only one dimensional serial wedge which maps into $\square^0$ is the the empty one. 
+  So indeed $\rho(\square^0)$ is a singleton.
+\end{proof}
+
+Now, the trick here is to observe that this makes $\rho$ a precubical set!
+Even better, it has a unique 0-cell, which brings us to the following results
+
+\begin{lemma}
+  If $P$ is $\square$, and has a unique 1-cell, then 
+  \[
+    (\bigvee a) \longrightarrow P \simeq \Pi_i P[a_i]
+  \]
+\end{lemma}
+\begin{proof}
+  The serial wedge is an iterated pushout over a point. But if the point is unique,
+  then the pushout degenerates by its universal property into just one map per edge.
+  Which is exactly a choice of appropriatly sized elements in P for each element of the wedge
+\end{proof}
+
+Futhermore, since $\Run$ is monoidal, 
+  \[
+    (\bigvee a) \longrightarrow \rho \simeq \Pi_i \Run[a_i] \simeq \Run[\bigvee a]
+  \]
+Formally, this make $\rho$ the classifying object for $\Run$ of wedges. 
+Now our goal function 
+\[
+  \theta:(\bigvee a \longrightarrow \bigvee b) \rightarrow \Run(\bigvee b) \rightarrow \Run(\bigvee a)
+\]
+is equivalent to
+\[
+(\bigvee a \longrightarrow \bigvee b) \rightarrow (\bigvee b \rightarrow \rho) \rightarrow (\bigvee a \rightarrow \rho)
+\]
+which is just a composition.
+
+now, that lets us define our desired functor
+\[
+\Lines : \Ch(K)^{op} \Rightarrow Set 
+\]
+with $\Lines(\bigvee a \longrightarrow K) \mapsto \Run(a)$ on objects, and 
+$\Lines(f : \bigvee a \longrightarrow \bigvee b) \mapsto \theta(f)$ on morphisms.
+Lines's functoriality is inherited from $\theta$. 
+Which finally brings us to 
+\[
+  \Chs(K) := \int \Lines (K)
+\]
+the category of elements for $\Lines$.
+
+\section{Relationship to the Salvetti Complex}
+The key fact here is that our story mirrors the salvetti story, on the nose, for cubes.
+That is, the face complex is exactly $\Ch(\square^n)$, and the salvetti complex is exactly $\Chs(\square^n)$.
+I'd argue this explains why the braid invariant from `Configuration Spaces' collapsed, 
+and why this complexification survives. However, it does suggest that 
+\begin{enumerate}
+  \item The salvetti complex is also $\Ch(Z)$, so the quotiont by the free action some is also 
+        related to the complexification story
+  \item $\Chs(Z)$ is bigger than Braid, so something interesting is happening
+
+\end{enumerate}
+
+\section{The Braid Functor}
+
 
 \printbibliography
 
