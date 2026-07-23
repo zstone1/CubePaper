@@ -85,29 +85,29 @@ a more elegant lifting stategy.
   Let $P$ be a functor $\Cube \Rightarrow Cat$. Then there is an extension
 
    \[ 
-   W(P) : (\BPSet, \lor, 0) \Rightarrow (Cat, \oplus, \emptyset)
+   E(P) : (\BPSet, \lor, 0) \Rightarrow (Cat, \oplus, \emptyset)
    \]
    which is a lax monoid functor extending P via coyoneda.
    Moreover, if $P \square^0$ is empty, then for any serial wedge $\bigvee a$ we get an isomorphism 
    \[
-     W(P)(\bigvee a) \simeq \Sigma_i P(\square^{a_i})
+     E(P)(\bigvee a) \simeq \Sigma_i P(\square^{a_i})
    \]
 \end{lemma}
 \begin{proof}
   The extension is, essentially, the Coend on $\square$. The isomorphism goes by induction.
-  At each point, since $P(\square^0)$ is empty, apply $W(P)$ to the pushout diagram trivializes
+  At each point, since $P(\square^0)$ is empty, apply $E(P)$ to the pushout diagram trivializes
   the shared point, so we end up with exactly the diagram of a coproduct. 
 \end{proof}
 
 \begin{lemma}
   Let $P$ be a functor $\Cube^{op} \Rightarrow Cat$, such that $P \square^0$ is a singleton. Then there is a
    \[ 
-   W(P) : (\BPSet, \lor, 0) \Rightarrow (Cat, \times, 1)
+   E(P) : (\BPSet, \lor, 0) \Rightarrow (Cat, \times, 1)
    \]
    is a lax monoidal functor extending P via yoneda. 
    Moreover, if $P(\square^0)$ is a singleton, then for any serial wedge $\bigvee a$, we get an isomorphism
    \[ 
-     W(P)(\bigvee a) \simeq \Pi_i P(\square^{a_i})
+     E(P)(\bigvee a) \simeq \Pi_i P(\square^{a_i})
    \]
 \end{lemma}
 \begin{proof}
@@ -125,6 +125,22 @@ So let us define the cases we care about
   directly as a monoidal functor.
   This tells us how coordinate positions in $\bigvee a$ translate to positions in $\bigvee b$.
 \end{definition}
+
+\begin{lemma}
+  The function $coordMap$ is a bijection.
+\end{lemma}
+\begin{proof}
+  We can by induction and monoidality, we can reduce this to just the case $\bigvee a \longrightarrow \square^m$.
+  Let's start with injectivity.  We can induct on the size of $a$. The base case is trivial. 
+  So we can consider $(\bigvee b) \lor a \longrightarrow \square^m$. 
+  Then every vertex the image of $a$ is reachable from the final vertex of the image of $\bigvee b$. 
+  Which means the their coordinates greater elementwise.
+  Since the image of the induced $[a] \rightarrow [m]$ is only the coordinates that flipped, the images are is disjoint.
+  And since $[a] \rightarrow [m]$ is injective, we are done.
+
+  For surjectivity, observe that the serial wedges and cubes admit altitude, and so the altitudes of their final points 
+  must agree, so coordMap is indeed a bijection.
+\end{proof}
 
 \begin{lemma}
   For any $f:\bigvee a \longrightarrow \bigvee b$, the function $coordMap(f)$ is bijective.
@@ -251,48 +267,81 @@ Now, $\rho$ is a nice. In particular,
   So indeed $\rho(\square^0)$ is a singleton.
 \end{proof}
 
-Now, the trick here is to observe that this makes $\rho$ a precubical set!
-Even better, it has a unique 0-cell, which brings us to the following results
+Now, we can use our lifting machinery to lift $\rho$ to $\hat{\rho} : \BPSet \Rightarrow Cat$.
+There is also a forgetful functor $W(K): \Ch(K) \Rightarrow BPSet$ sending $\bigvee a \rightarrow K \mapsto \bigvee a$.
+Then we can define our key functor
+\[
+\Lines(K) := E(\rho) \circ W(K)
+\]
+\[
+\Chs(K) := \int Lines
+\]
 
-\begin{lemma}
-  If $P$ is $\square$, and has a unique 1-cell, then 
-  \[
-    (\bigvee a) \longrightarrow P \simeq \Pi_i P[a_i]
-  \]
-\end{lemma}
-\begin{proof}
-  The serial wedge is an iterated pushout over a point. But if the point is unique,
-  then the pushout degenerates by its universal property into just one map per edge.
-  Which is exactly a choice of appropriatly sized elements in P for each element of the wedge
-\end{proof}
+Defining $\Chs$ abstractly has some convienences later. 
+In particular, since E is functorial, we can replace $\rho$ with an equivalent presheaf
+to produce an equivalence of $\Chs(\square^n)\simeq \Sal(n)$. 
+But it's worth unpacking the definition of $\Chs$ to have a more concrete presentation of it.
 
-Futhermore, since $\Run$ is monoidal, 
-  \[
-    (\bigvee a) \longrightarrow \rho \simeq \Pi_i \Run[a_i] \simeq \Run[\bigvee a]
-  \]
-Formally, this make $\rho$ the classifying object for $\Run$ of wedges. 
-Now our goal function 
-\[
-  \theta:(\bigvee a \longrightarrow \bigvee b) \rightarrow \Run(\bigvee b) \rightarrow \Run(\bigvee a)
+Objects of $\Chs(K)$ are pairs 
+\[ 
+  (\bigvee a \longrightarrow K, x : \Run[\bigvee a]), \text{ I.E. } (\bigvee a \longrightarrow K, \bigvee[1,...,1] \longrightarrow \bigvee a) 
 \]
-is equivalent to
-\[
-(\bigvee a \longrightarrow \bigvee b) \rightarrow (\bigvee b \rightarrow \rho) \rightarrow (\bigvee a \rightarrow \rho)
+The intuition here matches the Salvetti story precisely, we have a wedge map into $K$, coupled with orientation info about it.
+Morphisms are a little uglier. A morphism
+\[ 
+  (\bigvee a \longrightarrow K, x : \Run[\bigvee a]) \longrightarrow (\bigvee b \longrightarrow K, y : \Run[\bigvee b])
 \]
-which is just a composition.
+unpacks to 
+\begin{enumerate}
+  \item A morphism $f : (\bigvee a \longrightarrow K) \longrightarrow (\bigvee b \longrightarrow K )$ I.E. a commuting $f':\bigvee a \longrightarrow \bigvee b$.
+  \item A $\phi : \Lines(F)(x) \rightarrow y$, in other words $\phi: E(\rho)(f')(x) \rightarrow y$.
+  This means we are taking a run $x$, passing it through the projection maps, and comparing it with $y$. 
+  The key observation here is that these morphisms can be represented by permutations. A map in $\Run[\bigvee b]$ is a map 
+  $\bigvee[1,..,1] \rightarrow \bigvee[1,..,1]$. Which by the coordinate map, a bijection $[n] \rightarrow [n]$. 
+  Let $\tau(f)$ be that permutation.
+\end{enumerate}
 
-now, that lets us define our desired functor
+% Diagram 
+%
+%
+%      [1,...,1] --------> \/a ----------> K
+%          ^              ^|             ^
+%          |              ||              |
+%    tau(f)|          E(r)||f             |
+%          |              ||              |
+%          |              |V              |
+%     [1,...,1] --------> \/b  ------------
+%
+% where the E unpacks face-by-face as              
+%
+%      [1,...,1] --------> a_11 \/ ... \/ a_1k \/ a_21 \/ ... \/ a_ij  ----------> K
+%          ^               ^|     fhat_12/^        |                              ^
+%          |               ||f_11     // f_12          //                         |
+%    tau(f)|       fhat_11 ||       //                //                          |
+%          |               ||    //                  //                           |
+%          |               |V  V/                   //                            |
+%      [1,...,1] --------> b_1       \/ ...    \/ b_j -----------------------------
+% 
+%
+% where tau and fhat are in different colors, since they aren't actually morphisms in my category!
+
+This permutation is where our braids come from. 
+
+\section{Braidings}
+Let $f$ be a morphism in $\Chs(K)$. 
+Let $\tau(f)$ be the corresponding permutation.
+The main trick is to show that $\tau$ respects composition up to braiding. That is,
 \[
-\Lines : \Ch(K)^{op} \Rightarrow Set 
+  R: \Chs(K) \Rightarrow Braid
 \]
-with $\Lines(\bigvee a \longrightarrow K) \mapsto \Run(a)$ on objects, and 
-$\Lines(f : \bigvee a \longrightarrow \bigvee b) \mapsto \theta(f)$ on morphisms.
-Lines's functoriality is inherited from $\theta$. 
-Which finally brings us to 
-\[
-  \Chs(K) := \int \Lines (K)
-\]
-the category of elements for $\Lines$.
+sending objects to the objet with the appropriate length, and $f \mapsto \tau(f)$ is a functor.
+For our purposes, it will be easier to use an unusual presentation of the braids, the Garside 
+Germ presentation, generated by permutations, up to a relation about the height of the permutation.
+This is a convienent target, because the permutation height rule aligns nicely with the fact 
+that you can only refine each coordinate once.
+
+It also happens to agree with the construction from Salvetti's theorem, so this does indeed 
+duplicate the Salvetti work, but for precubical sets.
 
 \section{Relationship to the Salvetti Complex}
 The key fact here is that our story mirrors the salvetti story, on the nose, for cubes.
