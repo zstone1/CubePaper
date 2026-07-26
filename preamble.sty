@@ -99,6 +99,7 @@
 \DeclareMathOperator{\Lines}{Lines}
 \DeclareMathOperator{\Coord}{Coord}
 \DeclareMathOperator{\Sal}{Sal}
+\DeclareMathOperator{\Conc}{Conc}
 
 % --- Project notation ---------------------------------------------------
 % Cube-chains / precubical notation lives here so every section subfile
@@ -112,3 +113,13 @@
 \newcommand{\cube}[1]{\square^{#1}}
 \newcommand{\Run}{\mathrm{Run}}
 \newcommand{\Edge}{\mathrm{Edge}}
+
+% --- Diagram styles -----------------------------------------------------
+% Some maps we draw are illustrative annotations, not morphisms of the
+% ambient category: the permutation \sigma(f), the run action E(\rho)(f),
+% and the face projection \hat f. Draw them dashed so they read as
+% "not an arrow of this category".
+\tikzset{
+  perm/.style   = {dashed},  % \sigma(f): a permutation
+  runact/.style = {dashed},  % E(\rho)(f) / \hat f: the run action
+}
