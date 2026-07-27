@@ -94,8 +94,9 @@ A few things to note
 \begin{lemma}
   The $\lor$ operator is a monoidal product on $\BPSet$.
 \end{lemma}
+
 \begin{lemma}
-  $\Ch : \BPSet \Rightarrow Cat$ is a lax monoidal functor from $(\BPSet, \lor)$ to $(Cat, \times)$
+  $\Ch : \BPSet \Rightarrow Cat$ is a lax monoidal functor from $(\BPSet, \lor)$ to $(Cat, \times)$.
 \end{lemma}
 
 \begin{lemma}
@@ -150,31 +151,80 @@ extend construction on $\Cube$ to constructions on $\BPSet$.
 \end{proof}
 Together, these give us tools for lifting and decomposing cube maps to tensor maps.
 
-So let us define the cases we care about 
+We now instantiate this machinery. The first case is the coordinate functor.
 \begin{definition}
-  Let $\Coord : \Cube \Rightarrow Cat$ send $\square^n \mapsto [n]$, and a map 
-  $f :\square^n \rightarrow \square^m$ is a face inclusion which induces a $[n] \rightarrow [m]$.
-  This is a functor. And $[0]$ is empty, so it satisfies the lifting condition.
-  This gives us $coordMap: (\bigvee a \longrightarrow \bigvee b) \rightarrow (\Sigma_i [a_i] \rightarrow \Sigma_j [b_j])$
-  directly as a monoidal functor.
-  This tells us how coordinate positions in $\bigvee a$ translate to positions in $\bigvee b$.
+  Let $\Coord : \Cube \Rightarrow Set$ send the cube $\square^n$ to its set of directions
+  $[n] := \{1, \dots, n\}$, and send a face embedding $f : \square^n \to \square^m$ to the monotone
+  injection $[n] \hookrightarrow [m]$ that names the $n$ directions $f$ leaves free. Note
+  $\Coord(\square^0) = [0] = \emptyset$, so the first lifting lemma applies to $\Coord$: the extension
+  $E(\Coord)$ is strong monoidal, with
+  \[
+    E(\Coord)(\bigvee a) \;\simeq\; \coprod_i [a_i].
+  \]
+  For a morphism $f : \bigvee a \to \bigvee b$ we write $coordMap(f) := E(\Coord)(f)$ for the induced
+  function on coordinate sets,
+  \[
+    coordMap(f) : \coprod_i [a_i] \longrightarrow \coprod_j [b_j],
+  \]
+  which records where each coordinate of $\bigvee a$ is sent. We regard the coordinate set
+  $\coprod_i [a_i]$ as linearly ordered by the ordinal sum $[a_1] + \cdots + [a_n]$ --- first by summand,
+  then by direction within a summand --- and it is this order that we use below to speak of the
+  inversions of $coordMap(f)$.
 \end{definition}
 
 \begin{lemma}
-  For any $f:\bigvee a \longrightarrow \bigvee b$, the function $coordMap(f)$ is bijective.
+  For any $f:\bigvee a \longrightarrow \square^m$ of morphisms in $\square$, the function $coordMap(f)$ is injective.
 \end{lemma}
 \begin{proof}
-  We can by induction and monoidality, reduce this to just the case $\bigvee a \longrightarrow \square^m$.
-  Let's start with injectivity.  We can induct on the size of $a$. The base case is trivial. 
-  So we can consider $(\bigvee b) \lor a \longrightarrow \square^m$, and coordMap induces an injection 
-  on $\bigvee b \rightarrow [m]$.
-  Then every vertex in the image of $a$ is reachable from the final vertex of the image of $\bigvee b$. 
-  Which means the their coordinates greater elementwise.
-  Since the image of the induced $[a] \rightarrow [m]$ is only the coordinates that flipped, the images are is disjoint.
-  And since $[a] \rightarrow [m]$ is injective, we can union the two functions.
+  We recurse on $a$. 
+  If $a$ is empty, then $coordMap(f) : [0] \rightarrow [m]$ which is always injective.
+  For the induction case, we have $f:(\bigvee a) \lor \square^n  \longrightarrow \square^m$.
+  Now, by the universal property of the pushout, this splits into $h : \square^n \rightarrow \square^m$
+  and $g : \bigvee a \longrightarrow \square^m$. Now, $g$ is injective by hypothesis.
+  On the other hand, $h$ is a map of representables, and $E$ is the left-Kan extension.
+  So $E(\Coord)(h) = \Coord(h)$ is the injective monotone map $[n] \rightarrow [m]$ corresponding to $h$.
+  
+  Finally, we show the two images are disjoint. Let $c \in \{0,1\}^m$ be the image of the glued vertex
+  $\mathrm{fin}(\bigvee a) = \mathrm{init}(\square^n)$. 
+  Maps into a cube are monotone, raising one coordinate from $0$ to $1$ per edge. 
+  Since $h$ starts at $c$ and only raises coordinates, every direction free in $h$ is $0$ at
+  $c$; since $g$ ends at $c$, every direction $g$ raises has already reached $1$ at $c$. Hence
+  \[
+    \im E(\Coord)(h) \subseteq \{k : c_k = 0\}
+    \quad\text{and}\quad
+    \im E(\Coord)(g) \subseteq \{k : c_k = 1\}
+  \]
+  are disjoint. So $E(\Coord)(f) = E(\Coord)(g) \sqcup E(\Coord)(h)$ is the disjoint union of 
+  injective functions with disjoint images. Therefore $E(\Coord)(f)$ is injective.
+\end{proof}
 
-  For surjectivity, observe that the serial wedges and cubes admit altitude, and so the altitudes of their final points 
-  must agree. So every coordinate in $m$ is in the image. So coordMap is indeed a bijection. The 
+
+\begin{lemma}
+  For any $f:\bigvee a \longrightarrow \bigvee b$ of morphisms in $\BPSet$, the function $coordMap(f)$ is bijective.
+\end{lemma}
+\begin{proof}
+  First, let's do injectivity.
+  To begin with, we induct on the length of $b$.
+  If $b$ is empty, then $\bigvee b = \square^0$, and $\bigvee a$ only has 0-cells. 
+  Which means $a$ must also be empty, and $f : \square^0 \rightarrow \square^0$.
+  And $coordMap(f) : [0] \rightarrow [0]$ is always injective.
+
+  Now, consider $f:\bigvee a \longrightarrow \square^m \lor \bigvee b$, 
+  such that for any $x$, $\bigvee x \rightarrow \bigvee b$ is injective.
+  By strong monoidality of $Ch$, $f$ as a morphism of $Ch(\square^m \lor \bigvee b)$
+  splits into $(f_1, f_2)$ as a morphism in $\Ch(\square^m) \times \Ch(\bigvee b)$.
+  Now, by the induction hypothesis, $f_2$ is injective and $f_1$ is injective by the lemma above.
+  Then, $f \simeq f_1 \lor f_2$, and $E(\Coord)$ is strong monoidal. So 
+  \[ 
+    E(\Coord)(f) = E(\Coord)(f_1 \lor f_2) =E(\Coord)(f_1) \sqcup E(\Coord)(f_2)
+  \]
+  which is the disjoint union of functions with disjoint codomains. 
+  Therefore $f$ is injective.
+
+  For surjectivity, we take a counting argument. 
+  The altitudes of $\bigvee a \longrightarrow \bigvee b$ must be equal since the map is bipointed.
+  Futhermore, the altitude of $\bigvee a = \sigma_i a_i$, so $\sum_i a_i = \sum_i b_i$.
+  So $coordMap(f)$ is a cardinality-preserving injection, hence bijective.
 \end{proof}
 
 
@@ -184,46 +234,61 @@ or chambers, from the hyperplane configuration world.
 That is, they are the maximally refined elements. Let's start by reviewing the story on the 
 braid arrangement side. 
 
-Following Paris, but specifically for the braid arrangement. 
-The $n-1$ braid arrangement is a family of hyperplanes in $\R^{n}$ of $\{x_i = x_j\}$ for $0 \leq i < j \leq n$.
-The idea is to give each plane an orientation and compute $x \mapsto x_i - x_j$. 
-So that we can break up $\R^n$ into faces represented as functions
-\[ \mathbf{Face(n)}:=[n] \rightarrow \{-1,0,1\} \]
-These are called the covectors. We can order covectors
+Following Paris, we specialize the story to the braid arrangement.
+% TODO: \cite the Paris reference, and Salvetti's theorem.
+The braid arrangement $A_{n-1}$ is the family of hyperplanes
 \[
-  x \leq y := \forall i, x(i) = 0 \lor x(i) = y(i)
+  H_{ij} = \{ x \in \R^n : x_i = x_j \}, \qquad 1 \leq i < j \leq n,
 \]
-which gives an order on $\mathbf{Face(n)}$. 
-Maximal elements of this order are covectors that are never 0, which are precisely the complement of the hyperplanes.
-We call these maximal elements \textbf{topes}.
+one for each pair of coordinates. Orient $H_{ij}$ by the sign of $x_i - x_j$. Each point $x \in \R^n$ then
+assigns to every hyperplane a sign in $\{-,0,+\}$, and the sign vectors so obtained are the
+\textbf{covectors}, or faces, of the arrangement:
+\[
+  \mathbf{Face}(n) := \bigl\{\, F : \{(i,j) : 1 \leq i < j \leq n\} \to \{-,0,+\} \ \bigm|\ F \text{ arises from some } x \in \R^n \,\bigr\}.
+\]
+A covector records the weak order of the coordinates of $x$, so it is the same data as an \emph{ordered
+set partition} of $\{1,\dots,n\}$: the blocks are the coordinates of equal value, listed in increasing
+order of that value. We order covectors by
+\[
+  F \leq G \quad:\!\iff\quad \forall h,\ F(h) = 0 \ \lor\ F(h) = G(h),
+\]
+so that $G$ resolves some of the ties left open by $F$. The maximal covectors --- those never taking the
+value $0$ --- are the \textbf{topes}. A tope has all coordinates distinct, hence is a total order on
+$\{1,\dots,n\}$; there are exactly $n!$ of them, one per permutation.
 
-The main issue with $\mathbf{Face}$ is that it is contractible, so it's hard to reason about.
-The goal of Salvetti's theorem is to build a structure on top of the same covectors that captures
-essentially the same information, but with a richer structure. Repeat the process, but with $\C$ instead of $\R$.
-We end up with the Salvetti Poset $\Sal$. 
+Over $\R$ this poset is combinatorially inert: it has a least element (the all-$0$ covector, the diagonal
+$x_1 = \cdots = x_n$), so its order complex is contractible. Salvetti's construction reruns the story over
+$\C$ and recovers the homotopy type of the complexified complement. It is captured by the \textbf{Salvetti
+poset}
 \[
-  \Sal(n) = \{(F,C) \in \mathbf{Face(n)} \times \mathbf{Face} \;|\; C \text{ is a tope}\land F \leq C\}
+  \Sal(n) := \bigl\{\, (F, C) \ \bigm|\ F \in \mathbf{Face}(n),\ C \text{ a tope},\ F \leq C \,\bigr\},
 \]
-We need one more definition: the composition of two faces 
+whose order uses the composition of covectors,
 \[
-F \circ G := i \mapsto \text{ if F(i) = 0} \text{ then }Y(i) \text{ else } X(i)
+  (F \circ G)(h) := \begin{cases} F(h) & \text{if } F(h) \neq 0, \\ G(h) & \text{if } F(h) = 0, \end{cases}
 \]
-For a tope $C$ and face $F$, we define $C_F$ as the 
+namely
 \[
-  (F,C) \preceq (F',C') := F \leq F' \land C' = F' \circ C
+  (F, C) \preceq (F', C') \quad:\!\iff\quad F \leq F' \ \wedge\ C' = F' \circ C.
 \]
-This poset induces a complex, and Salvetti's theorem tells us that it is isomorphic to the configuration space of $n$ points.
-So, its fundamental group is pure braids. Intuitively, we build a covering-like structure, 
-where we pair each face with a direction annotation, indicated by a compatible tope.
-So when we paths cross through faces, they can cause orientation changes. 
-These changes are what the braid words represent. 
-And in fact, this direction information is what the Configuration Spaces paper retains as well, 
-essentially breaking every tie at a face in every possible way.
+By Salvetti's theorem $|\Sal(n)|$ is homotopy equivalent to the complement of the complexified braid
+arrangement in $\C^n$ --- the ordered configuration space of $n$ points in $\C$ --- so $\pi_1|\Sal(n)|$ is
+the pure braid group $P_n$. Intuitively, each face is annotated with a compatible tope, a local
+orientation; crossing a face can flip the orientation, and these flips are the braid letters. The
+`Configuration Spaces' construction retains the same orientation data, breaking every tie at a face in all
+possible ways.
 
-This construction abstracts a bit, in a way that will make it convienent to construct for us. 
-In particular, there's a functor $Tope: Face \Rightarrow \{X \in Face, X \text{ is a tope}\}$
-where each face maps to its neighboring topes. And functions between faces induce orientation-preserving maps of topes.
-Then the salvetti poset is $\int Tope$, the Grothendieck construction. 
+This packages as a Grothendieck construction, which is what we will imitate. Let
+\[
+  Tope : \mathbf{Face}(n) \Rightarrow Set, \qquad Tope(F) := \{ C \text{ a tope} : F \leq C \},
+\]
+be the covariant functor sending $F \leq F'$ to the map $C \mapsto F' \circ C$ (composing on the left by
+$F'$ carries a tope above $F$ to one above $F'$). Then
+\[
+  \Sal(n) \;\cong\; \textstyle\int Tope,
+\]
+the Grothendieck construction: its objects are the pairs $(F, C)$ with $C \in Tope(F)$, and its morphisms
+are exactly the relations $\preceq$ above.
 
 To rebuild this generically on the precubical side, let's start with the corresponding definition of tope.
 
@@ -264,12 +329,16 @@ via
 \]
 by 
 \[
-  [c_1,...,c_k] \mapsto [\hat{f}(c_1), ...,\hat{f}(c_k)]
+  [c_1,...,c_k] \mapsto \text{normalize } [\hat{f}(c_1), ...,\hat{f}(c_k)]
 \]
-Note that this is indeed a one dimensional chain in $\square^n$ because $\hat{f}$ 
-never increases dimension, and every projection respects initial/final points.
+where normalize removes all the 0-cells.
+Note that this is indeed a one dimensional chain in $\square^n$ because 
+\begin{enumerate}
+\item $\hat{f}$ never increases dimension, so all dimensions are less than or equal to 1
+\item normalization removes all the 0 cells, so very cell is one dimensional
+\item every projection respects initial/final points
+\end{enumerate}
 
-Now, $\rho$ is a nice. In particular, 
 \begin{lemma}
   $\rho : \Cube^{op} \Rightarrow Set$ is a functor, and $\rho (\square^0)$ is a singleton
 \end{lemma}
@@ -286,21 +355,20 @@ Now, $\rho$ is a nice. In particular,
 \end{proof}
 
 That means two things. Firstly, it means $\rho$ is itself, a precubical set. 
-Second, it means our lifting machinery sends $\rho$ to $\hat{\rho} : \BPSet \Rightarrow Cat$.
+Second, it means our lifting machinery sends $\rho$ to $E(\rho) : \BPSet^{op} \Rightarrow Cat$.
 Lastly, let $\square^\lor$ be the full subcategory of serial wedges in $\BPSet$.
 There is also a forgetful functor $W(K): \Ch(K) \Rightarrow \square^\lor$ sending $\bigvee a \rightarrow K \mapsto \bigvee a$.
 Then we can define our key functor
 \[
-\Lines(K) := E(\rho) \circ W(K)
+\Lines(K) := E(\rho) \circ W(K)^{op}
 \]
+which is a presheaf on $\Ch(K)$. Then we define
 \[
-\Chs(K) := \int Lines
+\Chs(K) := \int \Lines
 \]
-
+the category of elements of the presheaf $\Lines(K)$. 
 Defining $\Chs$ abstractly has some convienences later. 
-In particular, since E is functorial, we can replace $\rho$ with an equivalent presheaf
-to produce an equivalence of $\Chs(\square^n)\simeq \Sal(n)$. 
-But it's worth unpacking the definition of $\Chs$ to have a more concrete presentation of it.
+Let's unpack the definition of $\Chs$ to have a more concrete presentation of it.
 
 Objects of $\Chs(K)$ are pairs 
 \[ 
@@ -313,8 +381,9 @@ Morphisms are a little uglier. A morphism
 \]
 unpacks to 
 \begin{enumerate}
-  \item A morphism $f : (\bigvee a \longrightarrow K) \longrightarrow (\bigvee b \longrightarrow K )$ I.E. a commuting $f':\bigvee a \longrightarrow \bigvee b$.
-  \item A $\phi : \Lines(F)(x) \rightarrow y$, in other words $\phi: E(\rho)(f')(x) \rightarrow y$.
+  \item A morphism $f : (\bigvee a \longrightarrow K) \longrightarrow (\bigvee b \longrightarrow K )$ 
+  I.E. a commuting $f':\bigvee a \longrightarrow \bigvee b$.
+  \item $x = E(\rho)(f')(y)$. Equivalently $\phi : x \rightarrow \Lines(f)(y)$
   This means we are taking a run $x$, passing it through the projection maps, and comparing it with $y$. 
   The key observation here is that these morphisms can be represented by permutations. A map in $\Run[\bigvee b]$ is a map 
   $\bigvee[1,..,1] \rightarrow \bigvee[1,..,1]$. Which by the coordinate map, a bijection $[n] \rightarrow [n]$. 
