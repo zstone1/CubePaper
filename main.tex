@@ -223,7 +223,7 @@ We now instantiate this machinery. The first case is the coordinate functor.
 
   For surjectivity, we take a counting argument. 
   The altitudes of $\bigvee a \longrightarrow \bigvee b$ must be equal since the map is bipointed.
-  Futhermore, the altitude of $\bigvee a = \sigma_i a_i$, so $\sum_i a_i = \sum_i b_i$.
+  Futhermore, the altitude of $\bigvee a = \sum_i a_i$, so $\sum_i a_i = \sum_i b_i$.
   So $coordMap(f)$ is a cardinality-preserving injection, hence bijective.
 \end{proof}
 
@@ -383,27 +383,56 @@ unpacks to
 \begin{enumerate}
   \item A morphism $f : (\bigvee a \longrightarrow K) \longrightarrow (\bigvee b \longrightarrow K )$ 
   I.E. a commuting $f':\bigvee a \longrightarrow \bigvee b$.
-  \item $x = E(\rho)(f')(y)$. Equivalently $\phi : x \rightarrow \Lines(f)(y)$
-  This means we are taking a run $x$, passing it through the projection maps, and comparing it with $y$. 
-  The key observation here is that these morphisms can be represented by permutations. A map in $\Run[\bigvee b]$ is a map 
-  $\bigvee[1,..,1] \rightarrow \bigvee[1,..,1]$. Which by the coordinate map, a bijection $[n] \rightarrow [n]$. 
-  Let $\sigma(f)$ be that permutation.
+  \item $x = E(\rho)(f')(y)$, equivalently $\phi : x \rightarrow \Lines(f')(y)$:
+  we take the run $y$, project it along $f'$, and require the result to be $x$. Since the fibers of
+  $E(\rho)$ are discrete, this is a condition, not extra data --- $x$ is determined by $f'$ and $y$.
 \end{enumerate}
 
-Below is the diagram for this story. The solid arrows are morphisms of $\Chs(K)$; the dashed arrows 
-$\sigma(f)$ and $E(\rho)(f)$ are just plain functions, not morphisms in $\BPSet$.
+We'd like to associate a permutation with each such morphism. 
+Note that each run $r \in \Run[\bigvee p]$ is a bipointed map
+$\bigvee[1,\dots,1] \to \bigvee p$, so by bijectivity of $coordMap$ it is the same as a linear ordering of
+the coordinates of $\bigvee p$:
+\[
+  \bar r := coordMap(r) : [n] \xrightarrow{\ \sim\ } \textstyle\coprod_i [p_i].
+\]
+Conjugating the coordinate bijection $coordMap(f') : \coprod_i [a_i] \to \coprod_j [b_j]$ by the two run
+orderings gives a permutation of $[n]$,
+\[
+  S(f) := \bar y^{-1} \circ coordMap(f') \circ \bar x \ \in\ \Sigma_n.
+\]
+This permutation $S(f)$ is what feeds the braid functor. 
+
+Conjugation is what makes it functorial: along a composite the middle ordering $\bar y$ cancels,
+\[
+  S(g \circ f) = \bar z^{-1}\, coordMap(g)\, coordMap(f)\, \bar x
+    = \bigl(\bar z^{-1} coordMap(g)\, \bar y\bigr)\bigl(\bar y^{-1} coordMap(f)\, \bar x\bigr)
+    = S(g)\,S(f),
+\]
+and 
+\[
+  S(\id) = \bar z^{-1}\, coordMap(\id) \bar z = \id
+\]
+so 
+\begin{lemma}
+$S : \Chs(K) \to \bigsqcup_n \Sigma_n$ is a functor.
+\end{lemma}
+
+The diagram below records the story. The solid arrows are morphisms of $\Chs(K)$; the dashed $S(f)$ (a
+permutation of positions) and $E(\rho)(f)$ (the run projection) are plain functions, not morphisms in
+$\BPSet$, and they point oppositely --- $E(\rho)(f)$ carries $y$ back to $x$, and $S(f)$ is the
+induced reindexing.
 \[
 \begin{tikzcd}[row sep=huge, column sep=huge]
-  {[1,\dots,1]} \arrow[r, "x"]
-    & \bigvee a \arrow[d, "f"'] \arrow[rd] & \\
-  {[1,\dots,1]} \arrow[r, "y"'] \arrow[u, perm, "\sigma(f)"]
+  {[1,\dots,1]} \arrow[r, "x"] \arrow[d, perm, "S(f)"']
+    & \bigvee a \arrow[d, "f"] \arrow[rd] & \\
+  {[1,\dots,1]} \arrow[r, "y"']
     & \bigvee b \arrow[u, runact, bend left=85, "E(\rho)(f)"] \arrow[r] & K
 \end{tikzcd}
 \]
 
 \section{The Braiding}
-This permutation is where our braids come from. But you'll notice that the K side 
-is not involved in the computation of the permutation. 
+You'll notice that the K side is not involved in the computation of the permutation, 
+or the proofs of its functoriality.
 
 This comes from a rather nice fact that about grothendieck constructions: 
 
@@ -457,45 +486,7 @@ But, we can do a nicer trick
  has a unique $\bigvee a \rightarrow Z$. So we have a corresponding object of $\Chs(Z)$.
 \end{proof}
 
-So, consider a morphism in the slice $\BPSet / \rho$.
-Let $\sigma(f)$ be the corresponding permutation.
-We need to show that the construction of these permutations is functorial.
-Define \[
-  S: \Chs(Z) \Rightarrow \sqcup_n \Sigma_n
-\]
-where $\Sigma_n$ has a single object, and morphisms are permutations of $[n]$ with composition.
-$S$ sends objects to the object with the length of the wedge, and morphisms $f \mapsto \sigma(f)$.
-\begin{lemma}
-The map $S$ is indeed a functor.
-\end{lemma}
-\begin{proof}
-  Firstly, observe that the identity function in $\Chs(Z)$ gives us the identity function on runs.
-  Whose corresponding projection is the identity. This induces the identity permutation.
-
-\[
-\begin{tikzcd}[row sep=huge, column sep=huge]
-  {[1,\dots,1]} \arrow[r, "x"]
-    & \bigvee a \arrow[d, "\id"'] \\
-  {[1,\dots,1]} \arrow[r, "x"'] \arrow[u, perm, "\id"]
-    & \bigvee a \arrow[u, runact, bend left=85, "\id"]
-\end{tikzcd}
-\]
-
-For composition, The diagram below shows we just need $E(\rho)(g \circ f) = E(\rho)(g) \circ E(\rho)(g)$.
-Which follows from $E(\rho)$ being a functor.
-
-\[
-\begin{tikzcd}[row sep=huge, column sep=huge]
-  {[1,\dots,1]} \arrow[r]
-    & \bigvee a \arrow[d, "f"'] \\
-  {[1,\dots,1]} \arrow[r] \arrow[u, perm, "\sigma(f)"]
-    & \bigvee b \arrow[d, "g"'] \arrow[u, runact, bend left=85, "E(\rho)(f)"] \\
-  {[1,\dots,1]} \arrow[r] \arrow[u, perm, "\sigma(g)"]
-    & \bigvee c \arrow[u, runact, bend left=85, "E(\rho)(g)"]
-\end{tikzcd}
-\]
-\end{proof}
-
+But we need a device for building braid words from permutations.
 Which brings us to the Garside Germ Presentation of braids.
 
 That is, the set $\{[\sigma] \;|\; \sigma \in \Sigma_n \land [\sigma \sigma'] = [\sigma]+[\sigma'] \text{ when } |\sigma \sigma'| = |\sigma||\sigma'|\} $
