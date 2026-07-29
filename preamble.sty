@@ -91,28 +91,72 @@
 \DeclareMathOperator{\im}{im}
 \DeclareMathOperator{\Ob}{Ob}
 \DeclareMathOperator*{\colim}{colim}
-\DeclareMathOperator{\Chs}{Ch^*}
-\DeclareMathOperator{\Ch}{Ch}
-\DeclareMathOperator{\Refine}{Refine}
-\DeclareMathOperator{\Cube}{Cube}
-\DeclareMathOperator{\BPSet}{\square_*^*}
-\DeclareMathOperator{\Lines}{Lines}
-\DeclareMathOperator{\Coord}{Coord}
-\DeclareMathOperator{\Sal}{Sal}
-\DeclareMathOperator{\Conc}{Conc}
+
+% --- Notational house style ---------------------------------------------
+% Two families, kept visually distinct on purpose:
+%
+%   BOLD    a named ambient category:  \Cat \Set \Cube \Braid \List
+%   UPRIGHT a construction applied to an object, or an operator:
+%           \Ch(K)  \Chs(K)  \Run(K)  \Edge(K)  \Lines(K)  \Refine(K)
+%           \Coord  \Sal(n)  \Face(n) \Tope     \Conc(K)   \Inv(\sigma)
+%
+% Functors are written with \to, never \Rightarrow (which is reserved for
+% natural transformations).
+%
+% The symbol \square and its decorations ALWAYS mean a category of
+% precubical sets, never a cube.  The standard n-cube is \cube{n} = I^n.
+
+% Named categories (bold).
+\newcommand{\Cat}{\mathbf{Cat}}
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\Cube}{\mathbf{Cube}}               % the box category
+\newcommand{\Braid}{\mathbf{Braid}}
+\newcommand{\List}{\mathbf{List}}
 
 % --- Project notation ---------------------------------------------------
 % Cube-chains / precubical notation lives here so every section subfile
 % shares it. This block is expected to grow as the paper does; keep new
 % notation together and documented with a short comment.
 %
-%   \cube{n}   standard n-cube  (Box^n)
-%   \Ch        the cube-chain category  Ch(-)
-%   \Run       the run subcategory / run presheaf
+%   \cube{n}  standard n-cube, I^n           \pSet   precubical sets
+%   \BPSet    bipointed precubical sets      \Wdg    serial wedges
+%   \Ch       cube chains                    \Chs    their complexification
+%   \Run      runs (1-dimensional chains)    \Edge   their cell-list form
 %
-\newcommand{\cube}[1]{\square^{#1}}
-\newcommand{\Run}{\mathrm{Run}}
-\newcommand{\Edge}{\mathrm{Edge}}
+\newcommand{\cube}[1]{I^{#1}}
+\newcommand{\pSet}{\square}                     % presheaves on \Cube
+\newcommand{\BPSet}{\square_{*}}                % bipointed precubical sets
+\newcommand{\Wdg}{\square^{\vee}}               % full subcat of serial wedges
+
+\DeclareMathOperator{\Ch}{Ch}
+\DeclareMathOperator{\Chs}{Ch^*}
+\DeclareMathOperator{\Refine}{Refine}
+\DeclareMathOperator{\Run}{Run}
+\DeclareMathOperator{\Edge}{Edge}
+\DeclareMathOperator{\Lines}{Lines}
+\DeclareMathOperator{\Coord}{Coord}
+\DeclareMathOperator{\Conc}{Conc}
+
+% The summand index of a coordinate: the first component of an element of
+% \coprod_i [a_i].  Overloaded onto wedge maps for the induced map on summand
+% indices, characterised by naturality  blk(f_*(c)) = blk(f)(blk(c)).
+% Matches `blockIdx` in the Lean development.
+\DeclareMathOperator{\blk}{blk}
+\DeclareMathOperator{\normalize}{norm}          % delete 0-cells from a chain
+
+% Bipointed structure maps.
+\DeclareMathOperator{\init}{init}
+\DeclareMathOperator{\fin}{fin}
+\DeclareMathOperator{\alt}{alt}
+
+% Hyperplane-arrangement side.
+\DeclareMathOperator{\Face}{Face}
+\DeclareMathOperator{\Tope}{Tope}
+\DeclareMathOperator{\Sal}{Sal}
+
+% Permutations: \Inv is the inversion set, \ell its cardinality (Coxeter
+% length).  Do NOT use i(-) for the inversion set: i is an index everywhere.
+\DeclareMathOperator{\Inv}{Inv}
 
 % --- Diagram styles -----------------------------------------------------
 % Some maps we draw are illustrative annotations, not morphisms of the
