@@ -57,10 +57,12 @@
 \newtheorem{convention}[theorem]{Convention}
 
 \theoremstyle{remark}
-\newtheorem*{remark}{Remark}
+\newtheorem{remark}[theorem]{Remark}
 \newtheorem*{note}{Note}
 
 \crefname{theorem}{Theorem}{Theorems}
+\crefname{remark}{Remark}{Remarks}
+\crefname{convention}{Convention}{Conventions}
 \crefname{lemma}{Lemma}{Lemmas}
 \crefname{proposition}{Proposition}{Propositions}
 \crefname{corollary}{Corollary}{Corollaries}
@@ -110,7 +112,8 @@
 \newcommand{\Cat}{\mathbf{Cat}}
 \newcommand{\Set}{\mathbf{Set}}
 \newcommand{\Cube}{\mathbf{Cube}}               % the box category
-\newcommand{\Braid}{\mathbf{Braid}}
+\newcommand{\Braid}{\mathbf{Braid}}             % objects N, Hom(n,n) = B_n
+\newcommand{\BraidPos}{\mathbf{Braid}^{+}}      % objects N, Hom(n,n) = B_n^+
 \newcommand{\List}{\mathbf{List}}
 
 % --- Project notation ---------------------------------------------------
@@ -153,6 +156,15 @@
 \DeclareMathOperator{\Face}{Face}
 \DeclareMathOperator{\Tope}{Tope}
 \DeclareMathOperator{\Sal}{Sal}
+\DeclareMathOperator{\Conf}{Conf}               % ordered configuration space
+\DeclareMathOperator{\UConf}{UConf}             % unordered, matching PZ's notation
+
+% Directed topology.  \dP(K) is the space of directed paths on |K|; the
+% decoration \dP(K)_0^1 is PZ's space of d-paths from init to fin.
+\newcommand{\dP}{\vec{P}}
+
+% The free groupoid on a category (localisation at all morphisms).
+\DeclareMathOperator{\Free}{Free}
 
 % Permutations: \Inv is the inversion set, \ell its cardinality (Coxeter
 % length).  Do NOT use i(-) for the inversion set: i is an index everywhere.
