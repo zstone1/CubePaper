@@ -20,12 +20,11 @@ contractible \cite[Prop.~6.1]{PZ}.
 Following an analogy from the hyperplane arrangement literature, we build a ``complexified''
 version of $\Ch$, which we call $\Chs$. It does not collapse: in fact
 $\Chs(\cube n) \cong \Sal(n)\op$, the Salvetti poset of the braid arrangement. Salvetti's
-theorem tells us $|\Chs(\cube n)| \simeq \Conf(n,\C)$, which is not contractible. 
-In fact, its fundamental group is the pure braid group $P_n$.
+theorem tells us $\pi_1|\Chs(\cube n)|$ is homotopic to the pure braid group $P_n$.
 The construction of $\Chs$ works by attaching one dimensional refinements to each 
 cube chain in K. Then morphisms induce permutations, which give us a 
 functor $\Conc : \Chs(K) \to \BraidPos$ into the positive braid monoid.
-It is natural in $K$, and non-trivial as long as $K$ contains a square.
+It is natural in $K$, and non-trivial as long as $K$ contains a nontrivial chain.
 The construction and the comparison with $\Sal(n)$ are formalized in Lean \cite{Cubical}.
 \end{abstract}
 
@@ -33,39 +32,31 @@ The construction and the comparison with $\Sal(n)$ are formalized in Lean \cite{
 \bigskip
 
 \section{Introduction}\label{sec:intro}
-
-\subsection{The problem}
+\subsection{Background}
 
 Ziemiański's cube chain category $\Ch(K)$ is a combinatorial model for the executions of a
-bipointed precubical set $K$ \cite[Thm.~7.6]{Z2}, and Paliga and Ziemiański use it to build braid
-group invariants of $K$ --- representations $IB_n(K,-)$ into $B_n$, and characteristic classes ---
-by transporting along the unique map $K \to Z$ into the final precubical set \cite[\S6]{PZ}. On the
-class most concurrency examples live in, these vanish.
-
-\begin{theorem}[{\cite[Prop.~6.1]{PZ}}]\label{thm:pz-trivial}
-  Let $K \subseteq \cube n$ --- a \emph{sculpture} \cite{Pratt}, equivalently a \emph{Euclidean
-  cubical complex} \cite{RZ}. Then $IB_n(K,-)$ and all the associated characteristic classes are
-  trivial.
-\end{theorem}
-
+bipointed precubical set $K$ \cite[Thm.~7.6]{Z2}. Paliga and Ziemiański established a homotopy 
+equivalence between $\pi_1|\Ch(Z)|$ and braids, where $Z$ is the terminal precubical set.
+It extends, by naturality, to an invariant of any precubical set $K$.
+However, it trivializes on any euclidean complex, see {\cite[Prop.~6.1]{PZ}}. 
 The proof is one line: the invariant factors through $|\Ch(\cube n)|$, which is contractible.
 
-\subsection{The proposal}
+The key observation came through an attempt to formalize morse flows for precubical sets.
+Consider the space of ``execution times'' as a vector in $\R^n$, where each coordinate is an event,
+and the values in the vector represent when that event occured.
+The association of vectors with cube chains is precisely the faces of the braid arrangement.
+The trivialization phenomenon also occurs for hyperplane arrangements.
+However, that literature has a solution: consider analogous hyperplane arrangements in $\C$ instead of $\R$. 
+This results in the Salvetti poset \cite{Salvetti, Paris, BjornerZiegler}, whose elements are 
+pairs of faces and minimal faces refining them.
+Despite discovering neither a suitably generic morse framework, nor a notion of ``complexified precubical sets'',
+the construction of the salvetti complex does generalize well.
 
-The same phenomenon is familiar for real hyperplane arrangements: the order complex of the face
-poset of a real arrangement is contractible, and the fix is to complexify. The Salvetti poset \cite{Salvetti, Paris,
-BjornerZiegler} is the solution, a complex whose cells are a face together with a chamber above it.
-
-We carry that fix over. The analogy will turn into an equivalence for cubes, 
-but the construction will work for any precubical set. 
-Chambers, also known as topes, in hyperplanes are faces that cannot be refined further.
-These correspond to one dimensional cube chains, we call \emph{runs}, in a precubical set. 
-So we decorate each cube chain with a run refining it, exactly as Salvetti decorates each face with a
-tope above it. \Cref{def:chstar} does this for an arbitrary precubical set, by exhibiting runs as a
-presheaf and taking a category of elements.
-
-\subsection{Results}
-
+These minimal faces are called chambers or topes, in hyperplane arrangements.
+In the precubical setting, these correspond to one dimensional cube chains, we call \emph{runs}. 
+So we push this analogy through, and build $\Chs$ as a set of pairs, whose first component is an element of $\Ch$, 
+and second component is a run refining it. The construction $\Chs(K)$ works for any precubical set, and is indeed natural in $K$. 
+Futhermore we find the analogy with hyperplane arrangements is precise for cubes:
 \begin{theorem}[\Cref{thm:sal}]\label{thm:A}
   For every $n \ge 0$ there is an isomorphism of posets $\Chs(\cube n) \cong \Sal(n)\op$, where
   $\Sal(n)$ is the Salvetti poset of the braid arrangement $A_{n-1}$. Consequently
@@ -73,27 +64,25 @@ presheaf and taking a category of elements.
   on $n$ strands. 
 \end{theorem}
 
-So indeed this resolves the issue where contractability of $\Ch(\cube n)$ kills the invariants.
-The braid data can also be extracted directly, without passing through Salvetti's theorem at all.
-
+So indeed this circumbents the issue with euclidean complexes from {\cite[Prop.~6.1]{PZ}}.
+Futhermore, the braid data can also be extracted directly from morphisms of $\Chs(K)$. 
+No need to pass through Salvetti's theorem, or nerves at all. 
+The morphisms contain permutation data that allows us to build braid words in the 
+Garside germ presentation \cite{Garside, Garsidebook}:
 \begin{theorem}[\Cref{thm:conc}, \Cref{prop:nontrivial}]\label{thm:B}
   For every bipointed precubical set $K$ there is a functor $\Conc : \Chs(K) \to \BraidPos$ into
   the positive braid monoids, sending a morphism to the germ of the permutation by which it
-  reorders events. It is natural in $K$, and it is not constant at the identity braid as soon as
-  there is a map $\cube 2 \to K$.
+  reorders events. It is natural in $K$, and it is nontrivial if there is any not-one-dimensional chain in $K$.
 \end{theorem}
-
-This rests on a ``no double crossing'' property (\Cref{lem:no-double-crossing}): along a composite
-in $\Chs(K)$ no two events cross twice, so the associated permutations are length-additive and
-multiply in the Garside germ presentation \cite{Garside, Garsidebook}. Unlike $IB_n$, the result is
-basepoint-free and lands over the ordered rather than the unordered configuration space; see
-\Cref{rem:vs-IB,rem:no-section}.
 
 \subsection{Formalisation}
 
-Everything above except the topology is formalised in Lean~4 on top of mathlib \cite{Cubical}: the
-presheaf $\rho$, the category $\Chs(K)$, its projection to $\Ch(K)$, the comparison of
-\Cref{thm:A}, and the braid functor of \Cref{thm:B}.
+Everything above except the topology is formalised in Lean~4 on top of mathlib \cite{Cubical}.
+It also builds the foundational precubical theory, the neccesary results from \cite{PZ}.
+Some formalisations are slightly modified from the text, but those deviations are noted.
+It also provides a verified computation for $\Conc$.
+
+\subsection{Loose Ends}
 
 \subsection{Notation}
 
@@ -387,7 +376,7 @@ letters.
 
 The first observation that suggests a bridge is feasible here is that
 \begin{lemma}\label{lem:ch-face}
-  $\Ch(\cube n)\op \cong \Face(n)$
+  $\Ch(\cube n) \cong \Face(n)\op$
 \end{lemma}
 By \Cref{lem:coord-bijective} a chain of $\cube n$ is just an ordered set partition of its
 directions, and a morphism of chains is a refinement. The rest is rote, and formalized in Lean.
@@ -483,9 +472,16 @@ a presheaf on $\Ch(K)$, and
 the category of elements of $\Lines(K)$, with projection $\pi : \Chs(K) \to \Ch(K)$.
 \end{definition}
 
-Defining $\Chs$ abstractly has some conveniences later.
-Let us unpack the definition of $\Chs$ to have a more concrete presentation of it.
+Defining $\Chs$ abstractly has some conveniences. For example,
+\begin{lemma}\label{lem:chs-functor}
+  $\Chs$ is a functor $\BPSet \to \Cat$.
+\end{lemma}
+\begin{proof}
+  For $u : K \to L$ we have $W(L) \circ \Ch(u) = W(K)$, hence $\Lines(L) \circ \Ch(u)\op =
+  \Lines(K)$, which induces $\Chs(u)$ on categories of elements.
+\end{proof}
 
+But let us unpack the definition of $\Chs$ to have a more concrete presentation of it.
 Objects of $\Chs(K)$ are pairs
 \[
   (\bigvee a \to K,\ x \in \Run(\bigvee a)), \text{ i.e. } \bigvee[1,\dots,1] \to \bigvee a \to K,
@@ -539,7 +535,7 @@ Along a composite the middle ordering $y_*$ cancels,
   \sigma(g \circ f) = z_*^{-1} \circ g'_* \circ f'_* \circ x_*
     = \bigl(z_*^{-1} \circ g'_* \circ y_*\bigr)\bigl(y_*^{-1} \circ f'_* \circ x_*\bigr)
     = \sigma(g)\,\sigma(f),
-\]
+\] 
 and
 \[
   \sigma(\id) = x_*^{-1} \circ (\id)_* \circ x_* = \id. \qedhere
@@ -572,98 +568,51 @@ and
   For every $n \ge 0$ there is an isomorphism of posets $\Chs(\cube n) \cong \Sal(n)\op$.
   Consequently $|\Chs(\cube n)| \simeq \Conf(n,\C)$ and $\pi_1|\Chs(\cube n)| \cong P_n$.
 \end{theorem}
-The proof is straightforward: send $\Run(\cube n)$ to topes, and observe that the 
-composition operator agrees with the projection. This is machine-checked in \cite{Cubical}.
-
-\begin{remark}\label{rem:noncollapse}
-  $|\Ch(\cube n)|$ is contractible, and that contractibility is the whole proof of
-  \Cref{thm:pz-trivial}. \Cref{thm:sal} says the
-  complexification of the same object is a $K(P_n,1)$. This is the sense in which the construction
-  answers \Cref{thm:pz-trivial}.
-\end{remark}
+The proof is straightforward. Start with \Cref{lem:ch-face}. Then send $\Run(\cube n)$ to topes.
+For morphisms, the composition operator agrees with the projection. This is machine-checked in \cite{Cubical}.
 
 \section{The braiding}\label{sec:braiding}
 
 You'll notice that the $K$ side is not involved in the computation of the permutation,
-or the proofs of its functoriality. This comes from a rather nice fact about Grothendieck
-constructions.
+or the proofs of its functoriality. We can formalize why this happens nicely.
+
+\begin{lemma}\label{lem:chs-Z}
+  Let $Z$ be the final precubical set. Then $\Chs(Z) \cong \Wdg/\rho$, the comma category of serial
+  wedges over $\rho$.
+\end{lemma}
+\begin{proof}
+  Since $Z$ is terminal, each serial wedge has exactly one bipointed map to it and every map of
+  wedges commutes over it; so $W(Z) : \Ch(Z) \to \Wdg$ is an isomorphism, and hence
+  $\Lines(Z) = E(\rho) \circ W(Z)\op = E(\rho)|_{\Wdg}$. Taking categories of elements,
+  $\Chs(Z) = \int \Lines(Z) = \int E(\rho)|_{\Wdg} = \Wdg/\rho$, the last step because the category
+  of elements of $\Hom_{\pSet}(-,\rho)$ is the comma category.
+\end{proof}
 
 \begin{lemma}\label{lem:pullback}
-  The square
+  For every $K$ the square
   \[
   \begin{tikzcd}[column sep=large, row sep=large]
-    \Chs(K) = {\textstyle\int} (E(\rho)\circ W(K)\op)
-      \arrow[r, "Q"] \arrow[d, "\pi"']
+    \Chs(K) \arrow[r, "\Chs(!_K)"] \arrow[d, "\pi"']
       \arrow[dr, phantom, very near start, "\lrcorner"]
-      & {\textstyle\int} E(\rho)|_{\Wdg} = \Wdg / \rho \arrow[d, "\pi"] \\
+      & \Chs(Z) \arrow[d, "\pi"] \\
     \Ch(K) \arrow[r, "W(K)"'] & \Wdg
   \end{tikzcd}
   \]
-  is a strict pullback in $\Cat$. Here $\Wdg/\rho$ is the comma category of serial wedges over
-  $\rho$, formed along $\Wdg \subseteq \BPSet \to \pSet$; note $\rho$ itself is not a serial wedge.
+  is a strict pullback in $\Cat$, where $!_K : K \to Z$ is the unique map to the final object.
 \end{lemma}
 \begin{proof}
-  By definition $\Lines(K)$ is the restriction of $E(\rho)|_{\Wdg}$ along $W(K)$, and the category
-  of elements of a restricted presheaf is the strict pullback of the category of elements along the
-  restricting functor: both sides have as objects the pairs
-  $(c \in \Ch(K),\ x \in E(\rho)(W(K)c))$, with the same morphisms. The identification
-  $\int E(\rho)|_{\Wdg} = \Wdg/\rho$ is immediate: the category of elements of
-  $\Hom_{\pSet}(-,\rho)$ is the comma category.
+  Take $u = !_K$ in \Cref{lem:chs-functor}. Under the isomorphism $W(Z) : \Ch(Z) \cong \Wdg$ of
+  \Cref{lem:chs-Z} this exhibits $\Lines(K)$ as the restriction of
+  $\Lines(Z) = E(\rho)|_{\Wdg}$ along $W(K)$. The
+  category of elements of a restricted presheaf is the strict pullback of the category of elements
+  along the restricting functor: both $\int \Lines(K)$ and $\Ch(K) \times_{\Wdg} \int \Lines(Z)$
+  have as objects the pairs $(c \in \Ch(K),\ x \in E(\rho)(W(K)c))$, with the same morphisms. Since
+  $\int \Lines(K) = \Chs(K)$ and $\int \Lines(Z) = \Chs(Z)$, that is the square above, and the map
+  it induces on top is the one attached to $u = !_K$, namely $\Chs(!_K)$.
 \end{proof}
 
-The map $Q$ is just a projection to the first arrow of $\bigvee[1,\dots,1] \to \bigvee a \to K$.
-And $\rho$ is the classifier for runs (\Cref{lem:rho-classifies}). Since $E$ is, in the
-contravariant case, the restricted Yoneda embedding, the right-hand corner is a
-comma category of wedges over $\rho$. Note that $K$ does not appear on the right hand side at all.
-
-\begin{corollary}\label{cor:functorial}
-  $\Chs$ is a functor $\BPSet \to \Cat$, and the square of \Cref{lem:pullback} identifies $Q$ with
-  $\Chs(!_K) : \Chs(K) \to \Chs(Z)$, where $!_K : K \to Z$ is the unique map to the final object.
-\end{corollary}
-\begin{proof}
-  For $u : K \to L$ we have $W(L) \circ \Ch(u) = W(K)$, hence
-  $\Lines(L) \circ \Ch(u)\op = \Lines(K)$, which induces $\Chs(u)$ on categories of elements.
-  Taking $L = Z$ and applying \Cref{lem:chs-Z} gives the identification.
-\end{proof}
-
-\begin{lemma}\label{lem:Q-faithful}
-  The functor $Q$ is always faithful.
-\end{lemma}
-\begin{proof}
-  Let $\bigvee[1,\dots,1] \to \bigvee a \to K$ and $\bigvee[1,\dots,1] \to \bigvee b \to K$
-  be two objects of $\Chs(K)$. Two morphisms $f, g$ between these objects are equal exactly when they
-  have the same underlying map $\bigvee a \to \bigvee b$,
-  which happens if and only if $Q(f) = Q(g)$. So $Q$ is indeed faithful.
-\end{proof}
-But, we can do a nicer trick.
-\begin{lemma}\label{lem:chs-Z}
-  Let $Z$ be the final precubical set. Then $\Chs(Z)$ is isomorphic to $\Wdg / \rho$.
-\end{lemma}
-\begin{proof}
-  We know $Q$ is faithful already.
-  To show $Q$ is full, again we take two objects $\bigvee[1,\dots,1] \to \bigvee a \to Z$ and
-  $\bigvee[1,\dots,1] \to \bigvee b \to Z$.
-  Let $f$ be a morphism in $\Wdg / \rho$. That is, $f : \bigvee a \to \bigvee b$ forming a commuting
-  triangle:
-  \[
-  \begin{tikzcd}
-    \bigvee a \arrow[r] \arrow[d, "f"'] & \rho \\
-    \bigvee b \arrow[ur] &
-  \end{tikzcd}
-  \]
-  But, since $Z$ is the final precubical set, every map commutes in the triangle
-  \[
-  \begin{tikzcd}
-    \bigvee a \arrow[r] \arrow[d, "f"'] & Z \\
-    \bigvee b \arrow[ur] &
-  \end{tikzcd}
-  \]
- So $Q$ is full.
-
- On objects, every wedge map $\bigvee a \to \rho$ is the same data as a
- $\bigvee[1,\dots,1] \to \bigvee a$ by \Cref{lem:rho-classifies}, and every $\bigvee a$
- has a unique map $\bigvee a \to Z$. So $Q$ is a bijection on objects, and hence an isomorphism.
-\end{proof}
+Note that $K$ does not appear in the right-hand column: $\Chs(K)$ is determined by $\Ch(K)$
+together with the single universal case $\Chs(Z)$.
 
 \subsection{Braid words from permutations}
 
@@ -719,7 +668,7 @@ The two halves of that feature are the following pair, which between them say th
 only inside the fibres of $\blk$, and that nothing crosses twice inside a fibre.
 
 \begin{lemma}[crossings are intra-block]\label{lem:inv-restrict}
-Let $g : (\bigvee c, r) \to (\bigvee b, q)$ in $\Chs(K)$ and $(k,l) \in \Inv(\sigma(g))$. Then
+Let $g : (\bigvee c, r) \to (\bigvee b, q)$ in $\Chs(Z)$ and $(k,l) \in \Inv(\sigma(g))$. Then
 $\sigma(g)(k)$ and $\sigma(g)(l)$ lie in the same fibre of $\blk \circ q_*$.
 \end{lemma}
 \begin{proof}
@@ -753,7 +702,7 @@ Let $(k,l) \in \Inv(\sigma(g))$ and put $u := \sigma(g)(k)$, $v := \sigma(g)(l)$
 exactly $(k,l) \in \Inv(\sigma(f) \circ \sigma(g))$.
 
 For naturality in $K$, note that $\sigma$ reads only the underlying wedge data, so
-$\Conc_K = \Conc_Z \circ \Chs(!_K)$ by \Cref{cor:functorial}.
+$\Conc_K = \Conc_Z \circ \Chs(!_K)$ by \Cref{lem:pullback}.
 \end{proof}
 
 This looks a bit silly, because all we've done is proven our braid words have no cancellation.
@@ -801,11 +750,11 @@ $\Conc(K)$ is nontrivial.
   $\pi : \Chs(K) \to \Ch(K)$ is a discrete fibration, and for a fixed $K$ it may well admit
   sections. What it does not admit is a family of sections $s_K : \Ch(K) \to \Chs(K)$ natural in
   $K$ --- and it had better not. Suppose it did. Applying naturality to the unique map $K \to Z$
-  and using \Cref{cor:functorial}, $\Conc \circ s_K$ would equal $G \circ W(K)$ for the single
+  and using \Cref{lem:pullback}, $\Conc \circ s_K$ would equal $G \circ W(K)$ for the single
   functor $G := \Conc \circ s_Z$ on $\Wdg \cong \Ch(Z)$, so the braid data would be a function of
   the chain alone. For $K \subseteq \cube n$ that factors through $\Ch(\cube n)$, whose nerve is
   contractible, and the invariant would die exactly as in
-  \Cref{thm:pz-trivial}. So the content of $\Chs$ is precisely that the run \emph{cannot} be chosen
+  TODO: cite. So the content of $\Chs$ is precisely that the run \emph{cannot} be chosen
   coherently: that incoherence is the braiding. Turning this into a theorem --- fixing the class of
   $K$ over which naturality is demanded, and the sense in which the resulting invariant is trivial
   --- is \Cref{sec:next}\eqref{item:no-section}.
@@ -835,12 +784,6 @@ $\Conc(K)$ is nontrivial.
         $P_n \le B_n$. Carrying this through on the $\Chs$ side should recover the invariants of
         \cite[\S6]{PZ} as a quotient of ours, making \Cref{rem:vs-IB} precise. The covering and the
         deck sequence are formalised in \cite{Cubical}.
-
-  \item\label{item:no-section} \textbf{The obstruction.} Make \Cref{rem:no-section} a theorem:
-        there is no section of $\pi : \Chs(-) \to \Ch(-)$ natural in $K$. The sketch given there
-        reduces it to the triviality of any $\Ch$-level braid invariant on sculptures, which is
-        \Cref{thm:pz-trivial}; what needs care is the quantifier over $K$ and the notion of
-        triviality.
 
   \item\label{item:subdivision} \textbf{Subdivision and Markov moves.} The strand count of $\Conc$
         is $N = \alt(\fin_K)$, the number of events along an execution, so it changes when $K$ is
