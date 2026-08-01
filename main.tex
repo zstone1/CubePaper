@@ -14,18 +14,18 @@
 
 \begin{abstract}
 Ziemiański's cube chain category $\Ch(K)$ is a combinatorial model for the space of directed paths
-on a precubical set $K$, and Paliga and Ziemiański build a braid group invariant out of
-$\pi_1|\Ch(Z)|$. That invariant trivializes for Euclidean $K$, because $|\Ch(\cube n)|$ is
+on a precubical set $K$, and Paliga and Ziemiański build a braid invariant out of
+$\pi_1|\Ch(Z)|$. That invariant trivializes for Euclidean $K$ because $|\Ch(\cube n)|$ is
 contractible \cite[Prop.~6.1]{PZ}.
 Following an analogy from the hyperplane arrangement literature, we build a ``complexified''
-version of $\Ch$, which we call $\Chs$, and which does not collapse: in fact
+version of $\Ch$, which we call $\Chs$. It does not collapse: in fact
 $\Chs(\cube n) \cong \Sal(n)\op$, the Salvetti poset of the braid arrangement. Salvetti's
-theorem tells us $|\Chs(\cube n)| \simeq \Conf(n,\C)$ --- not contractible, and with fundamental
-group the pure braid group $P_n$.
-The construction of $\Chs$ associates to each cube chain of $K$ the set of its one dimensional
-refinements, and takes the category of elements of the resulting presheaf.
-In the end, we get a functor $\Conc : \Chs(K) \to \BraidPos$ into the positive braid monoid
-that is natural in $K$, and non-trivial as long as $K$ contains a square.
+theorem tells us $|\Chs(\cube n)| \simeq \Conf(n,\C)$, which is not contractible. 
+In fact, its fundamental group is the pure braid group $P_n$.
+The construction of $\Chs$ works by attaching one dimensional refinements to each 
+cube chain in K. Then morphisms induce permutations, which give us a 
+functor $\Conc : \Chs(K) \to \BraidPos$ into the positive braid monoid.
+It is natural in $K$, and non-trivial as long as $K$ contains a square.
 The construction and the comparison with $\Sal(n)$ are formalized in Lean \cite{Cubical}.
 \end{abstract}
 
@@ -130,14 +130,10 @@ the symbol $\square$ names the category of precubical sets.
 
 \begin{remark}[Variance]\label{rem:variance}
 The $\op$ in \Cref{thm:A} is merely an artefact of choices made by different 
-literature we reference. It does not reflect anything structural, it's just a convention so 
-we can stay consisent with our definitions. That is, in the cube chain literature 
+literature we reference. That is, in the cube chain literature 
 \cite{PZ, Z2} a morphism of $\Ch(K)$ runs from a \emph{finer} chain to
 a \emph{coarser} one (\Cref{def:ch}). And in the arrangement literature \cite{Salvetti, Paris} the face
-order runs from \emph{smaller} faces to \emph{larger} ones. and $\Sal(n)$ inherits that
-(\Cref{def:sal}). But under the dictionary of \Cref{lem:ch-face} a finer chain is a \emph{larger}
-covector. So ``finer to coarser'' and ``smaller to larger'' point in opposite directions, and any
-comparison of $\Ch$-shaped data with $\Sal$-shaped data carries an $\op$ somewhere.
+order runs from \emph{smaller} faces to \emph{larger} ones. 
 \end{remark}
 
 \section{Background: cube chains}\label{sec:background}
@@ -198,9 +194,12 @@ We use the following, all from \cite{PZ}.
 \begin{lemma}[{\cite[Lem.~2.11]{PZ}}]\label{lem:ch-refine}
   Let $K$ admit altitude and be NSL. Then $\Ch(K)$ is a poset, every chain is determined by its set
   of cubes, and every bipointed map $\bigvee a \to K$ is injective. Consequently $\Ch(K)$ and
-  $\Refine(K)$ are equivalent, and the comparison of \Cref{lem:ch-lax} is an equivalence on wedge
-  decompositions of $K$.
+  $\Refine(K)$ are equivalent. 
+  
+  Futhermore, a the comparison of \Cref{lem:ch-lax} is an isomorphisms of categories, 
+  since both categories are skeletal and posets.
 \end{lemma}
+
 
 \begin{lemma}\label{lem:wedges-nice}
   Serial wedges admit altitude and are NSL. Explicitly, $\alt$ counts edges from $\init$, so the
@@ -221,28 +220,26 @@ We use the following, all from \cite{PZ}.
 This is all the foundational material we need.
 
 \section{Wedge machinery}\label{sec:wedge}
-Some of our constructions are abstract machinery, and some rely specifically on precubical
-structure. 
-We use this machinery to separate it a bit more cleanly
+Most of the technical material in this paper involves bookkeeping around coordinates of wedges.
+So we build a bit of machinery here to assist.
 \begin{lemma}\label{lem:kan-left}
-  A functor $P : \Cube \to \Set$ extends, by left Kan extension along the Yoneda embedding
-  $\Cube \hookrightarrow \pSet$, to a cocontinuous $E(P) : \pSet \to \Set$ with
-  $E(P)(\cube n) = P(\cube n)$. If $P(\cube 0) = \emptyset$ then for every serial wedge
+  A functor $P : \Cube \to \Set$ extends, by left Kan extension along the Yoneda embedding,
+  to a cocontinuous $E(P) : \pSet \to \Set$ with $E(P)(\cube n) = P(\cube n)$. 
+  If $P(\cube 0) = \emptyset$ then for every serial wedge
   \begin{equation}\label{eq:kan-left}
     E(P)\Bigl(\bigvee a\Bigr) \;\cong\; \coprod_i P(\cube{a_i}).
   \end{equation}
 \end{lemma}
 \begin{proof}
-  A pointwise left Kan extension is cocontinuous, and Yoneda is fully faithful, so $E(P)$ restricts
-  to $P$ on cubes. Applying $E(P)$ to the pushout defining $A \vee B$ gives
+  Applying $E(P)$ to the pushout defining $A \vee B$ gives
   $E(P)(A \vee B) = E(P)(A) \sqcup_{P(\cube 0)} E(P)(B)$, which is the coproduct when
-  $P(\cube 0) = \emptyset$. Induct on the number of summands.
+  $P(\cube 0) = \emptyset$.
 \end{proof}
 
 \begin{lemma}\label{lem:kan-right}
   Let $P$ be a precubical set and put $E(P) := \Hom_{\pSet}(-, P) : \pSet\op \to \Set$, the right
-  Kan extension of $P$ along Yoneda; so $E(P)(\cube n) = P_n$. If $P_0$ is a singleton then for
-  every serial wedge
+  Kan extension of $P$ along Yoneda. 
+  If $P_0$ is a singleton then for every serial wedge
   \begin{equation}\label{eq:kan-right}
     E(P)\Bigl(\bigvee a\Bigr) \;\cong\; \prod_i P_{a_i}.
   \end{equation}
@@ -250,11 +247,8 @@ We use this machinery to separate it a bit more cleanly
 \begin{proof}
   A hom functor takes colimits in its first variable to limits, so $E(P)$ sends the pushout defining
   $A \vee B$ to the pullback $E(P)(A) \times_{E(P)(\cube 0)} E(P)(B)$. Here $E(P)(\cube 0) = P_0$ is
-  a singleton, hence terminal, and a pullback over a terminal object is a product. Induct on the
-  number of summands, the empty wedge giving the empty product.
+  a singleton, hence terminal in $\Set$, and a pullback over a terminal object is a product. 
 \end{proof}
-
-We now instantiate this machinery. The first case is the coordinate functor.
 
 \begin{definition}\label{def:coord}
   Let $\Coord : \Cube \to \Set$ send the cube $\cube{n}$ to its set of directions $[n]$, and send a
@@ -264,15 +258,15 @@ We now instantiate this machinery. The first case is the coordinate functor.
   \[
     E(\Coord)\Bigl(\bigvee a\Bigr) \;\cong\; \coprod_i [a_i].
   \]
-  For a morphism $f : \bigvee a \to \bigvee b$ we write $f_* := E(\Coord)(f)$, and we order
-  $\coprod_i [a_i]$ lexicographically: first by summand index, then within a summand.
+  For a morphism $f : \bigvee a \to \bigvee b$ we write $f_* := E(\Coord)(f)$.
 \end{definition}
 
 \begin{definition}\label{def:blk}
-  Write $\blk(c)$ for the summand index of a coordinate $c \in \coprod_i [a_i]$. By the pushout
-  defining $\bigvee a$, a morphism $f : \bigvee a \to \bigvee b$ is determined by the $a_i \to \bigvee b$.
-  But each such image lies in a single $b_i$ since $a_i > 0$. 
-  So it corresponds to a face embedding
+  Write $\blk(c)$ for the summand index of a coordinate $c \in \coprod_i [a_i]$. 
+  By the pushout defining $\bigvee a$, a morphism $f : \bigvee a \to \bigvee b$ 
+  is determined by the $a_i \to \bigvee b$.
+  But each such image lies in a single $\cube{b_j}$ since $a_i > 0$. 
+  So it corresponds to a order preserving face embedding
   \[
     f_i : \cube{a_i} \longrightarrow \cube{b_{\blk(f)(i)}}.
   \]
@@ -283,117 +277,86 @@ We now instantiate this machinery. The first case is the coordinate functor.
   In particular $\blk \circ f_* = \blk(f) \circ \blk$.
 \end{definition}
 
-\begin{lemma}\label{lem:blk}
-  For $f : \bigvee a \to \bigvee b$, the map $\blk(f)$ is monotone and $f_*$ restricts to an
-  order-preserving injection $[a_i] \hookrightarrow [b_{\blk(f)(i)}]$. Consequently $\blk \circ f_*$
-  is monotone.
-\end{lemma}
-\begin{proof}
-  The restriction of $f_*$ to $[a_i]$ is $(f_i)_*$, an order-preserving injection because $f_i$ is
-  a face embedding (\Cref{def:coord}).
-
-  For monotonicity of $\blk(f)$, use altitude. By \Cref{lem:wedges-nice} the vertices of the $j$-th
-  summand of $\bigvee b$ are those of altitude in $[s^b_j,\ s^b_{j+1}]$, and these intervals
-  increase with $j$; likewise summand $i$ of $\bigvee a$ occupies altitudes $[s^a_i, s^a_{i+1}]$.
-  By \Cref{lem:alt-preserved} the bipointed map $f$ preserves altitude, so the image of summand $i$
-  sits at altitudes at most those of the image of summand $i+1$.
-
-  The last claim follows since $\blk \circ f_* = \blk(f) \circ \blk$ and $\blk$ is monotone, the
-  order on $\coprod_i[a_i]$ being lexicographic in it.
-\end{proof}
-
-
 \begin{lemma}\label{lem:coord-injective}
   For any morphism $f : \bigvee a \to \cube{m}$ in $\pSet$, the function $f_*$ is injective.
 \end{lemma}
 \begin{proof}
   Induct on $a$; the empty case is $f_* : [0] \to [m]$. For the step, write
   $f : (\bigvee a) \vee \cube{n} \to \cube{m}$, which by the pushout splits into
-  $g : \bigvee a \to \cube{m}$ and $h : \cube{n} \to \cube{m}$ with $f_* = g_* \sqcup h_*$, since
-  $E(\Coord)$ carries that pushout to a coproduct (\Cref{lem:kan-left}). Here $g_*$ is injective by hypothesis, and $h_*$ is the monotone injection
-  attached to the face embedding $h$.
+  $g : \bigvee a \to \cube{m}$ and $h : \cube{n} \to \cube{m}$ with $f_* = g_* \sqcup h_*$ by (\Cref{lem:kan-left}). 
+  Here $g_*$ is injective by hypothesis, and $h_*$ is the monotone injection attached to the face embedding $h$.
 
-  So it suffices that the images are disjoint. Let $c \in \{0,1\}^m$ be the image of the glued
-  vertex $\fin(\bigvee a) = \init(\cube{n})$. Maps into a cube raise one coordinate from $0$ to $1$
-  per edge, so $h$, which starts at $c$, can only leave free directions that are $0$ at $c$, while
-  every direction $g$ raises has already reached $1$ at $c$. Hence
-  \[
-    \im h_* \subseteq \{k : c_k = 0\}
-    \quad\text{and}\quad
-    \im g_* \subseteq \{k : c_k = 1\}. \qedhere
-  \]
+  So it suffices that $\im g_*$ and $\im h_*$ are disjoint. Let $c \in \{0,1\}^m$ be the image of
+  the glued vertex $\fin(\bigvee a) = \init(\cube{n})$. Coordinates only increase along a map into
+  a cube, so every direction $g$ leaves free is already $1$ at $c$, while every direction $h$
+  leaves free is still $0$ at $c$.
 \end{proof}
 
-
 \begin{lemma}\label{lem:coord-bijective}
-  For any morphism $f : \bigvee a \to \bigvee b$ in $\BPSet$, the function $f_*$ is bijective.
+  For any morphism $f : \bigvee a \to \bigvee b$ in $\BPSet$, the function $f_*$ is bijective and $\blk(f)$ is monotone.
 \end{lemma}
 \begin{proof}
-  First, injectivity, by induction on the length of $b$, generalising over $a$.
-  If $b$ is empty, then $\bigvee b = \cube{0}$, which has no cells above dimension $0$; so
-  $\bigvee a$ has none either, forcing $a$ to be empty and $f_* : [0] \to [0]$.
+  To prove injective and monotone, we go by induction on the length of $b$, generalising over $a$.
+  If $b$ is empty, then so is $a$ by \Cref{lem:alt-preserved} and \Cref{lem:wedges-nice}. 
+  So both $\blk(f)$ and $f_*$ are the empty function.
 
-  Now consider $f : \bigvee a \to \cube{m} \vee \bigvee b$. The inductive hypothesis is that for
-  any $x$ the coordinate map of a morphism $\bigvee x \to \bigvee b$ is injective. By
-  \Cref{lem:wedges-nice} the target admits altitude and is NSL, so by \Cref{lem:ch-refine} the
-  comparison $\Ch(\cube{m}) \times \Ch(\bigvee b) \to \Ch(\cube{m} \vee \bigvee b)$ is an
-  equivalence. Viewing $f$ as a morphism of $\Ch(\cube{m} \vee \bigvee b)$ from
-  $(\bigvee a \to \cube m \vee \bigvee b)$ to the identity object, it therefore splits as a pair
-  $(f_1, f_2)$: the list $a$ splits as a concatenation $a' \ast a''$ with
-  $f_1 : \bigvee a' \to \cube{m}$ and $f_2 : \bigvee a'' \to \bigvee b$. Now $(f_2)_*$ is injective
-  by the induction hypothesis and $(f_1)_*$ is injective by \Cref{lem:coord-injective}.
-  Since $f \cong f_1 \vee f_2$ and $E(\Coord)$ is cocontinuous (\Cref{lem:kan-left}),
+  Now consider $f : \bigvee a \to \cube{m} \vee \bigvee b$. 
+  By \Cref{lem:wedges-nice} and \Cref{lem:ch-refine}, 
+  $\Ch(\cube{m}) \times \Ch(\bigvee b) = \Ch(\cube{m} \vee \bigvee b)$. 
+  We can view $f$ as an object of $\Ch(\cube{m} \vee \bigvee b)$. 
+  So $a$ splits as $a = a_l \ast a_r$, and $f$ splits as
   \[
-    f_* = (f_1 \vee f_2)_* = (f_1)_* \sqcup (f_2)_*,
+  (f_1 : \bigvee a_l \to \cube{m}, f_2 : \bigvee a_r \to \bigvee b)
   \]
-  the disjoint union of injections with disjoint codomains. Therefore $f_*$ is injective.
+  Since $f = f_1 \vee f_2$ and $E(\Coord)$ is cocontinuous (\Cref{lem:kan-left}),
+  \[
+    f_* = (f_1 \vee f_2)_* = (f_1)_* \sqcup (f_2)_* 
+  \]
+  Now $(f_2)_*$ is injective by the induction hypothesis and $(f_1)_*$ is injective by \Cref{lem:coord-injective}.
+  This is a disjoint union of injections with disjoint codomains, hence $f_*$ is injective.
+  For $\blk$, note
+  \[ 
+  \blk(f) = \blk(f_1) \sqcup (1 + \blk(f_2))
+  \]
+  Now $\blk(f_1)$ is always $1$, and $1+\blk(f_2)$ is monotone by induction, and $>1$.
+  So $\blk(f)$ is monotone as well.
 
-  For surjectivity we count. By \Cref{lem:wedges-nice} the final vertex of $\bigvee a$ has altitude
+  For surjectivity of $f_*$, we count. By \Cref{lem:wedges-nice} the final vertex of $\bigvee a$ has altitude
   $\sum_i a_i$, and likewise for $b$; by \Cref{lem:alt-preserved} the bipointed map $f$ preserves
-  altitude and sends $\fin$ to $\fin$, so $\sum_i a_i = \sum_j b_j$. Thus $f_*$ is a
-  cardinality-preserving injection of finite sets, hence bijective.
+  altitude so $\sum_i a_i = \sum_j b_j$. So $f_*$ is an injective function between finite sets with 
+  equal cardinality. So $f_*$ is a bijection.
 \end{proof}
 
 \section{The braid arrangement and the Salvetti poset}\label{sec:arrangement}
 
-The construction to come is a transcription of the following, so we recall it in the form we will
-imitate. We define the braid arrangement and its related constructions following Paris
-\cite{Paris}, specialised to the braid arrangement for convenience.
+The construction of $\Chs$ ports the following technique to precubical sets.\footnote{
+  The lean repo uses Conditional Oriented Matriods instead of ordered set partitions to define the braid 
+  arrangement, but proves they are equivalent
+}
+We describe the technique here, following Paris \cite{Paris}, and build $\Chs$ in the next section.
 
-The braid arrangement $A_{n-1}$ is the family of hyperplanes
+Let $\Face(n)$ be the set of total preorders on $[n]$. A total preorder $F$,
+induces an equivalence relation $\sim_F$, which are linearly ordered by $<_F$.
+The classes of $\sim_F$ are called blocks, which give an ordered set partition of $[n]$.
+Order $\Face(n)$ by
 \[
-  H_{ij} = \{ x \in \R^n : x_i = x_j \}, \qquad 1 \leq i < j \leq n,
+  F \leq G \quad:=\quad {<_F} \ \subseteq\ {<_G},
 \]
-one for each pair of coordinates. Orient $H_{ij}$ by the sign of $x_i - x_j$. Each point $x \in \R^n$ then
-assigns to every hyperplane a sign in $\{-,0,+\}$, and the sign vectors so obtained are the
-\textbf{covectors}, or faces, of the arrangement:
-\[
-  \Face(n) := \bigl\{\, F : \{(i,j) : 1 \leq i < j \leq n\} \to \{-,0,+\} \ \bigm|\ F \text{ arises from some } x \in \R^n \,\bigr\}.
-\]
-A covector records the weak order of the coordinates of $x$, so it is the same data as an \emph{ordered
-set partition} of $[n]$: the blocks are the coordinates of equal value, listed in increasing
-order of that value. We order covectors by
-\[
-  F \leq G \quad:\!\iff\quad \forall h,\ F(h) = 0 \ \text{ or }\ F(h) = G(h),
-\]
-so that $G$ resolves some of the ties left open by $F$. The maximal covectors --- those never taking the
-value $0$ --- are the \textbf{topes}. A tope has all coordinates distinct, hence is a total order on
-$[n]$; there are exactly $n!$ of them, one per permutation.
-
-Sadly, the order complex of $\Face(n)$ is contractible --- this is the arrangement-theoretic form
-of the contractibility that powers \Cref{thm:pz-trivial}. Salvetti's construction reruns the story
-over $\C$ and finds much richer homotopy.
+This is the poset of \textbf{covectors}, or faces, of the braid arrangement 
+$A_{n-1} = \{\,x_i = x_j \,\}_{i < j}$ in $\R^n$. A point $x$ gives
+the covector $i \leq_F j := x_i \leq x_j$, the weak order of its coordinates. The maximal
+covectors are those with no ties, that is the linear orders on $[n]$; these are the \textbf{topes},
+and they correspond to the components of $\R^n \setminus \bigcup A_{n-1}$.
 
 \begin{definition}\label{def:sal}
 The \textbf{Salvetti poset} is
 \[
   \Sal(n) := \bigl\{\, (F, C) \ \bigm|\ F \in \Face(n),\ C \text{ a tope},\ F \leq C \,\bigr\},
 \]
-whose order uses the composition of covectors,
-\[
-  (F \circ G)(h) := \begin{cases} F(h) & \text{if } F(h) \neq 0, \\ G(h) & \text{if } F(h) = 0, \end{cases}
-\]
-namely
+We define a composition of faces as $F \circ G$ by
+$i \leq_{F \circ G} j$ iff $i <_F j$, or $i \sim_F j$ and $i \leq_G j$. 
+In particular $F \leq F \circ G$, and $F \circ C$ is again a tope whenever $C$ is. 
+We give $\Sal(n)$ a partial order structure
 \[
   (F, C) \preceq (F', C') \quad:\!\iff\quad F \leq F' \ \text{ and }\ C' = F' \circ C.
 \]
@@ -402,37 +365,34 @@ namely
 This is the order of \cite{Paris}; see \cite{DDP} for the form used in the formalisation.
 
 \begin{theorem}[Salvetti \cite{Salvetti}; see also \cite{BjornerZiegler, Paris}]\label{thm:salvetti}
-  $\Sal(n)$ is the face poset of a regular CW complex homotopy equivalent to the complement of the
-  complexified braid arrangement in $\C^n$, namely the ordered configuration space
-  $\Conf(n,\C) = \{z \in \C^n : z_i \neq z_j \text{ for } i \neq j\}$. Since the order complex of
-  the face poset of a regular CW complex is its barycentric subdivision, $|\Sal(n)| \simeq
-  \Conf(n,\C)$ and $\pi_1|\Sal(n)| \cong P_n$, the pure braid group.
+  $|\Sal(n)| \simeq \Conf(n,\C) = \{z \in \C^n : z_i \neq z_j \text{ for } i \neq j\}$. 
+  This is ordered the configuration space on $n$ points, as well as the complement of the complexified $A_{n-1}$.
+  So $\pi_1|\Sal(n)| \cong P_n$, the pure braid group.
 \end{theorem}
 
 The packaging we will imitate is as a Grothendieck construction. Let
 \[
   \Tope : \Face(n) \to \Set, \qquad \Tope(F) := \{ C \text{ a tope} : F \leq C \},
 \]
-be the covariant functor sending $F \leq F'$ to the map $C \mapsto F' \circ C$ (composing on the left by
-$F'$ carries a tope above $F$ to one above $F'$). Then
+be the covariant functor sending $F \leq F'$ to the map $C \mapsto F' \circ C$. Then
 \[
   \Sal(n) \;\cong\; \textstyle\int \Tope,
 \]
 the Grothendieck construction: its objects are the pairs $(F, C)$ with $C \in \Tope(F)$, and its morphisms
 are exactly the relations $\preceq$ above. Intuitively, each face is annotated with a compatible
 tope, a local orientation; crossing a face can flip the orientation, and these flips are the braid
-letters. The construction of \cite{PZ} retains the same orientation data, breaking every tie at a
-face in all possible ways.
+letters.
 
 \section{The complexification \texorpdfstring{$\Chs$}{Ch*}}\label{sec:complexification}
 
-The bridge between the two sides is a way of reading a cube chain as execution data. Associate to
-each coordinate of the $n$-cube a real number: the time at which that event occurs. Then the
-coordinates of $\R^n$ behave like execution information --- when did each event occur --- and the
-regions cut out by the equalities $x_i = x_j$ correspond to wedge maps: sets of equal coordinates
-give coarser wedge maps. That is exactly the braid arrangement of \Cref{sec:arrangement}. To
-rebuild it generically on the precubical side, we start with the corresponding definition of tope.
-
+The first observation that suggests a bridge is feasible here is that
+\begin{lemma}\label{lem:ch-face}
+  $\Ch(\cube n)\op \cong \Face(n)$
+\end{lemma}
+By \Cref{lem:coord-bijective} a chain of $\cube n$ is just an ordered set partition of its
+directions, and a morphism of chains is a refinement. The rest is rote, and formalized in Lean.
+But, to establish an analogy that works for any precubical set, we need 
+to produce a precubical notion of tope. 
 \subsection{Runs}
 
 \begin{definition}
@@ -440,110 +400,74 @@ rebuild it generically on the precubical side, we start with the corresponding d
 \end{definition}
 
 \begin{definition}
-  Let $\Run(K)$ be the full subcategory of $\Ch(K)$ whose objects have
-  one dimensional serial wedges as domain. We write $\Run(K)$ also for its set of objects when no
-  confusion arises.
+  Let $\Run(K)$ be the set of one dimensional chains in $\Ch(K)$.
 \end{definition}
 
-\begin{lemma}\label{lem:run-monoidal}
-  Being one dimensional is preserved and reflected by $\vee$. Hence on serial wedges the
-  comparison of \Cref{lem:ch-refine} restricts to a bijection
-  $\Run(\bigvee a) \cong \prod_i \Run(\cube{a_i})$.
+\begin{lemma}
+  $\Run$ Forms a monoidal functor from lists of positive integers to Set
 \end{lemma}
+\begin{proof}
+  Note that wedge respects one dimensionality, so $\Run(K)$ is can also be seen 
+  as a full, monoidal subcategory of $\Ch(K)$. 
+  So $\Run$ itself becomes a monoidal functor.
+\end{proof}
 
-Now, the morphisms we want to build are a bit unusual, because they are built from
-degeneracies, which are not morphisms of $\pSet$. That is, we want a contravariant assignment
-from $\Ch(K)$ to runs, mirroring the order from Salvetti:
+Now, we want a contravariant operation from $\Ch(K)$ to runs, 
+mirroring the order from Salvetti:
 \[
   (\bigvee a \to \bigvee b) \;\longmapsto\; (\Run(\bigvee b) \to \Run(\bigvee a)).
 \]
-
-The key is that a run carries no more information than an ordering of directions. By
-\Cref{lem:coord-bijective} a run $r$ of $\cube n$ has bijective coordinate map
-$r_* : [n] \to [n]$, sending a position to the direction traversed there; so runs of $\cube n$ are
-exactly linear orders on the direction set $[n]$, and we write $\prec_r$ for the order induced by
-$r$. Restricting an order along an injection is again an order, which gives the whole construction.
+We will define a functor $\rho:\Cube\op \to \Set$ which will give us this shape. 
+First, note that every morphism $f : \cube n \to \cube m$ is a face embedding. 
+So has a corresponding projection on cells $\hat{f} : \cube m \to \cube n$.
+Notably, the projection is monotolically decreasing on cell dimension.
+With that, we can define $\rho$ as follows
 
 \begin{definition}\label{def:rho}
-  Let $\rho(\cube n)$ be the set of linear orders on $[n]$. For a face embedding
-  $f : \cube n \to \cube m$, let $\rho(f) : \rho(\cube m) \to \rho(\cube n)$ pull an order back
-  along the free-direction injection $f_* : [n] \hookrightarrow [m]$ of \Cref{def:coord}:
+  On objects, let $\rho(\cube n) = \Run(\cube n)$. By the pushout defining the wedge, a run of
+  $\cube m$ is a list $[c_1, \dots, c_m]$ of composable edges from $\init$ to $\fin$. For a face
+  embedding $f : \cube n \to \cube m$, let
   \[
-    d \prec_{\rho(f)(r)} d' \quad:\!\iff\quad f_*(d) \prec_r f_*(d').
+    \rho(f)[c_1, \dots, c_m] \;:=\; [\,\hat f(c_1), \dots, \hat f(c_m)\,]
+    \quad\text{with the } 0\text{-cells deleted}.
   \]
+  This is again a run: $\hat f(c_k)$ will preserve exactly $n$ coordinates, giving $n$ cells.
+  The projection preseves boundary maps, so even after deleting 0 cells, it remains a wedge map.
+  And $\hat f$ carries $\init$ to $\init$ and $\fin$ to $\fin$.
+
+  In coordinates, $r_*(k)$ is the free direction of $c_k$, so the surviving steps are those in
+  $S := r_*^{-1}(\im f_*)$, and they keep their relative order. Writing $\iota : [n] \to S$ for the
+  increasing bijection,
+  \begin{equation}\label{eq:rho-restrict}
+    \rho(f)(r)_* \;=\; f_*^{-1} \circ r_* \circ \iota .
+  \end{equation}
 \end{definition}
 
-In words: $r$ lists the directions of $\cube m$ in the order they are traversed; delete those not
-left free by $f$, and read off the survivors. Equivalently, and in the form we will use,
-$\rho(f)(r)$ is the unique run of $\cube n$ satisfying
-\begin{equation}\label{eq:rho-restrict}
-  f_* \circ \rho(f)(r)_* \;=\; r_* \circ \iota
-  \qquad\text{for some strictly increasing } \iota : [n] \to [m],
-\end{equation}
-where necessarily $\iota$ enumerates $r_*^{-1}(\im f_*)$, so
-$\rho(f)(r)_* = f_*^{-1} \circ r_* \circ \iota$.
-
-\begin{remark}
-  Geometrically $\rho(f)$ is a degeneracy, and degeneracies are not morphisms of $\pSet$. Read on
-  cells rather than orders, it projects a one dimensional chain of $\cube m$ onto the face
-  $f$, forgetting the directions $f$ does not leave free and deleting the resulting $0$-cells.
-  \Cref{def:rho} is that projection with the bookkeeping stripped out.
-\end{remark}
-
 \begin{lemma}\label{lem:rho-functor}
-  $\rho : \Cube\op \to \Set$ is a functor, and $\rho(\cube{0})$ is a singleton. In particular
-  $\rho$ is a precubical set, with $\rho(\cube n) \cong \Sigma_n$ and $d_i^0 = d_i^1$.
+  $\rho : \Cube\op \to \Set$ is a functor and $\rho(\cube{0})$ is a singleton; so $\rho$ is a
+  precubical set with a single vertex.
 \end{lemma}
 \begin{proof}
-  Pulling back along $\id$ is the identity, and pulling back along $(g \circ f)_* = g_* \circ f_*$
-  is pulling back along $g_*$ and then along $f_*$; so $\rho$ is a functor. There is exactly one
-  order on $[0] = \emptyset$, so $\rho(\cube 0)$ is a singleton. A linear order on $[n]$ is a
-  bijection $[n] \to [n]$, whence $\rho(\cube n) \cong \Sigma_n$, and
-  $\rho(\delta_i^\epsilon)$ pulls back along the injection omitting $i$, visibly independently of
-  $\epsilon$.
+  The projection of the identity embedding is the identity.
+  And projections compose to projections, so $\rho$ is a functor.
+  The empty wedge map is the sole member of $\rho(\cube 0)$.
 \end{proof}
 
 So $\rho$ is a precubical set, and we write $E(\rho) := \Hom_{\pSet}(-, \rho) : \BPSet\op \to \Set$.
-The next lemma is the linchpin: it says $\rho$ \emph{classifies} runs.
 
 \begin{lemma}[$\rho$ classifies runs]\label{lem:rho-classifies}
-  For every serial wedge $\bigvee a$ there is a bijection
+  For every serial wedge $\bigvee a$ there are bijections
   \[
     E(\rho)\bigl(\textstyle\bigvee a\bigr) \;=\; \Hom_{\pSet}\bigl(\textstyle\bigvee a,\ \rho\bigr)
-      \;\cong\; \Run\bigl(\textstyle\bigvee a\bigr),
+      \;\cong\; \prod_i \Run(\cube{a_i}) \;\cong\; \Run\bigl(\textstyle\bigvee a\bigr).
   \]
-  natural in $\bigvee a$, under which
-  \begin{enumerate}
-    \item a run $x$ corresponds to the tuple $(x_1, \dots, x_r)$ of its restrictions
-          $x_i \in \Run(\cube{a_i})$ to the summands; and
-    \item for a morphism $f : \bigvee a \to \bigvee b$ of $\BPSet$ and $y \in \Run(\bigvee b)$, the
-          $i$-th component of $E(\rho)(f)(y)$ is
-          \begin{equation}\label{eq:rho-componentwise}
-            \bigl(E(\rho)(f)(y)\bigr)_i \;=\; \rho(f_i)\bigl(y_{\blk(f)(i)}\bigr).
-          \end{equation}
-  \end{enumerate}
 \end{lemma}
 \begin{proof}
-  By \Cref{lem:rho-functor} the vertex set $\rho_0 = \rho(\cube 0)$ is a singleton, so
-  \Cref{lem:kan-right} gives
-  \[
-    \Hom_{\pSet}\bigl(\textstyle\bigvee a, \rho\bigr) \;\cong\; \prod_i \Hom_{\pSet}(\cube{a_i}, \rho)
-      \;=\; \prod_i \rho(\cube{a_i}) \;=\; \prod_i \Run(\cube{a_i}).
-  \]
-  On the other
-  side $\Run(\bigvee a) \cong \prod_i \Run(\cube{a_i})$ by \Cref{lem:run-monoidal}. Composing gives
-  the bijection, and by construction it is summandwise restriction, which is (1).
-
-  For (2), $E(\rho)(f)$ is precomposition with $f$, and the $i$-th component
-  of the product decomposition is restriction along the summand inclusion
-  $\cube{a_i} \hookrightarrow \bigvee a$. The composite
-  $\cube{a_i} \hookrightarrow \bigvee a \xrightarrow{f} \bigvee b$ is, by \Cref{def:blk}, the face
-  embedding $f_i$ followed by the inclusion of the summand $\cube{b_{\blk(f)(i)}}$. Precomposition
-  with $f_i$ is $\rho(f_i)$ by definition of $\rho$, and restricting along the summand inclusion of
-  $\bigvee b$ picks out $y_{\blk(f)(i)}$.
+  The left congruence is \Cref{lem:kan-right}, since $\rho_0$ is a singleton (\Cref{lem:rho-functor}). 
+  The right is the monoidal property of $\Run$. 
 \end{proof}
 
-From now on we silently identify $E(\rho)(\bigvee a)$ with $\Run(\bigvee a)$.
+We will freely identify $E(\rho)(\bigvee a)$ with $\Run(\bigvee a)$.
 
 \subsection{The construction}
 
@@ -577,15 +501,12 @@ unpacks to
   \item A morphism $f : (\bigvee a \to K) \to (\bigvee b \to K)$,
   i.e.\ a bipointed map $f' : \bigvee a \to \bigvee b$ commuting over $K$.
   \item The condition $x = \Lines(f)(y)$:
-  we take the run $y$, project it along $f'$, and require the result to be $x$. Since the fibers of
-  $E(\rho)$ are discrete, this is a condition, not extra data --- $x$ is determined by $f'$ and $y$.
+  we take the run $y$, project it backwards along $\hat{f}$, and require the result to be $x$.
 \end{enumerate}
-In particular $\pi$ is a discrete fibration; see \Cref{rem:variance}.
 
 The diagram below records the story. The solid arrows are morphisms of $\Chs(K)$; the dashed
-$\sigma(f)$ (a permutation of positions) and $E(\rho)(f)$ (the run projection) are plain functions, not
-morphisms in $\BPSet$, and they point oppositely --- $E(\rho)(f)$ carries $y$ back to $x$, and
-$\sigma(f)$ is the induced reindexing.
+lines are not. $E(\rho)(f)$ is the projection associated with $f$. And $\sigma(f)$ is 
+an induced permutation we will study in the next section
 \[
 \begin{tikzcd}[row sep=huge, column sep=huge]
   \bigvee[1,\dots,1] \arrow[r, "x"] \arrow[d, perm, "\sigma(f)"']
@@ -597,20 +518,14 @@ $\sigma(f)$ is the induced reindexing.
 
 \subsection{The crossing permutation}
 
-Let's look more closely at the construction of $\sigma$.
-Note that a run $r \in \Run(\bigvee p)$ is itself a bipointed map
-$\bigvee[1,\dots,1] \to \bigvee p$, so \Cref{def:coord} already applies to it, and by
-\Cref{lem:coord-bijective} its coordinate map
+Let's look more closely at how $\sigma$ is constructed.
+Let $N = \Sigma_i a_i = \Sigma_j b_j$. Then define  
 \[
-  r_* : [N] \xrightarrow{\ \sim\ } \textstyle\coprod_i [p_i], \qquad N := \textstyle\sum_i p_i,
+  \sigma(f) := y_*^{-1} \circ f'_* \circ x_* \,
 \]
-is exactly a linear ordering of the coordinates of $\bigvee p$.
-Conjugating the coordinate bijection $f'_* : \coprod_i [a_i] \to \coprod_j [b_j]$ by the two run
-orderings gives a permutation of $[N]$,
-\[
-  \sigma(f) := y_*^{-1} \circ f'_* \circ x_* \ \in\ \Sigma_N,
-\]
-equivalently $y_* \circ \sigma(f) = f'_* \circ x_*$. This is well posed: by
+and observe that by \Cref{lem:coord-bijective}, $\sigma(f)$ is a composition of bijections, 
+so $\sigma(f) \in \Sigma_n$.
+Also, the form $y_* \circ \sigma(f) = f'_* \circ x_*$ will be convenient.
 \Cref{lem:coord-bijective} the source and target of $f$ have the same number of coordinates.
 This permutation $\sigma(f)$ is what will power our braid functor.
 
@@ -636,52 +551,27 @@ and
   $\blk(x_*(k)) = \blk(x_*(l))$. Then $k < l$ if and only if $\sigma(f)(k) < \sigma(f)(l)$.
 \end{lemma}
 \begin{proof}
-  By \Cref{lem:rho-classifies}, $x$ decomposes as $(x_1, \dots, x_r)$ with
-  $(x_i)_* : [a_i] \to [a_i]$. Every coordinate of $\bigvee[1,\dots,1]$ is its own summand, so
-  \Cref{def:blk} reads $\blk \circ x_* = \blk(x)$, a monotone surjection
-  (\Cref{lem:blk}). Its fibres are therefore consecutive intervals, the $i$-th of length
-  $a_i$ and starting at $s^a_i := \sum_{i' < i} a_{i'}$, and on that interval the second component
-  of $x_*$ is $(x_i)_*$:
-  \begin{equation}\label{eq:run-block}
-    x_*(s^a_i + t) \;=\; \bigl(i,\ (x_i)_*(t)\bigr), \qquad t \in [a_i].
-  \end{equation}
+  Since $\blk \circ x_* = \blk(x)$ is monotone \eqref{lem:coord-bijective} and $x_*$ is a bijection
+  (\Cref{lem:coord-bijective}), $x$ traverses the summands in order: its positions in summand $i$
+  are the interval of length $a_i$ at $s^a_i := \sum_{i' < i} a_{i'}$, and there
+  $x_*(s^a_i + t) = (i, (x_i)_*(t))$, where $x_i$ is the restriction of $x$ to that summand
+  (\Cref{lem:rho-classifies}). The same holds for $y$, with $s^b_j$.
 
-  Put $i := \blk(x_*(k)) = \blk(x_*(l))$ and $j := \blk(f')(i)$, and write $k = s^a_i + t$ and
-  $l = s^a_i + t'$. By \eqref{eq:rho-componentwise} the morphism condition $x = E(\rho)(f')(y)$
-  reads componentwise as $x_i = \rho(f_i)(y_j)$, so \eqref{eq:rho-restrict} gives
-  $(f_i)_* \circ (x_i)_* = (y_j)_* \circ \iota$ with $\iota$ strictly increasing. Hence
-  \[
-    y_*(\sigma(f)(k))
-      = f'_*\bigl(x_*(s^a_i + t)\bigr)
-      = f'_*\bigl(i, (x_i)_*(t)\bigr)
-      = \bigl(j, (f_i)_*((x_i)_*(t))\bigr)
-      = \bigl(j, (y_j)_*(\iota(t))\bigr)
-      = y_*\bigl(s^b_j + \iota(t)\bigr),
-  \]
-  using \Cref{def:coord} and then \eqref{eq:run-block} for $y$.
-  As $y_*$ is injective, $\sigma(f)(k) = s^b_j + \iota(t)$ and $\sigma(f)(l) = s^b_j + \iota(t')$; since $\iota$
-  is strictly increasing, $\sigma(f)(k) < \sigma(f)(l)$ iff $t < t'$ iff $k < l$.
+  Put $i := \blk(x_*(k)) = \blk(x_*(l))$ and $j := \blk(f')(i)$, so $k = s^a_i + t$ and
+  $l = s^a_i + t'$ with $t, t' \in [a_i]$, and $k < l$ iff $t < t'$. The morphism condition
+  $x = E(\rho)(f')(y)$ is precomposition with $f'$, which on summand $i$ is $f_i$ into summand $j$
+  (\Cref{def:blk}), so it restricts to $x_i = \rho(f_i)(y_j)$; hence by \Cref{def:rho} the list
+  $x_i$ is what remains of the list $y_j$
+  after deleting steps. Deletion preserves the relative order of the survivors: step $t$ of $x_i$ is
+  step $\iota(t)$ of $y_j$ for a strictly increasing $\iota$.
+
+  Now $\sigma(f) = y_*^{-1} \circ f'_* \circ x_*$ carries the position of a step in $x$ to the
+  position in $y$ of the corresponding step. So $\sigma(f)(k) = s^b_j + \iota(t)$ and
+  $\sigma(f)(l) = s^b_j + \iota(t')$, whence $\sigma(f)(k) < \sigma(f)(l)$ iff $t < t'$ iff
+  $k < l$.
 \end{proof}
 
 \subsection{Comparison with the Salvetti poset}
-
-\begin{lemma}\label{lem:ch-face}
-  There is an isomorphism of posets $\Ch(\cube n) \cong \Face(n)\op$.
-\end{lemma}
-\begin{proof}
-  An object of $\Ch(\cube n)$ is a bipointed map $\bigvee a \to \cube n$. By
-  \Cref{lem:coord-bijective} its coordinate map is a bijection $\coprod_i [a_i] \to [n]$, and by
-  \Cref{lem:blk} it is order-preserving on each summand; so the object determines the ordered set
-  partition of $[n]$ whose $i$-th block is the image of $[a_i]$. Conversely every ordered set
-  partition arises this way, and by \Cref{lem:ch-refine} --- cubes are NSL and admit altitude ---
-  the object is determined by it. Ordered set partitions of $[n]$ are exactly the covectors of
-  $\Face(n)$.
-
-  For the order: a morphism $\bigvee a \to \bigvee b$ over $\cube n$ exists exactly when the
-  partition attached to $a$ refines that attached to $b$, i.e.\ when the covector of $b$ resolves
-  fewer ties than that of $a$, i.e.\ when $F_b \le F_a$. Since morphisms of $\Ch$ run finer to
-  coarser, this is the opposite order.
-\end{proof}
 
 \begin{theorem}\label{thm:sal}
   For every $n \ge 0$ there is an isomorphism of posets $\Chs(\cube n) \cong \Sal(n)\op$.
@@ -858,12 +748,12 @@ $\sigma(g)(k)$ and $\sigma(g)(l)$ lie in the same fibre of $\blk \circ q_*$.
 \begin{proof}
 Put $u := \sigma(g)(k)$ and $v := \sigma(g)(l)$, so $k < l$ and $v < u$. Since
 $q_* \circ \sigma(g) = g'_* \circ r_*$ we have $q_*(u) = g'_*(r_*(k))$ and $q_*(v) = g'_*(r_*(l))$,
-so by \Cref{def:blk} and monotonicity of $\blk(g')$ and of $\blk \circ r_*$
-(\Cref{lem:blk}),
+so by \Cref{def:blk}, monotonicity of $\blk(g')$ (\Cref{lem:coord-bijective}) and monotonicity of
+$\blk \circ r_*$ \eqref{eq:run-blk},
 \[
   \blk(q_*(u)) = \blk(g')\bigl(\blk(r_*(k))\bigr) \;\le\; \blk(g')\bigl(\blk(r_*(l))\bigr) = \blk(q_*(v)),
 \]
-using $k < l$. On the other hand $v < u$ and \Cref{lem:blk} give
+using $k < l$. On the other hand $v < u$ and monotonicity of $\blk \circ q_*$ \eqref{eq:run-blk} give
 $\blk(q_*(v)) \le \blk(q_*(u))$. Hence $\blk(q_*(u)) = \blk(q_*(v))$.
 \end{proof}
 
