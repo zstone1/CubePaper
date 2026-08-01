@@ -403,7 +403,7 @@ to produce a precubical notion of tope.
   Let $\Run(K)$ be the set of one dimensional chains in $\Ch(K)$.
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}\label{lem:run-monoidal}
   $\Run$ Forms a monoidal functor from lists of positive integers to Set
 \end{lemma}
 \begin{proof}
@@ -549,26 +549,21 @@ and
 \begin{lemma}\label{lem:within-summand}
   Let $f : (\bigvee a, x) \to (\bigvee b, y)$ in $\Chs(K)$ and suppose
   $\blk(x_*(k)) = \blk(x_*(l))$. Then $k < l$ if and only if $\sigma(f)(k) < \sigma(f)(l)$.
-\end{lemma}
+\end{lemma} 
 \begin{proof}
-  Since $\blk \circ x_* = \blk(x)$ is monotone \eqref{lem:coord-bijective} and $x_*$ is a bijection
-  (\Cref{lem:coord-bijective}), $x$ traverses the summands in order: its positions in summand $i$
-  are the interval of length $a_i$ at $s^a_i := \sum_{i' < i} a_{i'}$, and there
-  $x_*(s^a_i + t) = (i, (x_i)_*(t))$, where $x_i$ is the restriction of $x$ to that summand
-  (\Cref{lem:rho-classifies}). The same holds for $y$, with $s^b_j$.
+  Let $i = \blk(x_*(k))$. Then $x \in Run(\bigvee a) \simeq \prod_j \Run(\cube {a_j})$, by \Cref{lem:run-monoidal}.
+  So let $x_i$ be its $i^{\text{th}}$ component.
+  Likewise, let $j = \blk(f')(i)$, and $y_j$ be its $j^{\text{th}}$ component.
 
-  Put $i := \blk(x_*(k)) = \blk(x_*(l))$ and $j := \blk(f')(i)$, so $k = s^a_i + t$ and
-  $l = s^a_i + t'$ with $t, t' \in [a_i]$, and $k < l$ iff $t < t'$. The morphism condition
-  $x = E(\rho)(f')(y)$ is precomposition with $f'$, which on summand $i$ is $f_i$ into summand $j$
-  (\Cref{def:blk}), so it restricts to $x_i = \rho(f_i)(y_j)$; hence by \Cref{def:rho} the list
-  $x_i$ is what remains of the list $y_j$
-  after deleting steps. Deletion preserves the relative order of the survivors: step $t$ of $x_i$ is
-  step $\iota(t)$ of $y_j$ for a strictly increasing $\iota$.
+  Now, since $x$ is one dimensional, $\blk \circ x_* = \blk(x)$, which is monotone (\Cref{lem:coord-bijective}). 
+  So $x_*^{-1}(i)$ is an interval, order-isomorphic to the positions
+  $[a_i]$ of $x_i$, and likewise for $y$ and $[b_j]$.
 
-  Now $\sigma(f) = y_*^{-1} \circ f'_* \circ x_*$ carries the position of a step in $x$ to the
-  position in $y$ of the corresponding step. So $\sigma(f)(k) = s^b_j + \iota(t)$ and
-  $\sigma(f)(l) = s^b_j + \iota(t')$, whence $\sigma(f)(k) < \sigma(f)(l)$ iff $t < t'$ iff
-  $k < l$.
+  The morphism condition restricts to $x_i = \rho(f_i)(y_j)$ (\Cref{def:blk}), 
+  so $\sigma(f) = y_*^{-1} \circ f'_* \circ x_*$ restricts
+  to $(y_j)_*^{-1} \circ (f_i)_* \circ (x_i)_*$, which by \eqref{eq:rho-restrict} is the increasing
+  inclusion $[a_i] \to [b_j]$. Both identifications preserve order, so $k < l$ if and only if
+  $\sigma(f)(k) < \sigma(f)(l)$.
 \end{proof}
 
 \subsection{Comparison with the Salvetti poset}
@@ -577,26 +572,8 @@ and
   For every $n \ge 0$ there is an isomorphism of posets $\Chs(\cube n) \cong \Sal(n)\op$.
   Consequently $|\Chs(\cube n)| \simeq \Conf(n,\C)$ and $\pi_1|\Chs(\cube n)| \cong P_n$.
 \end{theorem}
-\begin{proof}
-  Transport $\Lines(\cube n)$ across \Cref{lem:ch-face}. A presheaf on $\Ch(\cube n)$ is a covariant
-  functor on $\Ch(\cube n)\op \cong \Face(n)$. On objects, $\Lines(\cube n)$ sends a chain to its
-  set of runs; under the dictionary a run of $\bigvee a$ is a linear order on $[n]$ refining the
-  partition, that is a tope $C \ge F_a$. So $\Lines(\cube n)$ and $\Tope$ agree on objects. On
-  morphisms, $\Lines$ acts by projecting a run along the chain map, which by
-  \eqref{eq:rho-restrict} reads off the order in which the finer chain meets the events; on
-  covectors that is exactly $C \mapsto F' \circ C$, the action of $\Tope$. Hence
-  $\Lines(\cube n) \cong \Tope$ as functors on $\Face(n)$.
-
-  Now compare categories of elements. A morphism $(c, x) \to (c', y)$ of $\Chs(\cube n)$ lies over
-  $c \to c'$ in $\Ch(\cube n)$, i.e.\ over $F_{c'} \le F_c$ in $\Face(n)$, and asserts
-  $x = \Tope(F_{c'} \le F_c)(y)$ --- which is precisely a morphism $(F_{c'}, y) \to (F_c, x)$ of
-  $\Sal(n) = \int \Tope$. So the two categories are isomorphic after reversing arrows.
-
-  The topological statement is \Cref{thm:salvetti} together with $|C| \cong |C\op|$.
-\end{proof}
-
-The routine verifications behind \Cref{lem:ch-face,thm:sal} --- that the dictionary is a bijection
-and that the two actions on topes agree --- are machine-checked in \cite{Cubical}.
+The proof is straightforward: send $\Run(\cube n)$ to topes, and observe that the 
+composition operator agrees with the projection. This is machine-checked in \cite{Cubical}.
 
 \begin{remark}\label{rem:noncollapse}
   $|\Ch(\cube n)|$ is contractible, and that contractibility is the whole proof of
@@ -748,12 +725,13 @@ $\sigma(g)(k)$ and $\sigma(g)(l)$ lie in the same fibre of $\blk \circ q_*$.
 \begin{proof}
 Put $u := \sigma(g)(k)$ and $v := \sigma(g)(l)$, so $k < l$ and $v < u$. Since
 $q_* \circ \sigma(g) = g'_* \circ r_*$ we have $q_*(u) = g'_*(r_*(k))$ and $q_*(v) = g'_*(r_*(l))$,
-so by \Cref{def:blk}, monotonicity of $\blk(g')$ (\Cref{lem:coord-bijective}) and monotonicity of
-$\blk \circ r_*$ \eqref{eq:run-blk},
+so by \Cref{def:blk} and the monotonicity of $\blk(g')$ and of $\blk \circ r_* = \blk(r)$
+(\Cref{lem:coord-bijective}),
 \[
   \blk(q_*(u)) = \blk(g')\bigl(\blk(r_*(k))\bigr) \;\le\; \blk(g')\bigl(\blk(r_*(l))\bigr) = \blk(q_*(v)),
 \]
-using $k < l$. On the other hand $v < u$ and monotonicity of $\blk \circ q_*$ \eqref{eq:run-blk} give
+using $k < l$. On the other hand $v < u$ and monotonicity of $\blk \circ q_* = \blk(q)$
+(\Cref{lem:coord-bijective}) give
 $\blk(q_*(v)) \le \blk(q_*(u))$. Hence $\blk(q_*(u)) = \blk(q_*(v))$.
 \end{proof}
 
