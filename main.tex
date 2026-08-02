@@ -14,15 +14,16 @@
 
 \begin{abstract}
 Ziemiański's cube chain category $\Ch(K)$ is a combinatorial model for the space of directed paths
-on a precubical set $K$, and Paliga and Ziemiański build a braid invariant out of
-$\pi_1|\Ch(Z)|$. That invariant trivializes for Euclidean $K$ because $|\Ch(\cube n)|$ is
+on a precubical set $K$. Paliga and Ziemiański built a braid invariant for precubical sets 
+by observing a relation between $\pi_1|\Ch(Z)|$ and braids, where $Z$ is the termainal precubical set.
+However, that invariant trivializes for Euclidean $K$ because $|\Ch(\cube n)|$ is
 contractible \cite[Prop.~6.1]{PZ}.
 Following an analogy from the hyperplane arrangement literature, we build a ``complexified''
 version of $\Ch$, which we call $\Chs$. It does not collapse: in fact
 $\Chs(\cube n) \cong \Sal(n)\op$, the Salvetti poset of the braid arrangement. Salvetti's
 theorem tells us $\pi_1|\Chs(\cube n)|$ is homotopic to the pure braid group $P_n$.
 The construction of $\Chs$ works by attaching one dimensional refinements to each 
-cube chain in K. Then morphisms induce permutations, which give us a 
+cube chain in $K$. Futhermore, we associate permutations with each morphism, which give us a 
 functor $\Conc : \Chs(K) \to \BraidPos$ into the positive braid monoid.
 It is natural in $K$, and non-trivial as long as $K$ contains a nontrivial chain.
 The construction and the comparison with $\Sal(n)$ are formalized in Lean \cite{Cubical}.
@@ -36,7 +37,8 @@ The construction and the comparison with $\Sal(n)$ are formalized in Lean \cite{
 
 Ziemiański's cube chain category $\Ch(K)$ is a combinatorial model for the executions of a
 bipointed precubical set $K$ \cite[Thm.~7.6]{Z2}. Paliga and Ziemiański established a homotopy 
-equivalence between $\pi_1|\Ch(Z)|$ and braids, where $Z$ is the terminal precubical set.
+equivalence between $|\Ch(Z)|$ and configuration spaces of points in the plane, 
+where $Z$ is the terminal precubical set.
 It extends, by naturality, to an invariant of any precubical set $K$.
 However, it trivializes on any euclidean complex, see {\cite[Prop.~6.1]{PZ}}. 
 The proof is one line: the invariant factors through $|\Ch(\cube n)|$, which is contractible.
@@ -50,9 +52,9 @@ However, that literature has a solution: consider analogous hyperplane arrangeme
 This results in the Salvetti poset \cite{Salvetti, Paris, BjornerZiegler}, whose elements are 
 pairs of faces and minimal faces refining them.
 Despite discovering neither a suitably generic morse framework, nor a notion of ``complexified precubical sets'',
-the construction of the salvetti complex does generalize well.
+the construction of the salvetti complex generalizes well.
 
-These minimal faces are called chambers or topes, in hyperplane arrangements.
+The minimal faces of an arrangement are called chambers or topes.
 In the precubical setting, these correspond to one dimensional cube chains, we call \emph{runs}. 
 So we push this analogy through, and build $\Chs$ as a set of pairs, whose first component is an element of $\Ch$, 
 and second component is a run refining it. The construction $\Chs(K)$ works for any precubical set, and is indeed natural in $K$. 
@@ -64,11 +66,11 @@ Futhermore we find the analogy with hyperplane arrangements is precise for cubes
   on $n$ strands. 
 \end{theorem}
 
-So indeed this circumbents the issue with euclidean complexes from {\cite[Prop.~6.1]{PZ}}.
+So indeed this circumvents the issue with euclidean complexes from {\cite[Prop.~6.1]{PZ}}.
 Futhermore, the braid data can also be extracted directly from morphisms of $\Chs(K)$. 
-No need to pass through Salvetti's theorem, or nerves at all. 
+No need to pass through Salvetti's theorem or nerves at all. 
 The morphisms contain permutation data that allows us to build braid words in the 
-Garside germ presentation \cite{Garside, Garsidebook}:
+Garside germ presentation \cite{Garide, Garsidebook}:
 \begin{theorem}[\Cref{thm:conc}, \Cref{prop:nontrivial}]\label{thm:B}
   For every bipointed precubical set $K$ there is a functor $\Conc : \Chs(K) \to \BraidPos$ into
   the positive braid monoids, sending a morphism to the germ of the permutation by which it
@@ -81,8 +83,6 @@ Everything above except the topology is formalised in Lean~4 on top of mathlib \
 It also builds the foundational precubical theory, the neccesary results from \cite{PZ}.
 Some formalisations are slightly modified from the text, but those deviations are noted.
 It also provides a verified computation for $\Conc$.
-
-\subsection{Loose Ends}
 
 \subsection{Notation}
 
@@ -121,13 +121,13 @@ the symbol $\square$ names the category of precubical sets.
 The $\op$ in \Cref{thm:A} is merely an artefact of choices made by different 
 literature we reference. That is, in the cube chain literature 
 \cite{PZ, Z2} a morphism of $\Ch(K)$ runs from a \emph{finer} chain to
-a \emph{coarser} one (\Cref{def:ch}). And in the arrangement literature \cite{Salvetti, Paris} the face
+a \emph{coarser}. And in the arrangement literature \cite{Salvetti, Paris} the face
 order runs from \emph{smaller} faces to \emph{larger} ones. 
 \end{remark}
 
 \section{Background: cube chains}\label{sec:background}
 
-We recall three constructions on $\BPSet$ from \cite{PZ, Z2}.
+We recall two constructions on $\BPSet$ from \cite{PZ, Z2}.
 
 The first is the \textbf{wedge} $\vee$. Given $P, Q \in \BPSet$, the wedge $P \vee Q$ is the
 pushout, formed in $\pSet$, gluing $P$'s final vertex to $Q$'s initial vertex:
@@ -137,8 +137,7 @@ pushout, formed in $\pSet$, gluing $P$'s final vertex to $Q$'s initial vertex:
   P \arrow[r] & P \vee Q \arrow[ul, phantom, very near start, "\ulcorner"]
 \end{tikzcd}
 \]
-Note that the two legs are maps of $\pSet$, not of $\BPSet$: a bipointed map $\cube 0 \to Q$ would
-have to send the point to both $\init_Q$ and $\fin_Q$. The wedge $P \vee Q$ is bipointed by
+Note that the two legs are maps of $\pSet$, not of $\BPSet$. The wedge $P \vee Q$ is bipointed by
 $\init_P$ and $\fin_Q$, and $(\BPSet, \vee, \cube{0})$ is monoidal with unit the point $\cube{0}$.
 The \textbf{serial wedge} of a list of \emph{positive} naturals is
 \[
@@ -147,27 +146,15 @@ The \textbf{serial wedge} of a list of \emph{positive} naturals is
 with $\bigvee[\,] = \cube{0}$. Write $\Wdg \subseteq \BPSet$ for the full subcategory of serial
 wedges.
 
-\begin{definition}[{\cite[\S2]{PZ}}]\label{def:ch}
-The second construction: For $K \in \BPSet$, let $\Ch(K)$ be the full subcategory of the slice $\BPSet / K$ spanned by the
+The second construction is $\Ch(K)$. For $K \in \BPSet$, let $\Ch(K)$ be the full subcategory of the slice $\BPSet / K$ spanned by the
 serial wedges: an object is a bipointed map $\bigvee a \to K$, and a morphism
 $(\bigvee a \to K) \to (\bigvee b \to K)$ is a bipointed map $\bigvee a \to \bigvee b$ commuting
 over $K$. Such a morphism runs from a finer chain to a coarser one.
-\end{definition}
-
-The third construction is \textbf{refinement}. A \emph{chain} in $K$ is a finite sequence
-$[c_1, \dots, c_l]$ of cells of $K$, each of dimension at least $1$, such that
-$\fin(c_i) = \init(c_{i+1})$ for all $i$, with $\init(c_1) = \init_K$ and $\fin(c_l) = \fin_K$;
-here $\init(c)$ and $\fin(c)$ denote the images under $c : \cube{\dim c} \to K$ of the initial and
-final vertices of the cube. A \emph{refinement} replaces a cell $c_i$ by a chain of the cube
-$\cube{\dim c_i}$, post-composed with $c_i$. Let $\Refine(K)$ be the category of chains, with
-morphisms generated by refinements and oriented as in $\Ch(K)$ (finer to coarser).
 
 Finally, two properties of $K$ from \cite{PZ} recur. We say $K$ \emph{admits altitude} if there is
 a function $\alt : K_0 \to \Z$ with $\alt(\fin(e)) = \alt(\init(e)) + 1$ for every edge
 $e \in K_1$. Following \cite[\S2]{PZ} verbatim, $K$ is \emph{non-self-linked} (NSL) if every
-$\square$-map $\cube{n} \to K$ is injective, for all $n \ge 0$. By Yoneda a $\square$-map
-$\cube n \to K$ is an $n$-cell of $K$, so this says the iterated faces of every cell are pairwise
-distinct.
+$\square$-map $\cube{n} \to K$ is injective, for all $n \ge 0$. 
 
 We use the following, all from \cite{PZ}.
 
@@ -180,31 +167,22 @@ We use the following, all from \cite{PZ}.
   comparison $\Ch(P) \times \Ch(Q) \to \Ch(P \vee Q)$ concatenates chains.
 \end{lemma}
 
-\begin{lemma}[{\cite[Lem.~2.11]{PZ}}]\label{lem:ch-refine}
-  Let $K$ admit altitude and be NSL. Then $\Ch(K)$ is a poset, every chain is determined by its set
-  of cubes, and every bipointed map $\bigvee a \to K$ is injective. Consequently $\Ch(K)$ and
-  $\Refine(K)$ are equivalent. 
-  
-  Futhermore, a the comparison of \Cref{lem:ch-lax} is an isomorphisms of categories, 
-  since both categories are skeletal and posets.
+\begin{lemma}\label{lem:ch-NSL}
+  When $K$ admits altitudes and is NSL, the functor of \Cref{lem:ch-lax} is an isomorphisms of categories,
+  since both categories are skeletal and posets. 
+  This is a easy corrolary of {\cite[Lem.~2.11]{PZ}}
 \end{lemma}
 
 
 \begin{lemma}\label{lem:wedges-nice}
-  Serial wedges admit altitude and are NSL. Explicitly, $\alt$ counts edges from $\init$, so the
-  final vertex of $\bigvee a$ has altitude $\sum_i a_i$, and the vertices of the $j$-th summand are
-  exactly those of altitude in $[s^a_j,\ s^a_{j+1}]$, where $s^a_j := \sum_{j' < j} a_{j'}$.
+  Serial wedges admit altitude and are NSL. And specifically so the
+  final vertex of $\bigvee a$ has altitude $\sum_i a_i$.
 \end{lemma}
 
 \begin{lemma}[{\cite[Prop.~2.7]{PZ}}]\label{lem:alt-preserved}
   Let $P, Q$ be connected bipointed precubical sets admitting altitude functions. Then every
   bipointed map $f : P \to Q$ preserves altitude: $\alt_Q \circ f = \alt_P$.
 \end{lemma}
-
-\begin{proof}[Proof sketch]
-  A precubical map takes edges to edges, so $\alt_Q$ increases by exactly one along the image of
-  each edge; connectivity propagates this, and $f(\init_P) = \init_Q$ pins the constant.
-\end{proof}
 
 This is all the foundational material we need.
 
@@ -270,10 +248,10 @@ So we build a bit of machinery here to assist.
   For any morphism $f : \bigvee a \to \cube{m}$ in $\pSet$, the function $f_*$ is injective.
 \end{lemma}
 \begin{proof}
-  Induct on $a$; the empty case is $f_* : [0] \to [m]$. For the step, write
-  $f : (\bigvee a) \vee \cube{n} \to \cube{m}$, which by the pushout splits into
+  Induct on $a$. The empty case is $f_* : [0] \to [m]$, trivially injective. 
+  For the induction case, $f : (\bigvee a) \vee \cube{n} \to \cube{m}$, which by the pushout splits into
   $g : \bigvee a \to \cube{m}$ and $h : \cube{n} \to \cube{m}$ with $f_* = g_* \sqcup h_*$ by (\Cref{lem:kan-left}). 
-  Here $g_*$ is injective by hypothesis, and $h_*$ is the monotone injection attached to the face embedding $h$.
+  Here $g_*$ is injective by the induction hypothesis, and $h_*$ is the monotone injection for the face embedding $h$.
 
   So it suffices that $\im g_*$ and $\im h_*$ are disjoint. Let $c \in \{0,1\}^m$ be the image of
   the glued vertex $\fin(\bigvee a) = \init(\cube{n})$. Coordinates only increase along a map into
@@ -290,14 +268,14 @@ So we build a bit of machinery here to assist.
   So both $\blk(f)$ and $f_*$ are the empty function.
 
   Now consider $f : \bigvee a \to \cube{m} \vee \bigvee b$. 
-  By \Cref{lem:wedges-nice} and \Cref{lem:ch-refine}, 
+  By \Cref{lem:wedges-nice} and \Cref{lem:ch-NSL}, 
   $\Ch(\cube{m}) \times \Ch(\bigvee b) = \Ch(\cube{m} \vee \bigvee b)$. 
   We can view $f$ as an object of $\Ch(\cube{m} \vee \bigvee b)$. 
   So $a$ splits as $a = a_l \ast a_r$, and $f$ splits as
   \[
   (f_1 : \bigvee a_l \to \cube{m}, f_2 : \bigvee a_r \to \bigvee b)
   \]
-  Since $f = f_1 \vee f_2$ and $E(\Coord)$ is cocontinuous (\Cref{lem:kan-left}),
+  Since $f = f_1 \vee f_2$, by (\Cref{lem:kan-left}) we have
   \[
     f_* = (f_1 \vee f_2)_* = (f_1)_* \sqcup (f_2)_* 
   \]
@@ -334,16 +312,19 @@ Order $\Face(n)$ by
 This is the poset of \textbf{covectors}, or faces, of the braid arrangement 
 $A_{n-1} = \{\,x_i = x_j \,\}_{i < j}$ in $\R^n$. A point $x$ gives
 the covector $i \leq_F j := x_i \leq x_j$, the weak order of its coordinates. The maximal
-covectors are those with no ties, that is the linear orders on $[n]$; these are the \textbf{topes},
+covectors are those with all distinct points, that is the linear orders on $[n]$; these are the \textbf{topes},
 and they correspond to the components of $\R^n \setminus \bigcup A_{n-1}$.
 
 \begin{definition}\label{def:sal}
 The \textbf{Salvetti poset} is
 \[
-  \Sal(n) := \bigl\{\, (F, C) \ \bigm|\ F \in \Face(n),\ C \text{ a tope},\ F \leq C \,\bigr\},
+  \Sal(n) := \bigl\{\, (F, C) \ \bigm|\ F \in \Face(n),\ C \text{ a tope},\ F \leq C \,\bigr\}.
 \]
-We define a composition of faces as $F \circ G$ by
-$i \leq_{F \circ G} j$ iff $i <_F j$, or $i \sim_F j$ and $i \leq_G j$. 
+To defin e the order on $\Sal$, we first need to define composition. Let $F$ and $G$ be faces, and define $F \circ G$ by
+\[
+  i \leq_{F \circ G} j \iff i <_F j \text{ or } \big( i \sim_F j  \text{ and } i \leq_G j \big).
+\]
+
 In particular $F \leq F \circ G$, and $F \circ C$ is again a tope whenever $C$ is. 
 We give $\Sal(n)$ a partial order structure
 \[
@@ -355,7 +336,7 @@ This is the order of \cite{Paris}; see \cite{DDP} for the form used in the forma
 
 \begin{theorem}[Salvetti \cite{Salvetti}; see also \cite{BjornerZiegler, Paris}]\label{thm:salvetti}
   $|\Sal(n)| \simeq \Conf(n,\C) = \{z \in \C^n : z_i \neq z_j \text{ for } i \neq j\}$. 
-  This is ordered the configuration space on $n$ points, as well as the complement of the complexified $A_{n-1}$.
+  This is the ordered configuration space on $n$ points, as well as the complement of the complexified $A_{n-1}$.
   So $\pi_1|\Sal(n)| \cong P_n$, the pure braid group.
 \end{theorem}
 
@@ -393,12 +374,13 @@ to produce a precubical notion of tope.
 \end{definition}
 
 \begin{lemma}\label{lem:run-monoidal}
-  $\Run$ Forms a monoidal functor from lists of positive integers to Set
+  $\Run$ forms a monoidal functor from lists of positive integers to Set
 \end{lemma}
 \begin{proof}
   Note that wedge respects one dimensionality, so $\Run(K)$ is can also be seen 
   as a full, monoidal subcategory of $\Ch(K)$. 
-  So $\Run$ itself becomes a monoidal functor.
+  So $\Run$ is the composition of two monoidal functors. 
+  One sending lists of positive integers to $\Wdg$, and monoidal inclusion inclusion $\Wdg \subset \BPSet$
 \end{proof}
 
 Now, we want a contravariant operation from $\Ch(K)$ to runs, 
@@ -422,7 +404,9 @@ With that, we can define $\rho$ as follows
   \]
   This is again a run: $\hat f(c_k)$ will preserve exactly $n$ coordinates, giving $n$ cells.
   The projection preseves boundary maps, so even after deleting 0 cells, it remains a wedge map.
-  And $\hat f$ carries $\init$ to $\init$ and $\fin$ to $\fin$.
+  And $\hat f$ carries $\init$ to $\init$ and $\fin$ to $\fin$.\footnote{
+    The lean defines $\rho$ via a slight detour with cube chains instead of wedge maps 
+    to avoid some issues with ``Fin''. But the approaches are proven equivalent}
 
   In coordinates, $r_*(k)$ is the free direction of $c_k$, so the surviving steps are those in
   $S := r_*^{-1}(\im f_*)$, and they keep their relative order. Writing $\iota : [n] \to S$ for the
@@ -452,8 +436,7 @@ So $\rho$ is a precubical set, and we write $E(\rho) := \Hom_{\pSet}(-, \rho) : 
   \]
 \end{lemma}
 \begin{proof}
-  The left congruence is \Cref{lem:kan-right}, since $\rho_0$ is a singleton (\Cref{lem:rho-functor}). 
-  The right is the monoidal property of $\Run$. 
+  The left congruence is \Cref{lem:kan-right}. The right is the monoidality of $\Run$. 
 \end{proof}
 
 We will freely identify $E(\rho)(\bigvee a)$ with $\Run(\bigvee a)$.
@@ -472,7 +455,7 @@ a presheaf on $\Ch(K)$, and
 the category of elements of $\Lines(K)$, with projection $\pi : \Chs(K) \to \Ch(K)$.
 \end{definition}
 
-Defining $\Chs$ abstractly has some conveniences. For example,
+Defining $\Chs(K)$ abstractly has some conveniences. For example, naturality is essentially for free:
 \begin{lemma}\label{lem:chs-functor}
   $\Chs$ is a functor $\BPSet \to \Cat$.
 \end{lemma}
@@ -488,7 +471,7 @@ Objects of $\Chs(K)$ are pairs
 \]
 a cube chain together with a linear ordering of its events.
 The intuition here matches the Salvetti story precisely: we have a wedge map into $K$, coupled with
-orientation info about it. Morphisms are a little uglier. A morphism
+compatible orientation information. Morphisms are a little uglier. A morphism
 \[
   (\bigvee a \to K,\ x \in \Run(\bigvee a)) \longrightarrow (\bigvee b \to K,\ y \in \Run(\bigvee b))
 \]
@@ -522,7 +505,6 @@ Let $N = \Sigma_i a_i = \Sigma_j b_j$. Then define
 and observe that by \Cref{lem:coord-bijective}, $\sigma(f)$ is a composition of bijections, 
 so $\sigma(f) \in \Sigma_n$.
 Also, the form $y_* \circ \sigma(f) = f'_* \circ x_*$ will be convenient.
-\Cref{lem:coord-bijective} the source and target of $f$ have the same number of coordinates.
 This permutation $\sigma(f)$ is what will power our braid functor.
 
 \begin{lemma}\label{lem:sigma-functor}
@@ -530,7 +512,7 @@ $\sigma : \Chs(K) \to \bigsqcup_N \Sigma_N$ is a functor, where the target is th
 objects the naturals and $\Hom(N,N) = \Sigma_N$.
 \end{lemma}
 \begin{proof}
-Along a composite the middle ordering $y_*$ cancels,
+Along a composite, the middle map $y_*$ cancels,
 \[
   \sigma(g \circ f) = z_*^{-1} \circ g'_* \circ f'_* \circ x_*
     = \bigl(z_*^{-1} \circ g'_* \circ y_*\bigr)\bigl(y_*^{-1} \circ f'_* \circ x_*\bigr)
@@ -557,7 +539,7 @@ and
 
   The morphism condition restricts to $x_i = \rho(f_i)(y_j)$ (\Cref{def:blk}), 
   so $\sigma(f) = y_*^{-1} \circ f'_* \circ x_*$ restricts
-  to $(y_j)_*^{-1} \circ (f_i)_* \circ (x_i)_*$, which by \eqref{eq:rho-restrict} is the increasing
+  to $(y_j)_*^{-1} \circ (f_i)_* \circ (x_i)_*$, which is the increasing
   inclusion $[a_i] \to [b_j]$. Both identifications preserve order, so $k < l$ if and only if
   $\sigma(f)(k) < \sigma(f)(l)$.
 \end{proof}
