@@ -3,7 +3,8 @@
 % Provenance markers:
 %   [PZ-bib]  transcribed from the reference list of arXiv:2103.05336, so
 %             authors/journal/volume/pages/DOI are as Paliga--Ziemianski print them.
-%   [VERIFY]  written from memory; check volume/pages/DOI before circulating.
+%
+% Every locator cited in the text has been checked against the source.
 
 % ---------------------------------------------------------------- directed topology
 
@@ -31,120 +32,27 @@
   eprint       = {1901.05206},
 }
 
-% [PZ-bib] Reference [13] of PZ.
-@article{Z1,
-  author       = {Ziemia{\'n}ski, Krzysztof},
-  title        = {Spaces of directed paths on pre-cubical sets},
-  journal      = {Applicable Algebra in Engineering, Communication and Computing},
-  volume       = {28},
-  pages        = {497--525},
-  year         = {2017},
-  doi          = {10.1007/s00200-017-0316-0},
-}
-
-% [PZ-bib] Reference [11] of PZ: the source for "Euclidean cubical complex".
-@article{RZ,
-  author       = {Raussen, Martin and Ziemia{\'n}ski, Krzysztof},
-  title        = {Homology of spaces of directed paths on {E}uclidean cubical complexes},
-  journal      = {Journal of Homotopy and Related Structures},
-  volume       = {9},
-  pages        = {67--84},
-  year         = {2014},
-  doi          = {10.1007/s40062-013-0045-4},
-}
-
-% [PZ-bib] Reference [8] of PZ: the source for "sculpture".
-@inproceedings{Pratt,
-  author       = {Pratt, Vaughan},
-  title        = {Modeling concurrency with geometry},
-  booktitle    = {Proceedings of the 18th {ACM} {SIGPLAN}--{SIGACT} Symposium on
-                  Principles of Programming Languages ({POPL} '91)},
-  pages        = {311--322},
-  year         = {1991},
-}
-
-% [PZ-bib] Reference [10] of PZ.
-@article{Raussen,
-  author       = {Raussen, Martin},
-  title        = {Trace spaces in a pre-cubical complex},
-  journal      = {Topology and its Applications},
-  volume       = {156},
-  number       = {9},
-  pages        = {1718--1728},
-  year         = {2009},
-  doi          = {10.1016/j.topol.2009.02.003},
-}
-
-% [PZ-bib] Reference [1] of PZ.
-@book{FGHMR,
-  author       = {Fajstrup, Lisbeth and Goubault, {\'E}ric and Haucourt, Emmanuel
-                  and Mimram, Samuel and Raussen, Martin},
-  title        = {Directed Algebraic Topology and Concurrency},
-  publisher    = {Springer},
-  year         = {2016},
-}
-
 % ---------------------------------------------------------------- arrangements
 
-% [VERIFY] Invent. Math. 88 (1987), 603--618.
-@article{Salvetti,
-  author       = {Salvetti, Mario},
-  title        = {Topology of the complement of real hyperplanes in $\mathbf{C}^N$},
-  journal      = {Inventiones Mathematicae},
-  volume       = {88},
-  number       = {3},
-  pages        = {603--618},
-  year         = {1987},
-  doi          = {10.1007/BF01391833},
-}
-
-% [VERIFY] The source for the order used on the Salvetti poset here ("the Paris
-% ordering").  Trans. Amer. Math. Soc. 340 (1993), 149--178.
-@article{Paris,
+% Section 3.1 is the construction of the Salvetti complex; it is the source for
+% the definition of the Salvetti poset and the order used here.  Confirmed.
+@online{Paris,
   author       = {Paris, Luis},
-  title        = {Universal cover of {S}alvetti's complex and topology of simplicial
-                  arrangements of hyperplanes},
-  journal      = {Transactions of the American Mathematical Society},
-  volume       = {340},
-  number       = {1},
-  pages        = {149--178},
-  year         = {1993},
-}
-
-% [VERIFY] J. Amer. Math. Soc. 5 (1992), 105--149.
-@article{BjornerZiegler,
-  author       = {Bj{\"o}rner, Anders and Ziegler, G{\"u}nter M.},
-  title        = {Combinatorial stratification of complex arrangements},
-  journal      = {Journal of the American Mathematical Society},
-  volume       = {5},
-  number       = {1},
-  pages        = {105--149},
-  year         = {1992},
-}
-
-% [VERIFY] Cited by the Lean development (Arrangements/Sal.lean) for the exact
-% form of the Salvetti order used here.
-@online{DDP,
-  author       = {Dorpalen-Barry, Galen and Dugger, Daniel and Proudfoot, Nicholas},
-  title        = {Salvetti complexes for conditional oriented matroids},
-  year         = {2025},
+  title        = {$K(\pi,1)$ conjecture for {A}rtin groups},
+  year         = {2012},
   eprinttype   = {arXiv},
-  eprint       = {2507.06365},
+  eprint       = {1211.7339},
+  eprintclass  = {math.GR},
 }
 
 % ---------------------------------------------------------------- braids / Garside
 
-% [VERIFY] Quart. J. Math. Oxford (2) 20 (1969), 235--254.
-@article{Garside,
-  author       = {Garside, F. A.},
-  title        = {The braid group and other groups},
-  journal      = {The Quarterly Journal of Mathematics},
-  volume       = {20},
-  pages        = {235--254},
-  year         = {1969},
-}
-
-% [VERIFY] EMS Tracts in Mathematics 22.  The source for "germ".
+% EMS Tracts in Mathematics 22.  Cited in def:braid for two things, both
+% confirmed: Lem. IX.1.22, that the positive lift of a permutation is well
+% defined and injective (this is what the proofs actually use), and
+% Prop. IX.1.35, that the resulting relations present B_N^+ (the germ
+% presentation, quoted as context only).  Locators are numbered results, so
+% they are stable across the 2014 manuscript and the published edition.
 @book{Garsidebook,
   author       = {Dehornoy, Patrick and Digne, Fran{\c c}ois and Godelle, Eddy
                   and Krammer, Daan and Michel, Jean},
@@ -157,11 +65,10 @@
 
 % ---------------------------------------------------------------- formalisation
 
-% TODO: fill in author and the public repository URL before circulating.
 @software{Cubical,
-  author       = {TODO: author},
+  author       = {Stone, Zachary},
   title        = {Cubical: a {L}ean~4 formalisation of cube chains and their
                   complexification},
   year         = {2026},
-  note         = {TODO: repository URL},
+  url          = {https://github.com/zstone1/Cubical},
 }

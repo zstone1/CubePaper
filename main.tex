@@ -4,9 +4,7 @@
 
 % Previous working title: "Braid Arrangements for Concurrent Programs".
 \title{Complexified Cube Chains and a Braid Invariant of Precubical Sets}
-\author{% TODO: author name(s) and affiliation.  Left blank deliberately ---
-        % do not circulate until this is filled in.
-  }
+\author{Zachary Stone}
 \date{\today}
 
 \begin{document}
@@ -49,7 +47,7 @@ and the values in the vector represent when that event occurred.
 The association of vectors with cube chains is precisely the faces of the braid arrangement.
 The trivialization phenomenon also occurs for hyperplane arrangements.
 However, that literature has a solution: consider analogous hyperplane arrangements in $\C$ instead of $\R$. 
-This results in the Salvetti poset \cite{Salvetti, Paris, BjornerZiegler}, whose elements are 
+This results in the Salvetti poset \cite{Paris}, whose elements are
 pairs of faces and minimal faces refining them.
 Despite discovering neither a suitably generic morse framework, nor a notion of ``complexified precubical sets'',
 the construction of the salvetti complex generalizes well.
@@ -70,7 +68,7 @@ So indeed this circumvents the issue with Euclidean complexes from {\cite[Prop.~
 Furthermore, the braid data can also be extracted directly from morphisms of $\Chs(K)$. 
 No need to pass through Salvetti's theorem or nerves at all. 
 The morphisms contain permutation data that allows us to build braid words in the 
-Garside germ presentation \cite{Garside, Garsidebook}:
+Garside germ presentation \cite{Garsidebook}:
 \begin{theorem}[\Cref{thm:conc}, \Cref{prop:nontrivial}]\label{thm:B}
   For every bipointed precubical set $K$ there is a functor $\Conc : \Chs(K) \to \BraidPos$ into
   the positive braid monoids, sending a morphism to the germ of the permutation by which it
@@ -111,7 +109,7 @@ $\cube{n}$ is bipointed by its initial vertex $(0,\dots,0)$ and final vertex $(1
 write $Z$ for the final object of $\BPSet$.
 
 \begin{convention}
-Named ambient categories are set in bold ($\Cat$, $\Set$, $\Cube$, $\Braid$); constructions applied
+Named ambient categories are set in bold ($\Cat$, $\Set$, $\Cube$, $\BraidPos$); constructions applied
 to an object are set upright ($\Ch(K)$, $\Run(K)$, $\Sal(n)$). Functors are written with $\to$; we
 reserve $\Rightarrow$ for natural transformations. The standard $n$-cube is $\cube{n}$;
 the symbol $\square$ names the category of precubical sets.
@@ -121,7 +119,7 @@ the symbol $\square$ names the category of precubical sets.
 The $\op$ in \Cref{thm:A} is merely an artefact of choices made by different 
 literature we reference. That is, in the cube chain literature 
 \cite{PZ, Z2} a morphism of $\Ch(K)$ runs from a \emph{finer} chain to
-a \emph{coarser}. And in the arrangement literature \cite{Salvetti, Paris} the face
+a \emph{coarser}. And in the arrangement literature \cite{Paris} the face
 order runs from \emph{smaller} faces to \emph{larger} ones. 
 \end{remark}
 
@@ -332,9 +330,9 @@ We give $\Sal(n)$ a partial order structure
 \]
 \end{definition}
 
-This is the order of \cite{Paris}; see \cite{DDP} for the form used in the formalisation.
+This is the order of \cite[\S3.1]{Paris}.
 
-\begin{theorem}[Salvetti \cite{Salvetti}; see also \cite{BjornerZiegler, Paris}]\label{thm:salvetti}
+\begin{theorem}[Salvetti \cite{Paris}]\label{thm:salvetti}
   $|\Sal(n)| \simeq \Conf(n,\C) = \{z \in \C^n : z_i \neq z_j \text{ for } i \neq j\}$. 
   This is the ordered configuration space on $n$ points, as well as the complement of the complexified $A_{n-1}$.
   So $\pi_1|\Sal(n)| \cong P_n$, the pure braid group.
@@ -370,17 +368,24 @@ to produce a precubical notion of tope.
 \end{definition}
 
 \begin{definition}
-  Let $\Run(K)$ be the set of one dimensional chains in $\Ch(K)$.
+  Let $\Run(K)$ be the set\footnote{In lean, we make Run a subcategory of $\Ch(K)$, 
+  so the bijection becomes monoidality explicitly. 
+  This makes no difference to the result.} 
+  of one dimensional chains in $\Ch(K)$.
 \end{definition}
 
 \begin{lemma}\label{lem:run-monoidal}
-  $\Run$ forms a monoidal functor from lists of positive integers to Set
+  Restriction to summands is a bijection $\Run(\bigvee a) \cong \prod_i \Run(\cube{a_i})$.
 \end{lemma}
 \begin{proof}
-  Note that wedge respects one dimensionality, so $\Run(K)$ can also be seen
-  as a full, monoidal subcategory of $\Ch(K)$. 
-  So $\Run$ is the composition of two monoidal functors. 
-  One sending lists of positive integers to $\Wdg$, and the monoidal inclusion $\Wdg \subset \BPSet$
+  Induct on the length of $a$. The empty case is trivial.
+  Now, suppose $\bigvee a = \cube{a_1} \vee \bigvee a'$. 
+  Given runs $f : \bigvee[1^n] \to \cube{a_1}$ and $g : \bigvee[1^m] \to \bigvee a'$, the wedge
+  $f \vee g : \bigvee[1^{n+m}] \to \bigvee a$ is again a run. Conversely, a run
+  $h : \bigvee [1^n] \to \bigvee a$ splits by \Cref{lem:ch-NSL} into chains
+  $h_l : \bigvee c \to \cube{a_1}$ and $h_r : \bigvee d \to \bigvee a'$; since
+  $\bigvee c \vee \bigvee d = \bigvee[1^n]$, every entry of $c$ and $d$ is $1$, so $h_l$ and
+  $h_r$ are runs. The two constructions are mutually inverse.
 \end{proof}
 
 Now, we want a contravariant operation from $\Ch(K)$ to runs, 
@@ -436,7 +441,7 @@ So $\rho$ is a precubical set, and we write $E(\rho) := \Hom_{\pSet}(-, \rho) : 
   \]
 \end{lemma}
 \begin{proof}
-  The left congruence is \Cref{lem:kan-right}. The right is the monoidality of $\Run$. 
+  The left congruence is \Cref{lem:kan-right}. The right is \Cref{lem:run-monoidal}. 
 \end{proof}
 
 We will freely identify $E(\rho)(\bigvee a)$ with $\Run(\bigvee a)$.
@@ -522,18 +527,21 @@ and
   $\blk(x_*(k)) = \blk(x_*(l))$. Then $k < l$ if and only if $\sigma(f)(k) < \sigma(f)(l)$.
 \end{lemma} 
 \begin{proof}
-  Let $i = \blk(x_*(k))$. Then $x \in Run(\bigvee a) \simeq \prod_j \Run(\cube {a_j})$, by \Cref{lem:run-monoidal}.
-  So let $x_i$ be its $i^{\text{th}}$ component.
-  Likewise, let $j = \blk(f')(i)$, and $y_j$ be its $j^{\text{th}}$ component.
+  Let $i = \blk(x_*(k))$, and write $f' : \bigvee a \to \bigvee b$ for the underlying wedge map of $f$.
+  By \Cref{lem:run-monoidal}, $x$ is a tuple of runs, one per summand; let $x_i$ be its
+  $i^{\text{th}}$ component.
+  Likewise, let $j = \blk(f')(i)$, and $y_j$ be the $j^{\text{th}}$ component of $y$.
 
   Now, since $x$ is one dimensional, $\blk \circ x_* = \blk(x)$, which is monotone (\Cref{lem:coord-bijective}). 
-  So $x_*^{-1}(i)$ is an interval, order-isomorphic to the positions
+  So $(\blk \circ x_*)^{-1}(i)$ is an interval, order-isomorphic to the positions
   $[a_i]$ of $x_i$, and likewise for $y$ and $[b_j]$.
 
-  The morphism condition restricts to $x_i = \rho(f_i)(y_j)$ (\Cref{def:blk}), 
-  so $\sigma(f) = y_*^{-1} \circ f'_* \circ x_*$ restricts
-  to $(y_j)_*^{-1} \circ (f_i)_* \circ (x_i)_*$, which is the increasing
-  inclusion $[a_i] \to [b_j]$. Both identifications preserve order, so $k < l$ if and only if
+  The morphism condition restricts to $x_i = \rho(f_i)(y_j)$ (\Cref{def:blk}), so
+  $(x_i)_* = (f_i)_*^{-1} \circ (y_j)_* \circ \iota$ by \eqref{eq:rho-restrict}, where
+  $\iota : [a_i] \to [b_j]$ is the increasing inclusion. Hence
+  $\sigma(f) = y_*^{-1} \circ f'_* \circ x_*$ restricts
+  to $(y_j)_*^{-1} \circ (f_i)_* \circ (x_i)_* = \iota$.
+  Both identifications preserve order, so $k < l$ if and only if
   $\sigma(f)(k) < \sigma(f)(l)$.
 \end{proof}
 
@@ -600,21 +608,31 @@ Now, a morphism $f$ of $\Chs(K)$ has a permutation $\sigma(f)$, and it does not 
 in the sense above.
 So it suffices to consider morphisms $f$ of $\Chs(Z)$. 
 But we still need a device for turning permutations into braid words. 
-Which brings us to the Garside germ presentation of braids \cite{Garside, Garsidebook}. 
+Which brings us to the Garside germ presentation of braids \cite{Garsidebook}. 
 For any $n \in \N$, and $\sigma \in \Sigma_n$ write
 \[
   \Inv(\sigma) := \{\, (i,j) \in [n] \times [n] \mid i < j \text{ and } \sigma(j) < \sigma(i) \,\}
 \]
 for its set of \emph{inversions}, and $\ell(\sigma) := |\Inv(\sigma)|$ for its \emph{length}. 
+
 \begin{definition}\label{def:braid}
-  Let $\BraidPos$ be the category with objects the naturals and $\Hom(N,N) = B_N^+$ the positive
-  braid monoid on $N$ strands in its \emph{germ presentation}: one generator $[\sigma]$ for each
-  $\sigma \in \Sigma_N$, subject to
+  Let $\BraidPos$ be the category with objects the naturals and $\Hom(N,N) = B_N^+$, the positive
+  braid monoid on $N$ strands: generators $\sigma_1, \dots, \sigma_{N-1}$ subject to the braid
+  relations.
+  
+  We want a different presentation: regard $\Sigma_N$ as the Coxeter group of type 
+  $A_{N-1}$, so its Coxeter length is the $\ell$ above. 
+  Sending a reduced word for $\sigma \in \Sigma_N$ to its image in $B_N^+$ gives
+  a well defined, injective map $\sigma \mapsto [\sigma]$, the \emph{positive lift}
+  \cite[Lem.~IX.1.22]{Garsidebook}. If $\ell(\sigma\sigma') = \ell(\sigma) + \ell(\sigma')$, then
+  concatenating reduced words for $\sigma$ and $\sigma'$ gives one for $\sigma\sigma'$, so
   \[
     [\sigma][\sigma'] = [\sigma\sigma'] \qquad\text{whenever}\qquad \ell(\sigma\sigma') = \ell(\sigma) + \ell(\sigma').
   \]
-  Write $\Braid$ for the corresponding category of braid \emph{groups}, $\Hom(N,N) = B_N$; the
-  canonical functor $\BraidPos \to \Braid$ is faithful by Garside's theorem \cite{Garside}.
+  These relations in fact present 
+    \footnote{In the Lean, this fact takes Matsumoto's theorem as an axiom. Instead it defines braids by their germ presentation.} 
+  $B_N^+$, its \emph{germ} presentation 
+  \cite[Prop.~IX.1.35]{Garsidebook}.
 \end{definition}
 
 The key fact is a ``no double crossings'' feature of $\Chs$: along a composite, no two events cross
@@ -645,8 +663,8 @@ Hence the second set contributes $\ell(g)$, and $\ell(g\circ f)=\ell(f)+\ell(g)$
 \end{proof}
 
 \begin{lemma}[crossings are intra-block]\label{lem:inv-restrict}
-Let $g : (\bigvee c, r) \to (\bigvee b, q)$ in $\Chs(Z)$ and $(k,l) \in \Inv(\sigma(g))$. Then
-$(\blk \circ q_* \circ \sigma(g))(k) = (\blk \circ q_* \circ \sigma(g))(l)$.
+Let $g : (\bigvee c \to K, r) \to (\bigvee b\to K, q)$ in $\Chs(K)$ and $(k,l) \in \Inv(\sigma(g))$. 
+Then $(\blk \circ q_* \circ \sigma(g))(k) = (\blk \circ q_* \circ \sigma(g))(l)$.
 \end{lemma}
 \begin{proof}
 Put $u := \sigma(g)(k)$ and $v := \sigma(g)(l)$, and $g' : \bigvee c \to \bigvee b$ be the induced wedge map. 
@@ -674,12 +692,15 @@ $\Inv(\sigma(g)) \subseteq \Inv(\sigma(f) \circ \sigma(g))$
 for composable $g : (\bigvee c, r) \to (\bigvee b, q)$ and $f : (\bigvee b, q) \to (\bigvee a, p)$.
 
 Let $(k,l) \in \Inv(\sigma(g))$ and put $u := \sigma(g)(k)$, $v := \sigma(g)(l)$, so $v < u$. By
-\Cref{lem:inv-restrict} the $(\blk \circ q_*)(u) = (\blk \circ q_*)(v)$, so
+\Cref{lem:inv-restrict}, $(\blk \circ q_*)(u) = (\blk \circ q_*)(v)$, so
 \Cref{lem:within-summand} applied to $f$ turns $v < u$ into $\sigma(f)(v) < \sigma(f)(u)$, which is
-exactly $(k,l) \in \Inv(\sigma(f \circ g)) = \Inv(\sigma(f) \circ \sigma(g))$.
+exactly $(k,l) \in \Inv(\sigma(f \circ g)) = \Inv(\sigma(f) \circ \sigma(g))$, the last equality by
+\Cref{lem:sigma-functor}.
 
-For naturality in $K$, note that $\sigma$ factors through $\Chs(Z)$, so 
-$\Conc(K) = \Conc(Z) \circ \Chs(!_K)$ by \Cref{lem:pullback}.
+For naturality in $K$, note that $\sigma$ factors through $\Chs(Z)$, so
+$\Conc(K) = \Conc(Z) \circ \Chs(!_K)$ by \Cref{lem:pullback}. For a general $u : K \to L$ we have
+$!_L \circ u = !_K$, hence $\Chs(!_L) \circ \Chs(u) = \Chs(!_K)$ and so
+$\Conc(L) \circ \Chs(u) = \Conc(K)$.
 \end{proof}
 
 \begin{proposition}\label{prop:nontrivial}
@@ -731,7 +752,7 @@ $\Conc(K)$ is nontrivial.
         should decompose into a sequence of degree $1$ morphisms. More work is required to 
         see what kinds of properties this has.
 
-  \item\label{item:sensitivity} \textbf{Sensitivity} Using the verified computations in Lean, 
+  \item\label{item:sensitivity} \textbf{Sensitivity.} Using the verified computations in Lean, 
       we have established several features. Firstly, the image of $\Conc$ seems insensitive
       to the topology. Both $\cube 3$ and the boundary of $\cube 3$ (that is, $\cube 3$ without its top 3-cell)
       produce the whole of $P_n$.
