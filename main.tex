@@ -15,7 +15,7 @@
 \begin{abstract}
 Ziemiański's cube chain category $\Ch(K)$ is a combinatorial model for the space of directed paths
 on a precubical set $K$. Paliga and Ziemiański built a braid invariant for precubical sets 
-by observing a relation between $\pi_1|\Ch(Z)|$ and braids, where $Z$ is the termainal precubical set.
+by observing a relation between $\pi_1|\Ch(Z)|$ and braids, where $Z$ is the terminal precubical set.
 However, that invariant trivializes for Euclidean $K$ because $|\Ch(\cube n)|$ is
 contractible \cite[Prop.~6.1]{PZ}.
 Following an analogy from the hyperplane arrangement literature, we build a ``complexified''
@@ -23,7 +23,7 @@ version of $\Ch$, which we call $\Chs$. It does not collapse: in fact
 $\Chs(\cube n) \cong \Sal(n)\op$, the Salvetti poset of the braid arrangement. Salvetti's
 theorem tells us $\pi_1|\Chs(\cube n)|$ is isomorphic to the pure braid group $P_n$.
 The construction of $\Chs$ works by attaching one dimensional refinements to each 
-cube chain in $K$. Futhermore, we associate permutations with each morphism, which give us a 
+cube chain in $K$. Furthermore, we associate permutations with each morphism, which give us a 
 functor $\Conc : \Chs(K) \to \BraidPos$ into the positive braid monoid.
 It is natural in $K$, and non-trivial as long as $K$ contains a 2-cell.
 The construction and the comparison with $\Sal(n)$ are formalized in Lean \cite{Cubical}.
@@ -40,12 +40,12 @@ bipointed precubical set $K$ \cite[Thm.~7.6]{Z2}. Paliga and Ziemiański establi
 equivalence between $|\Ch(Z)|$ and configuration spaces of points in the plane, 
 where $Z$ is the terminal precubical set.
 It extends, by naturality, to an invariant of any precubical set $K$.
-However, it trivializes on any euclidean complex, see {\cite[Prop.~6.1]{PZ}}. 
+However, it trivializes on any Euclidean complex, see {\cite[Prop.~6.1]{PZ}}. 
 The proof is one line: the invariant factors through $|\Ch(\cube n)|$, which is contractible.
 
 The key observation came through an attempt to formalize morse flows for precubical sets.
 Consider the space of ``execution times'' as a vector in $\R^n$, where each coordinate is an event,
-and the values in the vector represent when that event occured.
+and the values in the vector represent when that event occurred.
 The association of vectors with cube chains is precisely the faces of the braid arrangement.
 The trivialization phenomenon also occurs for hyperplane arrangements.
 However, that literature has a solution: consider analogous hyperplane arrangements in $\C$ instead of $\R$. 
@@ -58,7 +58,7 @@ The minimal faces of an arrangement are called chambers or topes.
 In the precubical setting, these correspond to one dimensional cube chains, we call \emph{runs}. 
 So we push this analogy through, and build $\Chs$ as a set of pairs, whose first component is an element of $\Ch$, 
 and second component is a run refining it. The construction $\Chs(K)$ works for any precubical set, and is indeed natural in $K$. 
-Futhermore we find the analogy with hyperplane arrangements is precise for cubes:
+Furthermore we find the analogy with hyperplane arrangements is precise for cubes:
 \begin{theorem}[\Cref{thm:sal}]\label{thm:A}
   For every $n \ge 0$ there is an isomorphism of posets $\Chs(\cube n) \cong \Sal(n)\op$, where
   $\Sal(n)$ is the Salvetti poset of the braid arrangement $A_{n-1}$. Consequently
@@ -66,21 +66,21 @@ Futhermore we find the analogy with hyperplane arrangements is precise for cubes
   on $n$ strands. 
 \end{theorem}
 
-So indeed this circumvents the issue with euclidean complexes from {\cite[Prop.~6.1]{PZ}}.
-Futhermore, the braid data can also be extracted directly from morphisms of $\Chs(K)$. 
+So indeed this circumvents the issue with Euclidean complexes from {\cite[Prop.~6.1]{PZ}}.
+Furthermore, the braid data can also be extracted directly from morphisms of $\Chs(K)$. 
 No need to pass through Salvetti's theorem or nerves at all. 
 The morphisms contain permutation data that allows us to build braid words in the 
-Garside germ presentation \cite{Garide, Garsidebook}:
+Garside germ presentation \cite{Garside, Garsidebook}:
 \begin{theorem}[\Cref{thm:conc}, \Cref{prop:nontrivial}]\label{thm:B}
   For every bipointed precubical set $K$ there is a functor $\Conc : \Chs(K) \to \BraidPos$ into
   the positive braid monoids, sending a morphism to the germ of the permutation by which it
-  reorders events. It is natural in $K$, and it is nontrivial if $K$ contains a 2 cell.
+  reorders events. It is natural in $K$, and it is nontrivial if $K$ contains a 2-cell.
 \end{theorem}
 
 \subsection{Formalisation}
 
 Everything above except the topology is formalised in Lean~4 on top of mathlib \cite{Cubical}.
-It also builds the foundational precubical theory, the neccesary results from \cite{PZ}.
+It also builds the foundational precubical theory, the necessary results from \cite{PZ}.
 Some formalisations are slightly modified from the text, but those deviations are noted.
 It also provides a verified computation for $\Conc$.
 
@@ -168,9 +168,9 @@ We use the following, all from \cite{PZ}.
 \end{lemma}
 
 \begin{lemma}\label{lem:ch-NSL}
-  When $K$ admits altitudes and is NSL, the functor of \Cref{lem:ch-lax} is an isomorphisms of categories,
-  since both categories are skeletal and posets. 
-  This is a easy corrolary of {\cite[Lem.~2.11]{PZ}}
+  When $K$ admits altitudes and is NSL, the functor of \Cref{lem:ch-lax} is an isomorphism of categories,
+  since both categories are skeletal and posets.
+  This is an easy corollary of {\cite[Lem.~2.11]{PZ}}
 \end{lemma}
 
 
@@ -297,7 +297,7 @@ So we build a bit of machinery here to assist.
 \section{The braid arrangement and the Salvetti poset}\label{sec:arrangement}
 
 The construction of $\Chs$ ports the following technique to precubical sets.\footnote{
-  The lean repo uses Conditional Oriented Matriods instead of ordered set partitions to define the braid 
+  The Lean repo uses Conditional Oriented Matroids instead of ordered set partitions to define the braid
   arrangement, but proves they are equivalent
 }
 We describe the technique here, following Paris \cite{Paris}, and build $\Chs$ in the next section.
@@ -320,7 +320,7 @@ The \textbf{Salvetti poset} is
 \[
   \Sal(n) := \bigl\{\, (F, C) \ \bigm|\ F \in \Face(n),\ C \text{ a tope},\ F \leq C \,\bigr\}.
 \]
-To defin e the order on $\Sal$, we first need to define composition. Let $F$ and $G$ be faces, and define $F \circ G$ by
+To define the order on $\Sal$, we first need to define composition. Let $F$ and $G$ be faces, and define $F \circ G$ by
 \[
   i \leq_{F \circ G} j \iff i <_F j \text{ or } \big( i \sim_F j  \text{ and } i \leq_G j \big).
 \]
@@ -377,10 +377,10 @@ to produce a precubical notion of tope.
   $\Run$ forms a monoidal functor from lists of positive integers to Set
 \end{lemma}
 \begin{proof}
-  Note that wedge respects one dimensionality, so $\Run(K)$ is can also be seen 
+  Note that wedge respects one dimensionality, so $\Run(K)$ can also be seen
   as a full, monoidal subcategory of $\Ch(K)$. 
   So $\Run$ is the composition of two monoidal functors. 
-  One sending lists of positive integers to $\Wdg$, and monoidal inclusion inclusion $\Wdg \subset \BPSet$
+  One sending lists of positive integers to $\Wdg$, and the monoidal inclusion $\Wdg \subset \BPSet$
 \end{proof}
 
 Now, we want a contravariant operation from $\Ch(K)$ to runs, 
@@ -391,7 +391,7 @@ mirroring the order from Salvetti:
 We will define a functor $\rho:\Cube\op \to \Set$ which will give us this shape. 
 First, note that every morphism $f : \cube n \to \cube m$ is a face embedding. 
 So has a corresponding projection on cells $\hat{f} : \cube m \to \cube n$.
-Notably, the projection is monotolically decreasing on cell dimension.
+Notably, the projection is monotonically decreasing on cell dimension.
 With that, we can define $\rho$ as follows
 
 \begin{definition}\label{def:rho}
@@ -403,7 +403,7 @@ With that, we can define $\rho$ as follows
     \quad\text{with the } 0\text{-cells deleted}.
   \]
   This is again a run: $\hat f(c_k)$ will preserve exactly $n$ coordinates, giving $n$ cells.
-  The projection preseves boundary maps, so even after deleting 0 cells, it remains a wedge map.
+  The projection preserves boundary maps, so even after deleting 0 cells, it remains a wedge map.
   And $\hat f$ carries $\init$ to $\init$ and $\fin$ to $\fin$.\footnote{
     The lean defines $\rho$ via a slight detour with cube chains instead of wedge maps 
     to avoid some issues with ``Fin''. But the approaches are proven equivalent}
@@ -543,7 +543,7 @@ and
   For every $n \ge 0$ there is an isomorphism of posets $\Chs(\cube n) \cong \Sal(n)\op$.
   Consequently $|\Chs(\cube n)| \simeq \Conf(n,\C)$ and $\pi_1|\Chs(\cube n)| \cong P_n$.
 \end{theorem}
-The proof is straightforward, although a bit tedius. 
+The proof is straightforward, although a bit tedious.
 Start with \Cref{lem:ch-face}. Then send $\Run(\cube n)$ to topes.
 For morphisms, the composition operator agrees with the projection. This is machine-checked in \cite{Cubical}.
 
@@ -683,7 +683,7 @@ $\Conc(K) = \Conc(Z) \circ \Chs(!_K)$ by \Cref{lem:pullback}.
 \end{proof}
 
 \begin{proposition}\label{prop:nontrivial}
-For any precubical set $K$, if there is a 2 cell, then
+For any bipointed precubical set $K$, if $K$ contains a 2-cell, then
 $\Conc(K)$ is nontrivial.
 \end{proposition}
 \begin{proof}
@@ -709,9 +709,10 @@ $\Conc(K)$ is nontrivial.
   This is a morphism of $\Chs(\cube 2)$ from $(\bigvee[1,1] \xrightarrow{f \circ p} \cube 2,\ \id)$ to
   $(\bigvee[2] \xrightarrow{f} \cube 2,\ q)$: the condition $x = \Lines(p)(y)$ is automatic because
   $\Run(\bigvee[1,1])$ is a singleton. Its permutation is
-  \[ 
-    \sigma(p) = q_*^{-1} \circ p_* \circ \id = \{1 \mapsto 2,\ 2 \mapsto 1\}
-  \], because $p$ traverses direction $1$ then direction $2$ while $q$ traverses direction $2$ then direction $1$. 
+  \[
+    \sigma(p) = q_*^{-1} \circ p_* \circ \id = \{1 \mapsto 2,\ 2 \mapsto 1\},
+  \]
+  because $p$ traverses direction $1$ then direction $2$ while $q$ traverses direction $2$ then direction $1$.
   This has an inversion, so $[\sigma(p)]$ is not the identity braid.
 \end{proof}
 
@@ -720,9 +721,10 @@ $\Conc(K)$ is nontrivial.
 \begin{enumerate}
   \item\label{item:geometric} \textbf{What does $|\Chs(K)|$ compute?} It appears that $\Conc$ is 
         a measurement of the concurrency structure of $K$, but it's unclear exactly 
-        what it computes in general. For euclidean complexes, it seems to have a slightly 
-        some slightly less vague semantics, since every strand corresponds to a axis. 
-        While $\Chs(K)$ as much information as $\Ch(K)$, $\Conc$ seems to depend only on the 3-skeleton.
+        what it computes in general. For Euclidean complexes, it seems to have slightly
+        less vague semantics, since every strand corresponds to an axis.
+        While $\Chs(K)$ carries as much information as $\Ch(K)$, $\Conc$ seems to depend only on
+        the 3-skeleton.
 
   \item\label{item:grading} \textbf{A chain complex.} The category $\Chs(K)$ is graded by the shape
         of the wedges: (the sum of the dimensions) $-$ (the length of the list). Each morphism
@@ -730,20 +732,20 @@ $\Conc(K)$ is nontrivial.
         see what kinds of properties this has.
 
   \item\label{item:sensitivity} \textbf{Sensitivity} Using the verified computations in Lean, 
-      we have established several features. Firstly, the image of $\Conc$ seems insenstive
-      to the topology. Both $\cube 3$ and the boundary of $\cube 3$ (that is, $\cube 3$ without it's top 3-cell)
-      produce the whole of $P_n$. 
-      However the kernels of $\Conc$ are quite distinct, so $\Conc$ itself is senstive to the topology.
-      The degree 1 wedges determine which generators occur, and the degree 2 wedges determine which 
-      artin relations are faithful. 
+      we have established several features. Firstly, the image of $\Conc$ seems insensitive
+      to the topology. Both $\cube 3$ and the boundary of $\cube 3$ (that is, $\cube 3$ without its top 3-cell)
+      produce the whole of $P_n$.
+      However the kernels of $\Conc$ are quite distinct, so $\Conc$ itself is sensitive to the topology.
+      The degree 1 wedges determine which generators occur, and the degree 2 wedges determine which
+      Artin relations are faithful.
 
   \item\label{item:subdivision} \textbf{Braid Closures} 
-      When looking at loops in the free groupoid of $\Chs(K)$, it make intuitive sense 
+      When looking at loops in the free groupoid of $\Chs(K)$, it makes intuitive sense
       to consider not just the braid, but the braid closure.
-      This gives us a device for adding new strands to the braids, via the markov move.
+      This gives us a device for adding new strands to the braids, via the Markov move.
       There is also a desire to build something invariant under subdivision, which 
       also adds new strands. Perhaps these goals align?
-      Futhermore, it may give a nice braid theoretic explanation of why only the 3-skeleton occurs,
+      Furthermore, it may give a nice braid theoretic explanation of why only the 3-skeleton occurs,
       as knots are all trivial in codimension 3 and above.
 
 \end{enumerate}
