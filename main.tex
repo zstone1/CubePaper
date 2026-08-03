@@ -23,7 +23,7 @@ theorem tells us $\pi_1|\Chs(\cube n)|$ is isomorphic to the pure braid group $P
 The construction of $\Chs$ works by attaching one dimensional refinements to each 
 cube chain in $K$. Furthermore, we associate permutations with each morphism, which give us a 
 functor $\Conc : \Chs(K) \to \BraidPos$ into the positive braid monoid.
-It is natural in $K$, and non-trivial as long as $K$ contains a 2-cell.
+It is natural in $K$, and not constant as long as $K$ contains a 2-cell.
 The construction and the comparison with $\Sal(n)$ are formalized in Lean \cite{Cubical}.
 \end{abstract}
 
@@ -41,7 +41,7 @@ It extends, by naturality, to an invariant of any precubical set $K$.
 However, it trivializes on any Euclidean complex, see {\cite[Prop.~6.1]{PZ}}. 
 The proof is one line: the invariant factors through $|\Ch(\cube n)|$, which is contractible.
 
-The key observation came through an attempt to formalize morse flows for precubical sets.
+The key observation came through an attempt to formalize Morse flows for precubical sets.
 Consider the space of ``execution times'' as a vector in $\R^n$, where each coordinate is an event,
 and the values in the vector represent when that event occurred.
 The association of vectors with cube chains is precisely the faces of the braid arrangement.
@@ -49,8 +49,8 @@ The trivialization phenomenon also occurs for hyperplane arrangements.
 However, that literature has a solution: consider analogous hyperplane arrangements in $\C$ instead of $\R$. 
 This results in the Salvetti poset \cite{Paris}, whose elements are
 pairs of faces and minimal faces refining them.
-Despite discovering neither a suitably generic morse framework, nor a notion of ``complexified precubical sets'',
-the construction of the salvetti complex generalizes well.
+Despite discovering neither a suitably generic Morse framework, nor a notion of ``complexified precubical sets'',
+the construction of the Salvetti complex generalizes well.
 
 The minimal faces of an arrangement are called chambers or topes.
 In the precubical setting, these correspond to one dimensional cube chains, we call \emph{runs}. 
@@ -72,7 +72,7 @@ Garside germ presentation \cite{Garsidebook}:
 \begin{theorem}[\Cref{thm:conc}, \Cref{prop:nontrivial}]\label{thm:B}
   For every bipointed precubical set $K$ there is a functor $\Conc : \Chs(K) \to \BraidPos$ into
   the positive braid monoids, sending a morphism to the germ of the permutation by which it
-  reorders events. It is natural in $K$, and it is nontrivial if $K$ contains a 2-cell.
+  reorders events. It is natural in $K$, and it is not constant if $K$ contains a 2-cell.
 \end{theorem}
 
 \subsection{Formalisation}
@@ -166,14 +166,14 @@ We use the following, all from \cite{PZ}.
 \end{lemma}
 
 \begin{lemma}\label{lem:ch-NSL}
-  When $K$ admits altitudes and is NSL, the functor of \Cref{lem:ch-lax} is an isomorphism of categories,
+  When $K$ admits altitude and is NSL, the functor of \Cref{lem:ch-lax} is an isomorphism of categories,
   since both categories are skeletal and posets.
-  This is an easy corollary of {\cite[Lem.~2.11]{PZ}}
+  This is an easy corollary of {\cite[Lem.~2.11]{PZ}}.
 \end{lemma}
 
 
 \begin{lemma}\label{lem:wedges-nice}
-  Serial wedges admit altitude and are NSL. And specifically so the
+  Serial wedges admit altitude and are NSL. Specifically, the
   final vertex of $\bigvee a$ has altitude $\sum_i a_i$.
 \end{lemma}
 
@@ -231,7 +231,7 @@ So we build a bit of machinery here to assist.
   By the pushout defining $\bigvee a$, a morphism $f : \bigvee a \to \bigvee b$ 
   is determined by the $a_i \to \bigvee b$.
   But each such image lies in a single $\cube{b_j}$ since $a_i > 0$. 
-  So it corresponds to a order preserving face embedding
+  So it corresponds to an order-preserving face embedding
   \[
     f_i : \cube{a_i} \longrightarrow \cube{b_{\blk(f)(i)}}.
   \]
@@ -296,13 +296,13 @@ So we build a bit of machinery here to assist.
 
 The construction of $\Chs$ ports the following technique to precubical sets.\footnote{
   The Lean repo uses Conditional Oriented Matroids instead of ordered set partitions to define the braid
-  arrangement, but proves they are equivalent
+  arrangement, but proves they are equivalent.
 }
 We describe the technique here, following Paris \cite{Paris}, and build $\Chs$ in the next section.
 
-Let $\Face(n)$ be the set of total preorders on $[n]$. A total preorder $F$,
-induces an equivalence relation $\sim_F$, which are linearly ordered by $<_F$.
-The classes of $\sim_F$ are called blocks, which give an ordered set partition of $[n]$.
+Let $\Face(n)$ be the set of total preorders on $[n]$. A total preorder $F$
+induces an equivalence relation $\sim_F$, whose classes are linearly ordered by $<_F$.
+These classes are called blocks, and they give an ordered set partition of $[n]$.
 Order $\Face(n)$ by
 \[
   F \leq G \quad:=\quad {<_F} \ \subseteq\ {<_G},
@@ -355,12 +355,12 @@ letters.
 
 The first observation that suggests a bridge is feasible here is that
 \begin{lemma}\label{lem:ch-face}
-  $\Ch(\cube n) \cong \Face(n)\op$
+  $\Ch(\cube n) \cong \Face(n)\op$.
 \end{lemma}
 \begin{proof}
 By \Cref{lem:coord-bijective} a chain of $\cube n$ is just an ordered set partition of its
 directions. So the morphism on objects is straightforward. 
-For morphisms, both categories are posets, so it it suffices to prove that this is an order isomorphism.  
+For morphisms, both categories are posets, so it suffices to prove that this is an order isomorphism.  
 This is bookkeeping, which is formalized in Lean.
 A more complete proof will be here in the next draft of this paper.
 \end{proof}
@@ -373,7 +373,7 @@ to produce a precubical notion of tope.
 \end{definition}
 
 \begin{definition}
-  Let $\Run(K)$ be the set\footnote{In lean, we make Run a subcategory of $\Ch(K)$, 
+  Let $\Run(K)$ be the set\footnote{In Lean, we make Run a subcategory of $\Ch(K)$, 
   so the bijection becomes monoidality explicitly. 
   This makes no difference to the result.} 
   of one dimensional chains in $\Ch(K)$.
@@ -415,7 +415,7 @@ With that, we can define $\rho$ as follows
   This is again a run: $\hat f(c_k)$ will preserve exactly $n$ coordinates, giving $n$ cells.
   The projection preserves boundary maps, so even after deleting 0 cells, it remains a wedge map.
   And $\hat f$ carries $\init$ to $\init$ and $\fin$ to $\fin$.\footnote{
-    The lean defines $\rho$ via a slight detour with cube chains instead of wedge maps 
+    The Lean defines $\rho$ via a slight detour with cube chains instead of wedge maps 
     to avoid some issues with ``Fin''. But the approaches are proven equivalent}
 
   In coordinates, $r_*(k)$ is the free direction of $c_k$, so the surviving steps are those in
@@ -466,7 +466,7 @@ a presheaf on $\Ch(K)$, and
 the category of elements of $\Lines(K)$, with projection $\pi : \Chs(K) \to \Ch(K)$.
 \end{definition}
 
-We will see that defining things abstractly can some conveinences later.  
+We will see that defining things abstractly has some conveniences later.  
 But first let us unpack the definition of $\Chs$ to have a more concrete presentation of it.
 Objects of $\Chs(K)$ are pairs
 \[
@@ -488,7 +488,7 @@ unpacks to
 
 The diagram below records the story. The solid arrows are morphisms of $\Chs(K)$; the dashed
 lines are not. $E(\rho)(f)$ is the projection associated with $f$. And $\sigma(f)$ is 
-an induced permutation we will study in the next section
+an induced permutation we will study in the next section.
 \[
 \begin{tikzcd}[row sep=huge, column sep=huge]
   \bigvee[1,\dots,1] \arrow[r, "x"] \arrow[d, perm, "\sigma(f)"']
@@ -754,12 +754,12 @@ $\Conc(K)$ is not constant.
 \section{Next steps}\label{sec:next}
 
 \begin{enumerate}
-  \item\label{item: discrete fibration}
-  So $\Chs$ does resolve the collapse from \cite{PZ}.
-  So one might wonder if we can use the braid on $\Chs$ morphisms to induce braids $\Ch$ morphisms. 
+  \item\label{item:fibration} \textbf{Braids on $\Ch$.}
+  One might then wonder if we can use the braid on $\Chs$ morphisms to induce braids on $\Ch$
+  morphisms.
   Since $\pi$ is a discrete fibration, a morphism of $\Ch(K)$ together with a choice of run on its
-  target does lifts uniquely to $\Chs(K)$, and so acquires a braid word through $\Conc$. 
-  However, That braid genuinely depends on the choice: 
+  target does lift uniquely to $\Chs(K)$, and so acquires a braid word through $\Conc$.
+  However, that braid genuinely depends on the choice:
   in \Cref{prop:nontrivial} the chain morphism $p$ gives the transposition when its target 
   carries the run $q$, and the identity when it carries $p$, so $\Conc$ does not factor through $\pi$. 
   More work is required to understand the relationship between these choices 
