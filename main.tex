@@ -21,11 +21,11 @@ contractible \cite[Prop.~6.1]{PZ}.
 Following an analogy from the hyperplane arrangement literature, we build a ``complexified''
 version of $\Ch$, which we call $\Chs$. It does not collapse: in fact
 $\Chs(\cube n) \cong \Sal(n)\op$, the Salvetti poset of the braid arrangement. Salvetti's
-theorem tells us $\pi_1|\Chs(\cube n)|$ is homotopic to the pure braid group $P_n$.
+theorem tells us $\pi_1|\Chs(\cube n)|$ is isomorphic to the pure braid group $P_n$.
 The construction of $\Chs$ works by attaching one dimensional refinements to each 
 cube chain in $K$. Futhermore, we associate permutations with each morphism, which give us a 
 functor $\Conc : \Chs(K) \to \BraidPos$ into the positive braid monoid.
-It is natural in $K$, and non-trivial as long as $K$ contains a nontrivial chain.
+It is natural in $K$, and non-trivial as long as $K$ contains a 2-cell.
 The construction and the comparison with $\Sal(n)$ are formalized in Lean \cite{Cubical}.
 \end{abstract}
 
@@ -74,7 +74,7 @@ Garside germ presentation \cite{Garide, Garsidebook}:
 \begin{theorem}[\Cref{thm:conc}, \Cref{prop:nontrivial}]\label{thm:B}
   For every bipointed precubical set $K$ there is a functor $\Conc : \Chs(K) \to \BraidPos$ into
   the positive braid monoids, sending a morphism to the germ of the permutation by which it
-  reorders events. It is natural in $K$, and it is nontrivial if there is any not-one-dimensional chain in $K$.
+  reorders events. It is natural in $K$, and it is nontrivial if $K$ contains a 2 cell.
 \end{theorem}
 
 \subsection{Formalisation}
@@ -444,7 +444,8 @@ We will freely identify $E(\rho)(\bigvee a)$ with $\Run(\bigvee a)$.
 \subsection{The construction}
 
 \begin{definition}\label{def:chstar}
-Let $W(K) : \Ch(K) \to \Wdg$ be the forgetful functor $(\bigvee a \to K) \mapsto \bigvee a$. Set
+Let $W(K) : \Ch(K) \to \Wdg$ be the forgetful functor $(\bigvee a \to K) \mapsto \bigvee a$, natural
+in $K$: for $u : K \to L$ we have $W(L) \circ \Ch(u) = W(K)$. Set
 \[
   \Lines(K) := E(\rho) \circ W(K)\op,
 \]
@@ -455,16 +456,8 @@ a presheaf on $\Ch(K)$, and
 the category of elements of $\Lines(K)$, with projection $\pi : \Chs(K) \to \Ch(K)$.
 \end{definition}
 
-Defining $\Chs(K)$ abstractly has some conveniences. For example, naturality is essentially for free:
-\begin{lemma}\label{lem:chs-functor}
-  $\Chs$ is a functor $\BPSet \to \Cat$.
-\end{lemma}
-\begin{proof}
-  For $u : K \to L$ we have $W(L) \circ \Ch(u) = W(K)$, hence $\Lines(L) \circ \Ch(u)\op =
-  \Lines(K)$, which induces $\Chs(u)$ on categories of elements.
-\end{proof}
-
-But let us unpack the definition of $\Chs$ to have a more concrete presentation of it.
+We will see that defining things abstractly can some conveinences later.  
+But first let us unpack the definition of $\Chs$ to have a more concrete presentation of it.
 Objects of $\Chs(K)$ are pairs
 \[
   (\bigvee a \to K,\ x \in \Run(\bigvee a)), \text{ i.e. } \bigvee[1,\dots,1] \to \bigvee a \to K,
@@ -550,7 +543,8 @@ and
   For every $n \ge 0$ there is an isomorphism of posets $\Chs(\cube n) \cong \Sal(n)\op$.
   Consequently $|\Chs(\cube n)| \simeq \Conf(n,\C)$ and $\pi_1|\Chs(\cube n)| \cong P_n$.
 \end{theorem}
-The proof is straightforward. Start with \Cref{lem:ch-face}. Then send $\Run(\cube n)$ to topes.
+The proof is straightforward, although a bit tedius. 
+Start with \Cref{lem:ch-face}. Then send $\Run(\cube n)$ to topes.
 For morphisms, the composition operator agrees with the projection. This is machine-checked in \cite{Cubical}.
 
 \section{The braiding}\label{sec:braiding}
@@ -559,38 +553,42 @@ You'll notice that the $K$ side is not involved in the computation of the permut
 or the proofs of its functoriality. We can formalize why this happens nicely.
 
 \begin{lemma}\label{lem:chs-Z}
-  Let $Z$ be the final precubical set. Then $\Chs(Z) \cong \Wdg/\rho$, the comma category of serial
+  Let $Z$ be the terminal precubical set. 
+  Then $\Ch(Z) \cong \Wdg$ and  $\Chs(Z) \cong \Wdg/\rho$, the comma category of serial
   wedges over $\rho$.
 \end{lemma}
 \begin{proof}
   Since $Z$ is terminal, each serial wedge has exactly one bipointed map to it and every map of
-  wedges commutes over it; so $W(Z) : \Ch(Z) \to \Wdg$ is an isomorphism, and hence
+  wedges commutes over it; so $W(Z) : \Ch(Z) \to \Wdg$ is an isomorphism. Hence
   $\Lines(Z) = E(\rho) \circ W(Z)\op = E(\rho)|_{\Wdg}$. Taking categories of elements,
   $\Chs(Z) = \int \Lines(Z) = \int E(\rho)|_{\Wdg} = \Wdg/\rho$, the last step because the category
   of elements of $\Hom_{\pSet}(-,\rho)$ is the comma category.
 \end{proof}
 
 \begin{lemma}\label{lem:pullback}
-  For every $K$ the square
+  $\Chs$ is a functor $\BPSet \to \Cat$, natural in $K$ in the sense that
+  $\pi : \Chs \Rightarrow \Ch$ is a natural transformation. Moreover, for every $K$ the naturality
+  square at the unique map $!_K : K \to Z$ to the final object,
   \[
   \begin{tikzcd}[column sep=large, row sep=large]
-    \Chs(K) \arrow[r, "\Chs(!_K)"] \arrow[d, "\pi"']
+    \Chs(K) \arrow[r, "\Chs(!_K)"] \arrow[d, "\pi_K"']
       \arrow[dr, phantom, very near start, "\lrcorner"]
-      & \Chs(Z) \arrow[d, "\pi"] \\
-    \Ch(K) \arrow[r, "W(K)"'] & \Wdg
+      & \Chs(Z) \arrow[d, "\pi_Z"] \\
+    \Ch(K) \arrow[r, "\Ch(!_K)"'] & \Ch(Z)
   \end{tikzcd}
   \]
-  is a strict pullback in $\Cat$, where $!_K : K \to Z$ is the unique map to the final object.
+  is a strict pullback in $\Cat$.
 \end{lemma}
 \begin{proof}
-  Take $u = !_K$ in \Cref{lem:chs-functor}. Under the isomorphism $W(Z) : \Ch(Z) \cong \Wdg$ of
-  \Cref{lem:chs-Z} this exhibits $\Lines(K)$ as the restriction of
-  $\Lines(Z) = E(\rho)|_{\Wdg}$ along $W(K)$. The
-  category of elements of a restricted presheaf is the strict pullback of the category of elements
-  along the restricting functor: both $\int \Lines(K)$ and $\Ch(K) \times_{\Wdg} \int \Lines(Z)$
-  have as objects the pairs $(c \in \Ch(K),\ x \in E(\rho)(W(K)c))$, with the same morphisms. Since
-  $\int \Lines(K) = \Chs(K)$ and $\int \Lines(Z) = \Chs(Z)$, that is the square above, and the map
-  it induces on top is the one attached to $u = !_K$, namely $\Chs(!_K)$.
+  For $u : K \to L$, naturality of $W$ gives
+  $\Lines(L) \circ \Ch(u)\op = E(\rho) \circ \bigl(W(L) \circ \Ch(u)\bigr)\op = \Lines(K)$.
+  So $\Chs(u)(c, x) := (\Ch(u)(c),\ x)$, and acts on morphisms via $\Ch(u)$.
+  So we get functoriality and $\pi_L \circ \Chs(u) = \Ch(u) \circ \pi_K$.
+
+  Now take $u = !_K$, so $\Lines(K)$ is the restriction of $\Lines(Z)$ along $\Ch(!_K)$.
+  Restricting a presheaf pulls back its category of elements, strictly: both $\Chs(K)$ and
+  $\Ch(K) \times_{\Ch(Z)} \Chs(Z)$ have as objects the pairs
+  $(c \in \Ch(K),\ x \in \Lines(Z)(\Ch(!_K)c))$, with the same morphisms.
 \end{proof}
 
 Note that $K$ does not appear in the right-hand column: $\Chs(K)$ is determined by $\Ch(K)$
@@ -598,16 +596,16 @@ together with the single universal case $\Chs(Z)$.
 
 \subsection{Braid words from permutations}
 
-But we need a device for building braid words from permutations, which brings us to the Garside
-germ presentation of braids \cite{Garside, Garsidebook}. For $\sigma \in \Sigma_N$ write
+Now, a morphism $f$ of $\Chs(K)$ has a permutation $\sigma(f)$, and it does not depend on $K$ 
+in the sense above.
+So it suffices to consider morphisms $f$ of $\Chs(Z)$. 
+But we still need a device for turning permutations into braid words. 
+Which brings us to the Garside germ presentation of braids \cite{Garside, Garsidebook}. 
+For any $n \in \N$, and $\sigma \in \Sigma_n$ write
 \[
-  \Inv(\sigma) := \{\, (i,j) \in [N] \times [N] \mid i < j \text{ and } \sigma(j) < \sigma(i) \,\}
+  \Inv(\sigma) := \{\, (i,j) \in [n] \times [n] \mid i < j \text{ and } \sigma(j) < \sigma(i) \,\}
 \]
-for its set of \emph{inversions}, and $\ell(\sigma) := |\Inv(\sigma)|$ for its \emph{length}. We
-use the same notation for a bijection between two finite linearly ordered sets, the inversions
-being taken with respect to those orders; the only case needed is a coordinate map
-$f_* : \coprod_i [a_i] \to \coprod_j [b_j]$ with the lexicographic orders of \Cref{def:coord}.
-
+for its set of \emph{inversions}, and $\ell(\sigma) := |\Inv(\sigma)|$ for its \emph{length}. 
 \begin{definition}\label{def:braid}
   Let $\BraidPos$ be the category with objects the naturals and $\Hom(N,N) = B_N^+$ the positive
   braid monoid on $N$ strands in its \emph{germ presentation}: one generator $[\sigma]$ for each
@@ -634,28 +632,25 @@ Every element of $\Inv(g\circ f)$ either lies in $\Inv(f)$ or not, so
 \]
 By hypothesis $\Inv(f)\subseteq \Inv(g\circ f)$, so the first set equals $\Inv(f)$ and contributes $\ell(f)$.
 
-For the second, a pair $(k,l)\notin \Inv(f)$ has $f(k)<f(l)$, and then $(k,l)\in \Inv(g\circ f)$
+For the second, a pair $k < l$ and $(k,l)\notin \Inv(f)$ has $f(k)<f(l)$, and then $(k,l)\in \Inv(g\circ f)$
 iff $g(f(k))>g(f(l))$, i.e. iff $(f(k),f(l))\in \Inv(g)$. Since $f$ is a bijection,
-$(k,l)\mapsto(f(k),f(l))$ restricts to a bijection
+$(p,q)\mapsto(f(p),f(q))$ restricts to a bijection
 \[
   \Inv(g\circ f)\setminus \Inv(f)\ \xrightarrow{\ \sim\ }\ \{(p,q)\in \Inv(g)\;:\;f^{-1}(p)<f^{-1}(q)\}.
 \]
 This target is all of $\Inv(g)$: otherwise take $(p,q)\in \Inv(g)$ and set
-$k=f^{-1}(q)<l=f^{-1}(p)$; then $f(k)=q>p=f(l)$ gives $(k,l)\in \Inv(f)$, while
+$k=f^{-1}(q)<l=f^{-1}(p)$. Then $f(k)=q>p=f(l)$ gives $(k,l)\in \Inv(f)$, while
 $g(f(k))=g(q)<g(p)=g(f(l))$ gives $(k,l)\notin \Inv(g\circ f)$, contradicting $\Inv(f)\subseteq \Inv(g\circ f)$.
 Hence the second set contributes $\ell(g)$, and $\ell(g\circ f)=\ell(f)+\ell(g)$.
 \end{proof}
 
-The two halves of that feature are the following pair, which between them say that crossings happen
-only inside the fibres of $\blk$, and that nothing crosses twice inside a fibre.
-
 \begin{lemma}[crossings are intra-block]\label{lem:inv-restrict}
 Let $g : (\bigvee c, r) \to (\bigvee b, q)$ in $\Chs(Z)$ and $(k,l) \in \Inv(\sigma(g))$. Then
-$\sigma(g)(k)$ and $\sigma(g)(l)$ lie in the same fibre of $\blk \circ q_*$.
+$(\blk \circ q_* \circ \sigma(g))(k) = (\blk \circ q_* \circ \sigma(g))(l)$.
 \end{lemma}
 \begin{proof}
-Put $u := \sigma(g)(k)$ and $v := \sigma(g)(l)$, so $k < l$ and $v < u$. Since
-$q_* \circ \sigma(g) = g'_* \circ r_*$ we have $q_*(u) = g'_*(r_*(k))$ and $q_*(v) = g'_*(r_*(l))$,
+Put $u := \sigma(g)(k)$ and $v := \sigma(g)(l)$, and $g' : \bigvee c \to \bigvee b$ be the induced wedge map. 
+So $k < l$ and $v < u$. Since $q_* \circ \sigma(g) = g'_* \circ r_*$ we have $q_*(u) = g'_*(r_*(k))$ and $q_*(v) = g'_*(r_*(l))$,
 so by \Cref{def:blk} and the monotonicity of $\blk(g')$ and of $\blk \circ r_* = \blk(r)$
 (\Cref{lem:coord-bijective}),
 \[
@@ -679,36 +674,27 @@ $\Inv(\sigma(g)) \subseteq \Inv(\sigma(f) \circ \sigma(g))$
 for composable $g : (\bigvee c, r) \to (\bigvee b, q)$ and $f : (\bigvee b, q) \to (\bigvee a, p)$.
 
 Let $(k,l) \in \Inv(\sigma(g))$ and put $u := \sigma(g)(k)$, $v := \sigma(g)(l)$, so $v < u$. By
-\Cref{lem:inv-restrict} the positions $u$ and $v$ share a fibre of $\blk \circ q_*$, so
+\Cref{lem:inv-restrict} the $(\blk \circ q_*)(u) = (\blk \circ q_*)(v)$, so
 \Cref{lem:within-summand} applied to $f$ turns $v < u$ into $\sigma(f)(v) < \sigma(f)(u)$, which is
-exactly $(k,l) \in \Inv(\sigma(f) \circ \sigma(g))$.
+exactly $(k,l) \in \Inv(\sigma(f \circ g)) = \Inv(\sigma(f) \circ \sigma(g))$.
 
-For naturality in $K$, note that $\sigma$ reads only the underlying wedge data, so
-$\Conc_K = \Conc_Z \circ \Chs(!_K)$ by \Cref{lem:pullback}.
+For naturality in $K$, note that $\sigma$ factors through $\Chs(Z)$, so 
+$\Conc(K) = \Conc(Z) \circ \Chs(!_K)$ by \Cref{lem:pullback}.
 \end{proof}
 
-This looks a bit silly, because all we've done is proven our braid words have no cancellation.
-But that only means we found a nice basis, and in fact it means we're working in the positive braid
-monoid, where by Garside's theorem \cite{Garside} the map $B_N^+ \hookrightarrow B_N$ loses no
-information. We recover the full braiding structure by lifting to the free groupoid.
-
-\begin{definition}\label{def:conc-cat}
-  Let $\Free(\Chs(K))$ be the free groupoid on $\Chs(K)$ --- its localisation at all morphisms ---
-  and let
-  \[
-    \Conc(K) : \Free(\Chs(K)) \longrightarrow \Braid
-  \]
-  be the unique extension of \Cref{thm:conc} along $\Chs(K) \to \Free(\Chs(K))$, which exists
-  because $\Braid$ is a groupoid. We call $\Conc(K)$ --- or, once a component is fixed, the induced
-  homomorphism on vertex groups --- the \emph{concurrency braid} of $K$.
-\end{definition}
-
 \begin{proposition}\label{prop:nontrivial}
-For any precubical set $K$, if there is an $f : \cube{2} \to K$, then
+For any precubical set $K$, if there is a 2 cell, then
 $\Conc(K)$ is nontrivial.
 \end{proposition}
 \begin{proof}
-  It suffices to find a morphism in $\Chs(K)$ whose permutation is not the identity.
+  First, note that if $K$ has a 2-cell, then there is a map $u : \cube 2 \to K$.
+  Then, by naturality 
+  \[
+  \begin{tikzcd}[row sep=large, column sep=large]
+      \Chs(\cube 2)\arrow[d, "\Chs(u)"] \arrow[rd, "\Conc(\cube 2)"] & \\
+      \Chs(K) \arrow[r, "\Conc(K)"'] & \BraidPos
+  \end{tikzcd}
+  \]
   Consider the map $p : \bigvee[1,1] \to \bigvee[2]$ going along the bottom edge and then the right
   edge, and the map $q : \bigvee[1,1] \to \bigvee[2]$ going along the left edge and then the top
   edge. We have
@@ -717,74 +703,49 @@ $\Conc(K)$ is nontrivial.
     \bigvee[1,1] \arrow[r, "\id"] \arrow[d, perm, "\sigma(p)"']
       & \bigvee[1,1] \arrow[d, "p"] \arrow[rd] & \\
     \bigvee[1,1] \arrow[r, "q"']
-      & \bigvee[2] \arrow[r, "f"'] & K
+      & \bigvee[2] \arrow[r, "f"'] & \cube 2
   \end{tikzcd}
   \]
-  This is a morphism of $\Chs(K)$ from $(\bigvee[1,1] \xrightarrow{f \circ p} K,\ \id)$ to
-  $(\bigvee[2] \xrightarrow{f} K,\ q)$: the condition $x = \Lines(p)(y)$ is automatic because
+  This is a morphism of $\Chs(\cube 2)$ from $(\bigvee[1,1] \xrightarrow{f \circ p} \cube 2,\ \id)$ to
+  $(\bigvee[2] \xrightarrow{f} \cube 2,\ q)$: the condition $x = \Lines(p)(y)$ is automatic because
   $\Run(\bigvee[1,1])$ is a singleton. Its permutation is
-  $\sigma(p) = q_*^{-1} \circ p_* \circ \id = \{1 \mapsto 2,\ 2 \mapsto 1\}$, because $p$ traverses
-  direction $1$ then direction $2$ while $q$ traverses direction $2$ then direction $1$. This has an
-  inversion, so $[\sigma(p)]$ is not the identity braid.
+  \[ 
+    \sigma(p) = q_*^{-1} \circ p_* \circ \id = \{1 \mapsto 2,\ 2 \mapsto 1\}
+  \], because $p$ traverses direction $1$ then direction $2$ while $q$ traverses direction $2$ then direction $1$. 
+  This has an inversion, so $[\sigma(p)]$ is not the identity braid.
 \end{proof}
-
-\begin{remark}[Why there is no coherent choice of run]\label{rem:no-section}
-  $\pi : \Chs(K) \to \Ch(K)$ is a discrete fibration, and for a fixed $K$ it may well admit
-  sections. What it does not admit is a family of sections $s_K : \Ch(K) \to \Chs(K)$ natural in
-  $K$ --- and it had better not. Suppose it did. Applying naturality to the unique map $K \to Z$
-  and using \Cref{lem:pullback}, $\Conc \circ s_K$ would equal $G \circ W(K)$ for the single
-  functor $G := \Conc \circ s_Z$ on $\Wdg \cong \Ch(Z)$, so the braid data would be a function of
-  the chain alone. For $K \subseteq \cube n$ that factors through $\Ch(\cube n)$, whose nerve is
-  contractible, and the invariant would die exactly as in
-  TODO: cite. So the content of $\Chs$ is precisely that the run \emph{cannot} be chosen
-  coherently: that incoherence is the braiding. Turning this into a theorem --- fixing the class of
-  $K$ over which naturality is demanded, and the sense in which the resulting invariant is trivial
-  --- is \Cref{sec:next}\eqref{item:no-section}.
-\end{remark}
-
-\begin{remark}[Relation to $IB_n$]\label{rem:vs-IB}
-  Two differences from the invariants of \cite[\S6]{PZ} are worth naming. Theirs is a conjugacy
-  class of homomorphism out of the fundamental group of an execution space, so it needs a basepoint
-  and is only defined up to conjugacy; $\Conc$ is a functor on a category, so it needs neither. And theirs
-  lands in $B_n$, the fundamental group of the \emph{unordered} configuration space, whereas
-  \Cref{thm:sal} places ours over the ordered one. The $\Sigma_n$-quotient relating the two is
-  \Cref{sec:next}\eqref{item:quotient}.
-\end{remark}
 
 \section{Next steps}\label{sec:next}
 
 \begin{enumerate}
-  \item\label{item:geometric} \textbf{What does $|\Chs(K)|$ compute?} What gives $\Ch$ its meaning
-        is \cite[Thm.~7.6]{Z2}: its nerve is the execution space. We have no such statement for
-        $\Chs$ beyond $K = \cube n$, where \Cref{thm:sal} identifies it with a configuration space.
-        Is there a space of ``complexified d-paths'' on $|K|$ whose homotopy type is $|\Chs(K)|$,
-        naturally in $K$? This is the main open question, and much of what follows is downstream of
-        it.
-
-  \item\label{item:quotient} \textbf{Recovering $B_n$.} $\Sigma_n$ acts on $\Sal(n)$ with quotient
-        the Salvetti complex of the unordered arrangement, and the corresponding covering realises
-        $P_n \le B_n$. Carrying this through on the $\Chs$ side should recover the invariants of
-        \cite[\S6]{PZ} as a quotient of ours, making \Cref{rem:vs-IB} precise. The covering and the
-        deck sequence are formalised in \cite{Cubical}.
-
-  \item\label{item:subdivision} \textbf{Subdivision and Markov moves.} The strand count of $\Conc$
-        is $N = \alt(\fin_K)$, the number of events along an execution, so it changes when $K$ is
-        subdivided. This is the same indexing used in \cite[\S6]{PZ}, where the invariant is defined
-        one execution at a time, so it is a feature of the setting rather than of this
-        construction; but it does mean $\Conc$ is an invariant of the cubulation, not of the
-        directed homotopy type. Looking at braid closures instead, we can relate braids with
-        different numbers of strands via the Markov moves. I believe there is a connection to
-        subdividing $K$, but more work is required to formalize this.
+  \item\label{item:geometric} \textbf{What does $|\Chs(K)|$ compute?} It appears that $\Conc$ is 
+        a measurement of the concurrency structure of $K$, but it's unclear exactly 
+        what it computes in general. For euclidean complexes, it seems to have a slightly 
+        some slightly less vague semantics, since every strand corresponds to a axis. 
+        While $\Chs(K)$ as much information as $\Ch(K)$, $\Conc$ seems to depend only on the 3-skeleton.
 
   \item\label{item:grading} \textbf{A chain complex.} The category $\Chs(K)$ is graded by the shape
         of the wedges: (the sum of the dimensions) $-$ (the length of the list). Each morphism
-        should decompose into a sequence of degree $1$ morphisms. I think this is the face relation
-        of a CW complex, but I'm not certain, and I also think there is a sensible boundary map
-        which gives us a chain complex. Unlike the rest of the paper, none of this is formalised.
+        should decompose into a sequence of degree $1$ morphisms. More work is required to 
+        see what kinds of properties this has.
 
-  \item\label{item:examples} \textbf{Examples.} Beyond $\cube n$ and $Z$ nothing is computed. A
-        PV-program example --- the Swiss flag, say --- in which $\Conc$ distinguishes executions
-        would do a lot to substantiate the claim that this is an invariant of concurrent programs.
+  \item\label{item:sensitivity} \textbf{Sensitivity} Using the verified computations in Lean, 
+      we have established several features. Firstly, the image of $\Conc$ seems insenstive
+      to the topology. Both $\cube 3$ and the boundary of $\cube 3$ (that is, $\cube 3$ without it's top 3-cell)
+      produce the whole of $P_n$. 
+      However the kernels of $\Conc$ are quite distinct, so $\Conc$ itself is senstive to the topology.
+      The degree 1 wedges determine which generators occur, and the degree 2 wedges determine which 
+      artin relations are faithful. 
+
+  \item\label{item:subdivision} \textbf{Braid Closures} 
+      When looking at loops in the free groupoid of $\Chs(K)$, it make intuitive sense 
+      to consider not just the braid, but the braid closure.
+      This gives us a device for adding new strands to the braids, via the markov move.
+      There is also a desire to build something invariant under subdivision, which 
+      also adds new strands. Perhaps these goals align?
+      Futhermore, it may give a nice braid theoretic explanation of why only the 3-skeleton occurs,
+      as knots are all trivial in codimension 3 and above.
+
 \end{enumerate}
 
 \printbibliography
