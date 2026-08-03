@@ -357,8 +357,13 @@ The first observation that suggests a bridge is feasible here is that
 \begin{lemma}\label{lem:ch-face}
   $\Ch(\cube n) \cong \Face(n)\op$
 \end{lemma}
+\begin{proof}
 By \Cref{lem:coord-bijective} a chain of $\cube n$ is just an ordered set partition of its
-directions, and a morphism of chains is a refinement. The rest is rote, and formalized in Lean.
+directions. So the morphism on objects is straightforward. 
+For morphisms, both categories are posets, so it it suffices to prove that this is an order isomorphism.  
+This is bookkeeping, which is formalized in Lean.
+A more complete proof will be here in the next draft of this paper.
+\end{proof}
 But, to establish an analogy that works for any precubical set, we need 
 to produce a precubical notion of tope. 
 \subsection{Runs}
@@ -551,9 +556,17 @@ and
   For every $n \ge 0$ there is an isomorphism of posets $\Chs(\cube n) \cong \Sal(n)\op$.
   Consequently $|\Chs(\cube n)| \simeq \Conf(n,\C)$ and $\pi_1|\Chs(\cube n)| \cong P_n$.
 \end{theorem}
-The proof is straightforward, although a bit tedious.
-Start with \Cref{lem:ch-face}. Then send $\Run(\cube n)$ to topes.
-For morphisms, the composition operator agrees with the projection. This is machine-checked in \cite{Cubical}.
+\begin{proof}
+The equivalance on objects is in two parts, since the elements are pairs.
+The first part is just \Cref{lem:ch-face}. 
+The second part observes that \Cref{lem:ch-face} implies their minimal elements 
+agree.
+For morphisms, both categories are posets, so it suffies to prove the bijection 
+is an order isomorphism.
+This happens because the projection in $\rho$ agrees with the composition operator.
+This is machine-checked in \cite{Cubical}.
+This will also get a more complete proof in the next draft of this paper.
+\end{proof}
 
 \section{The braiding}\label{sec:braiding}
 
@@ -705,7 +718,7 @@ $\Conc(L) \circ \Chs(u) = \Conc(K)$.
 
 \begin{proposition}\label{prop:nontrivial}
 For any bipointed precubical set $K$, if $K$ contains a 2-cell, then
-$\Conc(K)$ is nontrivial.
+$\Conc(K)$ is not constant.
 \end{proposition}
 \begin{proof}
   First, note that if $K$ has a 2-cell, then there is a map $u : \cube 2 \to K$.
@@ -737,9 +750,21 @@ $\Conc(K)$ is nontrivial.
   This has an inversion, so $[\sigma(p)]$ is not the identity braid.
 \end{proof}
 
+
 \section{Next steps}\label{sec:next}
 
 \begin{enumerate}
+  \item\label{item: discrete fibration}
+  So $\Chs$ does resolve the collapse from \cite{PZ}.
+  So one might wonder if we can use the braid on $\Chs$ morphisms to induce braids $\Ch$ morphisms. 
+  Since $\pi$ is a discrete fibration, a morphism of $\Ch(K)$ together with a choice of run on its
+  target does lifts uniquely to $\Chs(K)$, and so acquires a braid word through $\Conc$. 
+  However, That braid genuinely depends on the choice: 
+  in \Cref{prop:nontrivial} the chain morphism $p$ gives the transposition when its target 
+  carries the run $q$, and the identity when it carries $p$, so $\Conc$ does not factor through $\pi$. 
+  More work is required to understand the relationship between these choices 
+  and the braids we get for $\Ch(K)$.
+  
   \item\label{item:geometric} \textbf{What does $|\Chs(K)|$ compute?} It appears that $\Conc$ is 
         a measurement of the concurrency structure of $K$, but it's unclear exactly 
         what it computes in general. For Euclidean complexes, it seems to have slightly
