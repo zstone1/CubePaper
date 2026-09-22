@@ -64,8 +64,8 @@ of these forms.
   \draw[ar] (1.60,-0.42) -- (2.75,-1.35); \draw[ar] (6.45,-1.35) -- (7.60,-0.42);
   \IconSqSq{(1.35,1.45)}{-1}   \IconSqSq{(7.85,1.45)}{1}
   \IconSqSq{(1.35,-1.45)}{1}   \IconSqSq{(7.85,-1.45)}{-1}
-  \node[gen] at (1.35,1.95)  {$\sigma_i$};  \node[gen] at (7.85,1.95)  {$\sigma_j$};
-  \node[gen] at (1.35,-1.95) {$\sigma_j$};  \node[gen] at (7.85,-1.95) {$\sigma_i$};
+  \node[gen] at (1.35,1.95)  {$\sigma_1$};  \node[gen] at (7.85,1.95)  {$\sigma_3$};
+  \node[gen] at (1.35,-1.95) {$\sigma_3$};  \node[gen] at (7.85,-1.95) {$\sigma_1$};
   \draw[twocell] (4.6,0.62) -- (4.6,-0.62);
   \IconSqSqBoth{(5.50,0)}
   \node[wd] at (0,-0.62)   {$\bot_e = 1234$};
@@ -75,7 +75,7 @@ of these forms.
 \caption{The four runs over the degree-two chain $e = \bigvee[2,2]$. 
 Each arrow is decorated with the square that witnesses the reordering. 
 And each node is decorated with the degree 0 refinement's permutation.
-So the 2 cell attaches $\sigma_j\sigma_i \to \sigma_i \sigma_j$.
+So the 2 cell attaches $\sigma_1\sigma_3 \to \sigma_3 \sigma_1$.
 }
 \label{fig:species-sq}
 \end{figure}
@@ -305,9 +305,6 @@ intervals (\Cref{conv:events}).
   blocks (\Cref{prop:coords}).
 \end{definition}
 
-The second clause says that the complement of $R$ satisfies the first, so the biclosed sets are
-closed under complementation.
-
 \begin{definition}\label{def:crossings}
   A map of serial wedges $f : \bigvee a \to \bigvee b$ \textbf{crosses}
   \[
@@ -412,8 +409,7 @@ set of squares $(p,q)$ of $d$ with $q <_x p$.
 \end{proof}
 
 \begin{theorem}\label{thm:structure}
-  $x \mapsto \Cross(x)$ is a bijection from $\RunOver(d)$ onto the biclosed subsets of $\Sq(d)$,
-  and reversing the order on every block complements $\Cross$.
+  $x \mapsto \Cross(x)$ is a bijection from $\RunOver(d)$ onto the biclosed subsets of $\Sq(d)$.
 \end{theorem}
 \begin{proof}
   Both the statement and biclosedness are local to a block, by \Cref{lem:firing-blocks}; fix one
@@ -651,7 +647,9 @@ $\bot_\alpha\op$, we may set
 \begin{lemma}\label{lem:telescope}
   Let $d$ be a chain and $z \in \RunOver(d)$. Every path from $\bot_d$ to $z$ in
   $\mathrm{Hasse}(\RunOver(d))$ reads, under $E_K \circ \gamma$, as
-  $Q(z\op) \circ Q(\bot_d\op)\inv$.
+  $Q(z\op) \circ Q(\bot_d\op)\inv$. In particular the two words of a $2$-cell $e$ are paths from
+  $\bot_e$ to $\top_e$ (\Cref{prop:polygon}), so they have the same image and $E_K$ extends to a
+  functor $\pres{\Art(K)} \to \Br(K)$ by \Cref{prop:present-univ}(i).
 \end{lemma}
 \begin{proof}
   Induct on the length of the path, the empty path reading as the identity. For a cover
@@ -666,14 +664,6 @@ $\bot_\alpha\op$, we may set
   cancel, leaving $Q(\top_\beta\op)Q(q\op)Q(\bot_d\op)\inv = Q(y\op)Q(\bot_d\op)\inv$.
 \end{proof}
 
-\begin{corollary}\label{cor:E}
-  The two words of a $2$-cell have the same image under $E_K \circ \gamma$, so $E_K$ extends to a
-  functor $E_K : \pres{\Art(K)} \to \Br(K)$.
-\end{corollary}
-\begin{proof}
-  Both words are paths from $\bot_e$ to $\top_e$ (\Cref{prop:polygon}), so both read as
-  $Q(\top_e\op)Q(\bot_e\op)\inv$ (\Cref{lem:telescope}); apply \Cref{prop:present-univ}(i).
-\end{proof}
 
 \begin{definition}\label{def:theta}
   Let $\Theta_K : \Ch(K)\op \to \pres{\Art(K)}$ be given by $\Theta_K(d) := \dom\bot_d$ and, for a
