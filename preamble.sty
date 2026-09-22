@@ -245,21 +245,24 @@
     \draw[rt] (-2.9,0)--(-2,0)--(-1,#2)--(0,0)--(1,#3)--(2,0)--(2.9,0);
   \end{scope}}
 % A run of \bigvee[3]: the block drawn as a cube, initial vertex at the near
-% bottom left and final vertex at the far top right, the run the monotone edge
-% path between them.  #1 shift; #2, #3 name the two intermediate vertices,
-% from  x, y, z  (one axis used) and  xy, xz, yz  (two).
+% bottom left and final vertex at the far top right, with the edges of the
+% chain before and after it as a tail and a tip, so the block is visibly one
+% bead of a chain.  #1 shift; #2, #3 name the two intermediate vertices of the
+% run, from  x, y, z  (one axis used) and  xy, xz, yz  (two).
 \newcommand{\PanelCube}[3]{%
   \begin{scope}[shift={#1}, scale=0.85]
-    \coordinate (o)   at (-0.76,-0.76);
-    \coordinate (x)   at ( 0.24,-0.76);
-    \coordinate (y)   at (-0.24,-0.26);
-    \coordinate (z)   at (-0.76, 0.26);
-    \coordinate (xy)  at ( 0.76,-0.26);
-    \coordinate (xz)  at ( 0.24, 0.26);
-    \coordinate (yz)  at (-0.24, 0.76);
-    \coordinate (xyz) at ( 0.76, 0.76);
-    \draw[te] (o)--(x) (o)--(z) (x)--(xy) (x)--(xz) (z)--(xz) (z)--(yz)
-              (xy)--(xyz) (xz)--(xyz) (yz)--(xyz);
+    \coordinate (o)    at (-0.76,-0.76);
+    \coordinate (x)    at ( 0.24,-0.76);
+    \coordinate (y)    at (-0.24,-0.26);
+    \coordinate (z)    at (-0.76, 0.26);
+    \coordinate (xy)   at ( 0.76,-0.26);
+    \coordinate (xz)   at ( 0.24, 0.26);
+    \coordinate (yz)   at (-0.24, 0.76);
+    \coordinate (xyz)  at ( 0.76, 0.76);
+    \coordinate (tail) at (-1.46,-0.76);
+    \coordinate (tip)  at ( 1.46, 0.76);
+    \draw[te] (tail)--(o) (o)--(x) (o)--(z) (x)--(xy) (x)--(xz) (z)--(xz)
+              (z)--(yz) (xy)--(xyz) (xz)--(xyz) (yz)--(xyz) (xyz)--(tip);
     \draw[te, densely dashed] (o)--(y) (y)--(xy) (y)--(yz);
-    \draw[rt] (o)--(#2)--(#3)--(xyz);
+    \draw[rt] (tail)--(o)--(#2)--(#3)--(xyz)--(tip);
   \end{scope}}
