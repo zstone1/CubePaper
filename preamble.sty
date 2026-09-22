@@ -185,22 +185,23 @@
 }
 
 % --- mainv2: squares, runs over a chain, polygraphs ----------------------
-% The second paper localises \Ch(K) at the order-preserving refinements and
-% presents the result.  Events of a shape on N are identified with [N], so the
-% shape enters only through its block map \blk; that keeps the vocabulary to:
+% Events of a shape on N are identified with [N], so a shape is an interval
+% partition of [N] and enters only through its block map \blk.  Vocabulary:
 %
-%   \blk    the block an event lies in     \Sq(d)  the squares of a chain
-%   \Cross  the squares a map crosses      \Steps  the steps of a run over d
-%   \Cell_n the n-cells                    \Pgraph(K) the paper polygraph
-%   \pres{P} the category P presents       \dom    the source of an arrow
+%   \blk    the block an event lies in     \Sq(d)   the squares of a chain
+%   \Cross  the squares a map crosses      \Steps   the steps of a run over d
+%   \Cell_n the n-cells                    \Art(K)  the Artin polygraph of K
+%   \pres{P} the category P presents       \ArtBraid  Artin's braid polygraph
+%   \dom    the source of an arrow
 %
-% The only decorations are \bot_d, \top_d (least and greatest in a poset) and
-% x^s (the flip of x at s).  Nothing else is decorated: no bars, no sharps.
+% The only decorations are \bot_d, \top_d (least/greatest in a poset) and x^s
+% (the flip of x at s).  No bars, no sharps, no flats.
 \DeclareMathOperator{\Ev}{Ev}
 \DeclareMathOperator{\Sq}{Sq}
 \DeclareMathOperator{\Cross}{Cr}
 \DeclareMathOperator{\Steps}{St}
 \DeclareMathOperator{\Cell}{Cell}
+\DeclareMathOperator{\Art}{Art}
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\pos}{pos}
 \DeclareMathOperator{\cut}{cut}
@@ -208,9 +209,18 @@
 \DeclareMathOperator{\src}{src}
 \DeclareMathOperator{\tgt}{tgt}
 \newcommand{\RunOver}{\mathcal{R}}              % runs over a chain
-\newcommand{\Pgraph}{\mathcal{P}}               % the paper polygraph
+\newcommand{\Pg}{\mathcal{P}}                   % a generic 2-polygraph
+\newcommand{\ArtBraid}{\mathcal{A}}             % Artin's braid polygraph
 \newcommand{\Polygraph}{\mathbf{Poly}}          % the category of 2-polygraphs
 \newcommand{\pres}[1]{\left\langle #1 \right\rangle}
 \newcommand{\symdiff}{\mathbin{\triangle}}
 % \BraidPos already carries a superscript, so its opposite needs its own name.
 \newcommand{\BraidPosOp}{\mathbf{Braid}^{+,\mathrm{op}}}
+
+% --- Drafting -----------------------------------------------------------
+% \gap{...} marks prose that is still to be written, and says what the
+% paragraph has to communicate.  Grep for "\gap{" to find them all; delete
+% this macro's body to typeset a clean copy.
+\newcommand{\gap}[1]{%
+  \par\smallskip\noindent
+  \textcolor{BrickRed}{$\blacktriangleright$ \textit{#1}}\par\smallskip}
