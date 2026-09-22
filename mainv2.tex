@@ -294,7 +294,10 @@ intervals (\Cref{conv:events}).
 \begin{definition}\label{def:squares}
   A \textbf{square} of $a$ is a pair $s = (p,q)$ of events with $p < q$ and $\blk(p) = \blk(q)$;
   write $\Sq(a)$ for the set of them, so $|\Sq(a)| = \sum_i \binom{a_i}{2}$. A set
-  $R \subseteq \Sq(a)$ is \textbf{biclosed} when for all events $p<q<r$ of one block,
+  $R \subseteq \Sq(a)$ orients the complete graph on each block: send $(p,q)$ to the edge
+  $q \to p$ when $(p,q) \in R$, and to $p \to q$ otherwise. Call $R$ \textbf{biclosed} when no
+  block's tournament has a directed $3$-cycle. On a triple $p<q<r$ of one block the two cycles are
+  $p \to r \to q \to p$ and $p \to q \to r \to p$, so this says
   \[
     (p,q) \in R \text{ and } (q,r) \in R \implies (p,r) \in R,
     \qquad
@@ -306,25 +309,27 @@ intervals (\Cref{conv:events}).
 \end{definition}
 
 \begin{definition}\label{def:crossings}
-  A map of serial wedges $f : \bigvee a \to \bigvee b$ \textbf{crosses}
+  The \textbf{crossings} of a map of serial wedges $f : \bigvee a \to \bigvee b$ are the inversions
+  of the relabelling it performs:
   \[
-    \Cross(f) \;:=\; \bigl\{\, (p,q) \in \Sq(b) \;:\;
-      \blk_a\bigl(f_*\inv q\bigr) < \blk_a\bigl(f_*\inv p\bigr) \,\bigr\} ,
+    \Cross(f) \;:=\; \bigl\{\, (p,q) \;:\; p < q \text{ and } f_*\inv(q) < f_*\inv(p) \,\bigr\} .
   \]
-  the squares of $b$ whose second event $f$ brings from a strictly earlier block of $a$ than its
-  first.
 \end{definition}
 
 \begin{lemma}\label{lem:sq-range}
-  A square $(p,q)$ of $b$ lies in the image of $f_*$ if and only if $f_*\inv p$ and $f_*\inv q$ lie
-  in one block of $a$. For events $u,v$ of $b$ in distinct blocks,
-  $\blk_a(f_*\inv u) < \blk_a(f_*\inv v)$ if and only if $\blk_b(u) < \blk_b(v)$.
+  The map $f_*\inv$ preserves the order of any two events lying in distinct blocks of $b$. Hence
+  $\Cross(f) \subseteq \Sq(b)$: the two events of a crossing share a block, so no squareness
+  condition need be imposed. Moreover a square $(p,q)$ of $b$ lies in the image of $f_*$ if and
+  only if $f_*\inv p$ and $f_*\inv q$ lie in one block of $a$.
 \end{lemma}
 \begin{proof}
-  A square in the image pulls back to a square, whose events share a block; conversely if the two
+  Let $u < v$ lie in distinct blocks of $b$, so $\blk_b(u) < \blk_b(v)$, and put $w = f_*\inv u$,
+  $w' = f_*\inv v$. Then \eqref{eq:blk-coord} gives $\blk(f)(\blk_a w) < \blk(f)(\blk_a w')$, so
+  $\blk_a(w) < \blk_a(w')$ as $\blk(f)$ is monotone, so $w < w'$ as blocks are intervals. An
+  inversion of $f_*\inv$ therefore has both events in one block of $b$. For the last claim, a
+  square in the image pulls back to a square, whose events share a block; conversely if the two
   preimages share a block then, $f_*$ being increasing there, they form a square mapping to
-  $(p,q)$. The second claim is \eqref{eq:blk-coord} with $\blk(f)$ monotone, read in both
-  directions, the two blocks being distinct.
+  $(p,q)$.
 \end{proof}
 
 \begin{lemma}\label{lem:cocycle}
@@ -358,16 +363,8 @@ intervals (\Cref{conv:events}).
   it descends to $\Br(u) : \Br(K) \to \Br(L)$, strictly functorially in $u$.
 \end{proposition}
 \begin{proof}
-  If $f_* = \id$ and $(p,q)$ is a square of $b$, then
-  $\blk(f)(\blk_a p) = \blk_b(p) = \blk_b(q) = \blk(f)(\blk_a q)$ by \eqref{eq:blk-coord}, while
-  $p<q$ and $\blk_a$ monotone give $\blk_a(p) \le \blk_a(q)$; so $(p,q) \notin \Cross(f)$.
-
-  Conversely let $\Cross(f) = \emptyset$ and $p < q$ in $[N]$. If $\blk_a(p) = \blk_a(q)$ then
-  $f_*p < f_*q$, as $f_*$ is increasing on blocks. If $\blk_a(p) < \blk_a(q)$ then
-  $\blk_b(f_*p) \le \blk_b(f_*q)$ by \eqref{eq:blk-coord}, so $f_*q < f_*p$ would force both into
-  one block of $b$, making $(f_*q, f_*p)$ a square crossed by $f$. So $f_*$ is monotone, hence the
-  identity.
-
+  A permutation with no inversions is the identity, and $\Cross(f)$ is the inversion set of
+  $f_*\inv$, so $\Cross(f) = \emptyset$ if and only if $f_*\inv = \id$, that is $f_* = \id$.
   The consequences follow: the second from \Cref{lem:cocycle} with $g_*$ injective, the third
   because $f_*$ determines $f$ (\Cref{prop:coords}), and the last because $\Ch(u)$ changes neither
   shape nor wedge map, with the descent given by \Cref{prop:loc}.
@@ -395,7 +392,7 @@ Fix $K$, and let $d$ be a chain of $K$ on $N$ events.
 
 A refinement out of a run is determined by its map of wedges, the classifying map of the source
 being forced; so $\RunOver(d)$ is the set of runs of the wedge $\bigvee a$, and $\Cross(x)$ is the
-set of squares $(p,q)$ of $d$ with $q <_x p$.
+inversion set of the firing order.
 
 \begin{lemma}\label{lem:firing-blocks}
   A run over $d$ fires the blocks of $d$ in order: $\blk(p) < \blk(q)$ implies $p <_x q$. So $x$ is
@@ -412,12 +409,11 @@ set of squares $(p,q)$ of $d$ with $q <_x p$.
   $x \mapsto \Cross(x)$ is a bijection from $\RunOver(d)$ onto the biclosed subsets of $\Sq(d)$.
 \end{theorem}
 \begin{proof}
-  Both the statement and biclosedness are local to a block, by \Cref{lem:firing-blocks}; fix one
-  and let $\prec$ be a linear order on it. Then $\Cross(\prec) = \{(p,q) : p<q,\ q \prec p\}$ is
-  its inversion set, and $\prec$ is recovered from a set $R$ by declaring $p \prec q$ when either
-  $p<q$ and $(p,q) \notin R$, or $q<p$ and $(q,p) \in R$. So the map is injective, and its image is
-  the set of $R$ for which that recipe is transitive, totality being automatic. Transitivity can
-  fail only on a triple $p<q<r$, where the cases to check are the two biclosedness clauses.
+  Both sides are local to a block (\Cref{lem:firing-blocks}), so fix one. A run restricts there to
+  a linear order; its tournament is that order, which has no cycle at all, and $\Cross$ restricts
+  to its inversion set. Conversely a biclosed $R$ gives a tournament with no $3$-cycle, hence a
+  transitive one --- if $p \to q$ and $q \to r$ then $r \to p$ would close a $3$-cycle --- and a
+  transitive tournament is a linear order, whose inversion set is $R$.
 \end{proof}
 
 \gap{Note that for a single block this is the classical description of inversion sets, and that
