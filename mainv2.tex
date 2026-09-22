@@ -539,53 +539,67 @@ spans, and a $0$-cell is a run.}
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}[
-  >=Stealth,
-  run/.style = {font=\small, inner sep=1pt},
-  gen/.style = {font=\scriptsize, inner sep=2pt},
-  ext/.style = {font=\scriptsize, inner sep=1pt}]
+  vtx/.style  = {circle, fill=black, inner sep=1.1pt},
+  wd/.style   = {font=\scriptsize, inner sep=2.5pt},
+  gen/.style  = {font=\scriptsize, inner sep=2pt},
+  route/.style= {line width=1.7pt, line cap=round},
+  alt/.style  = {line width=0.6pt, black!50},
+  stub/.style = {line width=0.6pt, black!35, dotted}]
 
-  % two blocks of dimension two
-  \node[run] (a0) at (0,0)      {$1234$};
-  \node[run] (a1) at (1.75,0.95){$2134$};
-  \node[run] (a2) at (1.75,-0.95){$1243$};
-  \node[run] (a3) at (3.5,0)    {$2143$};
-  \draw[->, very thick] (a0) -- node[gen, above left]  {$\sigma_1$} (a1);
-  \draw[->, very thick] (a1) -- node[gen, above right] {$\sigma_3$} (a3);
-  \draw[->, dashed]     (a0) -- node[gen, below left]  {$\sigma_3$} (a2);
-  \draw[->, dashed]     (a2) -- node[gen, below right] {$\sigma_1$} (a3);
-  \node[ext] at (-0.75,0) {$\bot_e$};
-  \node[ext] at (4.25,0)  {$\top_e$};
-  \node[font=\small] at (1.75,-1.85) {$e = \bigvee[2,2]$};
+  %%% (a) two blocks of dimension two: a diamond
+  \node[vtx] (aL) at (0,0)       {};
+  \node[vtx] (aT) at (1.6,0.85)  {};
+  \node[vtx] (aB) at (1.6,-0.85) {};
+  \node[vtx] (aR) at (3.2,0)     {};
+  \draw[stub] (-1.3,0) -- (aL);
+  \draw[stub] (aR) -- (4.5,0);
+  \draw[route] (aL) -- node[gen, above] {$\sigma_1$} (aT);
+  \draw[route] (aT) -- node[gen, above] {$\sigma_3$} (aR);
+  \draw[alt]   (aL) -- node[gen, below] {$\sigma_3$} (aB);
+  \draw[alt]   (aB) -- node[gen, below] {$\sigma_1$} (aR);
+  \node[wd, above=1pt] at (aT) {$2134$};
+  \node[wd, below=1pt] at (aB) {$1243$};
+  \node[wd] at (-0.62,-0.34) {$\bot_e = 1234$};
+  \node[wd] at (3.86,-0.34)  {$2143 = \top_e$};
+  \node[font=\small] at (1.6,-2.05) {(a)\quad $e = \bigvee[2,2]$};
 
-  % one block of dimension three
-  \begin{scope}[xshift=6.6cm]
-    \node[run] (b0) at (0,0)      {$123$};
-    \node[run] (b1) at (1.35,0.95){$213$};
-    \node[run] (b2) at (3.25,0.95){$231$};
-    \node[run] (b3) at (4.6,0)    {$321$};
-    \node[run] (b4) at (3.25,-0.95){$312$};
-    \node[run] (b5) at (1.35,-0.95){$132$};
-    \draw[->, very thick] (b0) -- node[gen, above left]  {$\sigma_1$} (b1);
-    \draw[->, very thick] (b1) -- node[gen, above]       {$\sigma_2$} (b2);
-    \draw[->, very thick] (b2) -- node[gen, above right] {$\sigma_1$} (b3);
-    \draw[->, dashed]     (b0) -- node[gen, below left]  {$\sigma_2$} (b5);
-    \draw[->, dashed]     (b5) -- node[gen, below]       {$\sigma_1$} (b4);
-    \draw[->, dashed]     (b4) -- node[gen, below right] {$\sigma_2$} (b3);
-    \node[ext] at (-0.7,0)  {$\bot_e$};
-    \node[ext] at (5.3,0)   {$\top_e$};
-    \node[font=\small] at (2.3,-1.85) {$e = \bigvee[3]$};
+  %%% (b) one block of dimension three: a hexagon
+  \begin{scope}[xshift=7.4cm]
+    \node[vtx] (bL)  at (0,0)        {};
+    \node[vtx] (bUL) at (1.25,0.85)  {};
+    \node[vtx] (bUR) at (3.0,0.85)   {};
+    \node[vtx] (bR)  at (4.25,0)     {};
+    \node[vtx] (bLR) at (3.0,-0.85)  {};
+    \node[vtx] (bLL) at (1.25,-0.85) {};
+    \draw[stub] (-1.3,0) -- (bL);
+    \draw[stub] (bR) -- (5.55,0);
+    \draw[route] (bL)  -- node[gen, above] {$\sigma_1$} (bUL);
+    \draw[route] (bUL) -- node[gen, above] {$\sigma_2$} (bUR);
+    \draw[route] (bUR) -- node[gen, above] {$\sigma_1$} (bR);
+    \draw[alt]   (bL)  -- node[gen, below] {$\sigma_2$} (bLL);
+    \draw[alt]   (bLL) -- node[gen, below] {$\sigma_1$} (bLR);
+    \draw[alt]   (bLR) -- node[gen, below] {$\sigma_2$} (bR);
+    \node[wd, above=1pt] at (bUL) {$213$};
+    \node[wd, above=1pt] at (bUR) {$231$};
+    \node[wd, below=1pt] at (bLL) {$132$};
+    \node[wd, below=1pt] at (bLR) {$312$};
+    \node[wd] at (-0.60,-0.34) {$\bot_e = 123$};
+    \node[wd] at (4.86,-0.34)  {$321 = \top_e$};
+    \node[font=\small] at (2.12,-2.05) {(b)\quad $e = \bigvee[3]$};
   \end{scope}
 \end{tikzpicture}
-\caption{The poset $\RunOver(e)$ for the two species of degree-two chain
-(\Cref{prop:polygon}). A vertex is labelled by the order in which that run fires the events of
-$e$, an edge by the $1$-cell it reads as under $\gamma$ (\Cref{lem:pos}). The solid chain is
-$\src(e)$ and the dashed one $\tgt(e)$.}
+\caption{The polygon $\RunOver(e)$ for the two species of degree-two chain
+(\Cref{prop:polygon}). A vertex is the run firing the events of $e$ in the order shown; an edge is
+the $1$-cell it reads as under $\gamma$ (\Cref{lem:pos}). The heavy route is $\src(e)$ and the
+light one $\tgt(e)$. The dotted stubs are the rest of $\RunOver(d)$ for a chain $d$ that $e$
+refines to, into which the polygon order-embeds (\Cref{prop:push}).}
 \label{fig:species}
 \end{figure}
 
-\gap{One paragraph reading \Cref{fig:species}: the two species are the two Artin relations, and
-the picture is where the reader should see that the relations are not imposed but are the two ways
-round a polygon of runs.}
+\gap{One paragraph reading \Cref{fig:species}: a $2$-cell is a place where a path through
+$\RunOver(d)$ has two routes, and the relation it imposes is that the two routes agree. The two
+species are the two Artin relations, and the point of the picture is that the relations are not
+chosen but are the two ways round a polygon of runs.}
 
 \begin{definition}\label{def:poly}
   The \textbf{Artin polygraph} $\Art(K)$ has $0$-cells the runs of $K$, $1$-cells
