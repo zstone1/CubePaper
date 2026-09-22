@@ -539,24 +539,29 @@ spans, and a $0$-cell is a run.}
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}
-  \PanelSqSq{(0,0)}{.6}{.6}
-  \PanelSqSq{(3.6,1.4)}{-.6}{.6}
-  \PanelSqSq{(3.6,-1.4)}{.6}{-.6}
-  \PanelSqSq{(7.2,0)}{-.6}{-.6}
-  \draw[ar] (1.60,0.45) -- node[gen, above left=-1pt] {$\sigma_1$} (2.15,0.95);
-  \draw[ar] (1.60,-0.45) -- node[gen, below left=-1pt] {$\sigma_3$} (2.15,-0.95);
-  \draw[ar] (5.05,0.95) -- node[gen, above right=-1pt] {$\sigma_3$} (5.60,0.45);
-  \draw[ar] (5.05,-0.95) -- node[gen, below right=-1pt] {$\sigma_1$} (5.60,-0.45);
-  \node[wd] at (0,-0.62)   {$\bot_e = 1234$};
-  \node[wd] at (7.2,-0.62) {$2143 = \top_e$};
-  \node[wd] at (3.6,1.95)  {$2134$};
-  \node[wd] at (3.6,-1.95) {$1243$};
+  \PanelCube{(0,0)}{x}{xy}          \PanelCube{(3.3,2.5)}{y}{xy}
+  \PanelCube{(7.4,2.5)}{y}{yz}      \PanelCube{(10.7,0)}{z}{yz}
+  \PanelCube{(7.4,-2.5)}{z}{xz}     \PanelCube{(3.3,-2.5)}{x}{xz}
+  \draw[ar] (1.55,0.90) -- (2.20,1.60);    \draw[ar] (4.70,2.50) -- (6.00,2.50);
+  \draw[ar] (8.50,1.60) -- (9.15,0.90);    \draw[ar] (1.55,-0.90) -- (2.20,-1.60);
+  \draw[ar] (4.70,-2.50) -- (6.00,-2.50);  \draw[ar] (8.50,-1.60) -- (9.15,-0.90);
+  \IconCube{(2.60,0.85)}{o}{x}{xy}{y}      \IconCube{(5.35,1.72)}{y}{xy}{xyz}{yz}
+  \IconCube{(8.10,0.85)}{o}{y}{yz}{z}      \IconCube{(2.60,-0.85)}{x}{xy}{xyz}{xz}
+  \IconCube{(5.35,-1.72)}{o}{x}{xz}{z}     \IconCube{(8.10,-0.85)}{z}{xz}{xyz}{yz}
+  \node[gen] at (1.25,1.70)  {$\sigma_1$};  \node[gen] at (5.35,3.05) {$\sigma_2$};
+  \node[gen] at (9.45,1.70)  {$\sigma_1$};  \node[gen] at (1.25,-1.70){$\sigma_2$};
+  \node[gen] at (5.35,-3.05) {$\sigma_1$};  \node[gen] at (9.45,-1.70){$\sigma_2$};
+  \node[wd] at (0,-1.18)     {$\bot_e = 123$};
+  \node[wd] at (10.7,-1.18)  {$321 = \top_e$};
+  \node[wd] at (3.3,3.62)    {$213$};   \node[wd] at (7.4,3.62)  {$231$};
+  \node[wd] at (3.3,-3.62)   {$132$};   \node[wd] at (7.4,-3.62) {$312$};
 \end{tikzpicture}
 \caption{The four runs over a degree-two chain $e = \bigvee[2,2]$. Each panel draws the two blocks
 of $e$ as squares and the run as the monotone path by which it traverses them, the upper route
 through a block firing its two events in order and the lower route reversing them. The poset
 $\RunOver(e)$ is the diamond, and the two routes from $\bot_e$ to $\top_e$ are
-$\src(e) = \sigma_1\sigma_3$ and $\tgt(e) = \sigma_3\sigma_1$.}
+$\src(e) = \sigma_1\sigma_3$ and $\tgt(e) = \sigma_3\sigma_1$. Each arrow carries a small copy of
+$e$ with the square it flips shaded.}
 \label{fig:species-sq}
 \end{figure}
 
@@ -582,7 +587,8 @@ of $e$ as a cube, with the initial vertex of $e$ at the near bottom left and its
 the far top right, the run as the monotone edge path between them, and the edges of the chain
 before and after $e$ as a tail and a tip. Here $\RunOver(e)$ is a
 hexagon, and its two routes are $\src(e) = \sigma_1\sigma_2\sigma_1$ and
-$\tgt(e) = \sigma_2\sigma_1\sigma_2$.}
+$\tgt(e) = \sigma_2\sigma_1\sigma_2$. Each arrow carries a small copy of the cube with the square
+it flips shaded: the run is pushed across that face.}
 \label{fig:species-cube}
 \end{figure}
 

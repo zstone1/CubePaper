@@ -266,3 +266,23 @@
     \draw[te, densely dashed] (o)--(y) (y)--(xy) (y)--(yz);
     \draw[rt] (tail)--(o)--(#2)--(#3)--(xyz)--(tip);
   \end{scope}}
+
+% The square a cover flips, shown on the arrow: a small copy with that face
+% shaded.  \IconSqSq{shift}{-1 or 1} picks the first or second square;
+% \IconCube{shift}{four corner names} shades that face of the cube.
+\newcommand{\IconSqSq}[2]{%
+  \begin{scope}[shift={#1}, scale=0.30]
+    \fill[black!18] ({#2-1},0)--({#2},.6)--({#2+1},0)--({#2},-.6)--cycle;
+    \draw[te] (-2,0)--(-1,.6)--(0,0)--(1,.6)--(2,0)--(1,-.6)--(0,0)--(-1,-.6)--(-2,0);
+  \end{scope}}
+\newcommand{\IconCube}[5]{%
+  \begin{scope}[shift={#1}, scale=0.50]
+    \coordinate (o)   at (-0.76,-0.76);   \coordinate (x)   at ( 0.24,-0.76);
+    \coordinate (y)   at (-0.24,-0.26);   \coordinate (z)   at (-0.76, 0.26);
+    \coordinate (xy)  at ( 0.76,-0.26);   \coordinate (xz)  at ( 0.24, 0.26);
+    \coordinate (yz)  at (-0.24, 0.76);   \coordinate (xyz) at ( 0.76, 0.76);
+    \fill[black!18] (#2)--(#3)--(#4)--(#5)--cycle;
+    \draw[te] (o)--(x) (o)--(z) (x)--(xy) (x)--(xz) (z)--(xz) (z)--(yz)
+              (xy)--(xyz) (xz)--(xyz) (yz)--(xyz);
+    \draw[te, densely dashed] (o)--(y) (y)--(xy) (y)--(yz);
+  \end{scope}}
