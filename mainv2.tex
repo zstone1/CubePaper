@@ -53,6 +53,69 @@ for the dimension of the cubes. Let the degree of a chain be the sum of the list
 Then the polygraph's $n$-cells are the degree $n$ chains, for $n \in \{0,1,2\}$. The attachements
 of the 2 cells to the 1 cells is slightly subtle, and we will spend some time building them.
 
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \PanelSqSq{(0,0)}{.6}{.6}       \PanelSqSq{(4.0,1.5)}{-.6}{.6}
+  \PanelSqSq{(4.0,-1.5)}{.6}{-.6} \PanelSqSq{(8.0,0)}{-.6}{-.6}
+  \draw[ar] (1.62,0.45) -- (2.30,1.05);   \draw[ar] (5.70,1.05) -- (6.38,0.45);
+  \draw[ar] (1.62,-0.45) -- (2.30,-1.05); \draw[ar] (5.70,-1.05) -- (6.38,-0.45);
+  \IconSqSq{(3.05,0.42)}{-1}   \IconSqSq{(4.95,0.42)}{1}
+  \IconSqSq{(3.05,-0.42)}{1}   \IconSqSq{(4.95,-0.42)}{-1}
+  \node[gen] at (1.35,0.98)  {$\sigma_1$};  \node[gen] at (6.65,0.98)  {$\sigma_3$};
+  \node[gen] at (1.35,-0.98) {$\sigma_3$};  \node[gen] at (6.65,-0.98) {$\sigma_1$};
+  \node[wd] at (0,-0.62)   {$\bot_e = 1234$};
+  \node[wd] at (8.0,-0.62) {$2143 = \top_e$};
+  \node[wd] at (4.0,2.05)  {$2134$};   \node[wd] at (4.0,-2.05) {$1243$};
+\end{tikzpicture}
+\caption{The four runs over the degree-two chain $e = \bigvee[2,2]$, whose two blocks are the
+events $\{1,2\}$ and $\{3,4\}$. Each panel draws the blocks as squares, with the edges of the chain
+before and after them as a tail and a tip; the run passes over a square when it fires that block's
+two events in order, and under it when it reverses them. The four runs form a diamond,
+$\RunOver(e)$ (\Cref{def:runover}), whose two routes are the words $\src(e) = \sigma_1\sigma_3$ and
+$\tgt(e) = \sigma_3\sigma_1$ that $e$ contributes as a $2$-cell (\Cref{def:words}). Each arrow
+carries a small copy of $e$ with the square it flips shaded.}
+\label{fig:species-sq}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \PanelCube{(0,0)}{x}{xy}          \PanelCube{(3.3,2.5)}{y}{xy}
+  \PanelCube{(7.4,2.5)}{y}{yz}      \PanelCube{(10.7,0)}{z}{yz}
+  \PanelCube{(7.4,-2.5)}{z}{xz}     \PanelCube{(3.3,-2.5)}{x}{xz}
+  \draw[ar] (1.55,0.90) -- (2.20,1.60);    \draw[ar] (4.70,2.50) -- (6.00,2.50);
+  \draw[ar] (8.50,1.60) -- (9.15,0.90);    \draw[ar] (1.55,-0.90) -- (2.20,-1.60);
+  \draw[ar] (4.70,-2.50) -- (6.00,-2.50);  \draw[ar] (8.50,-1.60) -- (9.15,-0.90);
+  \IconCube{(2.60,0.85)}{o}{x}{xy}{y}      \IconCube{(5.35,1.72)}{y}{xy}{xyz}{yz}
+  \IconCube{(8.10,0.85)}{o}{y}{yz}{z}      \IconCube{(2.60,-0.85)}{x}{xy}{xyz}{xz}
+  \IconCube{(5.35,-1.72)}{o}{x}{xz}{z}     \IconCube{(8.10,-0.85)}{z}{xz}{xyz}{yz}
+  \node[gen] at (1.25,1.70)  {$\sigma_1$};  \node[gen] at (5.35,3.05) {$\sigma_2$};
+  \node[gen] at (9.45,1.70)  {$\sigma_1$};  \node[gen] at (1.25,-1.70){$\sigma_2$};
+  \node[gen] at (5.35,-3.05) {$\sigma_1$};  \node[gen] at (9.45,-1.70){$\sigma_2$};
+  \node[wd] at (0,-1.18)     {$\bot_e = 123$};
+  \node[wd] at (10.7,-1.18)  {$321 = \top_e$};
+  \node[wd] at (3.3,3.62)    {$213$};   \node[wd] at (7.4,3.62)  {$231$};
+  \node[wd] at (3.3,-3.62)   {$132$};   \node[wd] at (7.4,-3.62) {$312$};
+\end{tikzpicture}
+\caption{The six runs over the degree-two chain $e = \bigvee[3]$, whose single block is the events
+$\{1,2,3\}$. Each panel draws the block as a cube, with the initial vertex of $e$ at the near
+bottom left and its final vertex at the far top right, the run as the monotone edge path between
+them, and the edges of the chain before and after $e$ as a tail and a tip. The six runs form a
+hexagon, whose two routes are $\src(e) = \sigma_1\sigma_2\sigma_1$ and
+$\tgt(e) = \sigma_2\sigma_1\sigma_2$. Each arrow carries a small copy of the cube with the square
+it flips shaded: the run is pushed across that face.}
+\label{fig:species-cube}
+\end{figure}
+
+
+\gap{Read \Cref{fig:species-sq} and \Cref{fig:species-cube} for the reader: a run is a way of
+traversing the blocks of a chain; a degree-one chain has a single square, hence exactly two runs,
+and it is the generator that flips that square; a degree-two chain offers two flips, so its runs
+form a polygon with two routes, and the $2$-cell says those routes agree. Say that these two
+pictures are the only shapes this can take, which is why the relations come out Artin's.}
+
+
 \begin{theorem}[\Cref{thm:A}, \Cref{thm:B}, \Cref{thm:C}]\label{thm:ABC}
   Let $K$ be a bipointed precubical set, $\Br(K)$ the localization of $\Ch(K)\op$ at the
   order-preserving refinements (\Cref{def:W}), and $\Art(K)$ the $2$-polygraph of
@@ -536,67 +599,7 @@ spans, and a $0$-cell is a run.}
   $\{2,2\}$, and \Cref{def:squares} counts $\binom32 = 3$ and $2\binom22 = 2$.
 \end{proof}
 
-\begin{figure}[ht]
-\centering
-\begin{tikzpicture}
-  \PanelSqSq{(0,0)}{.6}{.6}       \PanelSqSq{(4.0,1.5)}{-.6}{.6}
-  \PanelSqSq{(4.0,-1.5)}{.6}{-.6} \PanelSqSq{(8.0,0)}{-.6}{-.6}
-  \draw[ar] (1.62,0.45) -- (2.30,1.05);   \draw[ar] (5.70,1.05) -- (6.38,0.45);
-  \draw[ar] (1.62,-0.45) -- (2.30,-1.05); \draw[ar] (5.70,-1.05) -- (6.38,-0.45);
-  \IconSqSq{(3.05,0.42)}{-1}   \IconSqSq{(4.95,0.42)}{1}
-  \IconSqSq{(3.05,-0.42)}{1}   \IconSqSq{(4.95,-0.42)}{-1}
-  \node[gen] at (1.35,0.98)  {$\sigma_1$};  \node[gen] at (6.65,0.98)  {$\sigma_3$};
-  \node[gen] at (1.35,-0.98) {$\sigma_3$};  \node[gen] at (6.65,-0.98) {$\sigma_1$};
-  \node[wd] at (0,-0.62)   {$\bot_e = 1234$};
-  \node[wd] at (8.0,-0.62) {$2143 = \top_e$};
-  \node[wd] at (4.0,2.05)  {$2134$};   \node[wd] at (4.0,-2.05) {$1243$};
-\end{tikzpicture}
-\caption{The four runs over the degree-two chain $e = \bigvee[2,2]$, whose two blocks are the
-events $\{1,2\}$ and $\{3,4\}$, so that $\cut(e) = \{1,3\}$. Each panel draws the blocks as
-squares, with the edges of the chain before and after them as a tail and a tip; the run passes over
-a square when it fires that block's two events in order and under it when it reverses them. Here
-$\RunOver(e)$ is a diamond, and its two routes are $\src(e) = \sigma_1\sigma_3$ and
-$\tgt(e) = \sigma_3\sigma_1$. Each arrow carries a small copy of $e$ with the square it flips
-shaded.}
-\label{fig:species-sq}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\begin{tikzpicture}
-  \PanelCube{(0,0)}{x}{xy}          \PanelCube{(3.3,2.5)}{y}{xy}
-  \PanelCube{(7.4,2.5)}{y}{yz}      \PanelCube{(10.7,0)}{z}{yz}
-  \PanelCube{(7.4,-2.5)}{z}{xz}     \PanelCube{(3.3,-2.5)}{x}{xz}
-  \draw[ar] (1.55,0.90) -- (2.20,1.60);    \draw[ar] (4.70,2.50) -- (6.00,2.50);
-  \draw[ar] (8.50,1.60) -- (9.15,0.90);    \draw[ar] (1.55,-0.90) -- (2.20,-1.60);
-  \draw[ar] (4.70,-2.50) -- (6.00,-2.50);  \draw[ar] (8.50,-1.60) -- (9.15,-0.90);
-  \IconCube{(2.60,0.85)}{o}{x}{xy}{y}      \IconCube{(5.35,1.72)}{y}{xy}{xyz}{yz}
-  \IconCube{(8.10,0.85)}{o}{y}{yz}{z}      \IconCube{(2.60,-0.85)}{x}{xy}{xyz}{xz}
-  \IconCube{(5.35,-1.72)}{o}{x}{xz}{z}     \IconCube{(8.10,-0.85)}{z}{xz}{xyz}{yz}
-  \node[gen] at (1.25,1.70)  {$\sigma_1$};  \node[gen] at (5.35,3.05) {$\sigma_2$};
-  \node[gen] at (9.45,1.70)  {$\sigma_1$};  \node[gen] at (1.25,-1.70){$\sigma_2$};
-  \node[gen] at (5.35,-3.05) {$\sigma_1$};  \node[gen] at (9.45,-1.70){$\sigma_2$};
-  \node[wd] at (0,-1.18)     {$\bot_e = 123$};
-  \node[wd] at (10.7,-1.18)  {$321 = \top_e$};
-  \node[wd] at (3.3,3.62)    {$213$};   \node[wd] at (7.4,3.62)  {$231$};
-  \node[wd] at (3.3,-3.62)   {$132$};   \node[wd] at (7.4,-3.62) {$312$};
-\end{tikzpicture}
-\caption{The six runs over the degree-two chain $e = \bigvee[3]$, whose single block is the events
-$\{1,2,3\}$, so that $\cut(e) = \{1,2\}$. Each panel draws the block as a cube, with the initial
-vertex of $e$ at the near bottom left and its final vertex at the far top right, the run as the
-monotone edge path between them, and the edges of the chain before and after $e$ as a tail and a
-tip. Here $\RunOver(e)$ is a hexagon, and its two routes are
-$\src(e) = \sigma_1\sigma_2\sigma_1$ and $\tgt(e) = \sigma_2\sigma_1\sigma_2$. Each arrow carries a
-small copy of the cube with the square it flips shaded: the run is pushed across that face.}
-\label{fig:species-cube}
-\end{figure}
-
-\gap{One paragraph reading \Cref{fig:species-sq} and \Cref{fig:species-cube}: a run is a way of
-traversing the blocks of a chain, a $1$-cell flips one square of one block, and a $2$-cell is a
-place where two flips are available, so that a path has two routes. The two species are the two
-Artin relations, and the point is that the relations are not chosen but are the two ways round a
-polygon of runs.}
-
+The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
 \begin{definition}\label{def:poly}
   The \textbf{Artin polygraph} $\Art(K)$ has $0$-cells the runs of $K$, $1$-cells
   $\Art(K)_1(X,Y) := \Cell_1(X,Y)$, $2$-cells $\Art(K)_2(X,Y) := \Cell_2(X,Y)$, and the words
