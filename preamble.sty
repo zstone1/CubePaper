@@ -23,6 +23,9 @@
 \RequirePackage{tikz-cd}
 \usetikzlibrary{arrows.meta, calc, positioning, decorations.pathmorphing, cd}
 
+% --- Tables -------------------------------------------------------------
+\RequirePackage{booktabs}
+
 % --- Lists --------------------------------------------------------------
 \RequirePackage{enumitem}
 \setlist{topsep=2pt, itemsep=2pt, parsep=0pt}
@@ -132,6 +135,7 @@
 \newcommand{\Wdg}{\square^{\vee}}               % full subcat of serial wedges
 
 \DeclareMathOperator{\Ch}{Ch}
+\DeclareMathOperator{\Br}{Br}
 \DeclareMathOperator{\Chs}{Ch^*}
 \DeclareMathOperator{\Refine}{Refine}
 \DeclareMathOperator{\Run}{Run}
@@ -179,3 +183,39 @@
   perm/.style   = {dashed},  % \sigma(f): a permutation
   runact/.style = {dashed},  % E(\rho)(f) / \hat f: the run action
 }
+
+% --- mainv2: squares, runs over a chain, polygraphs ----------------------
+% The second paper localises \Ch(K) at the order-preserving refinements and
+% presents the result.  Its vocabulary:
+%
+%   \Ev(a)      the events of a shape        \str   an event's strand
+%   \Sq(d)      the squares of a chain       \Tri   its triangles
+%   \Cross(f)   the squares f crosses        \rev   the squares a run reverses
+%   \RunOver(d) the runs over a chain d      \Steps the steps of such a run
+%   \Cell_n     the n-cells                  \Pgraph(K) the paper polygraph
+%   \pres{P}    the category P presents
+\DeclareMathOperator{\Ev}{Ev}
+\DeclareMathOperator{\str}{str}
+\DeclareMathOperator{\Sq}{Sq}
+\DeclareMathOperator{\Tri}{Tri}
+\DeclareMathOperator{\Cross}{Cr}
+\DeclareMathOperator{\rev}{rev}
+\DeclareMathOperator{\Steps}{St}
+\DeclareMathOperator{\Cell}{Cell}
+\DeclareMathOperator{\step}{step}
+\DeclareMathOperator{\pos}{pos}
+\DeclareMathOperator{\cut}{cut}
+\DeclareMathOperator{\cox}{cox}
+\DeclareMathOperator{\src}{src}
+\DeclareMathOperator{\tgt}{tgt}
+\DeclareMathOperator{\Fact}{Fact}
+\newcommand{\RunOver}{\mathcal{R}}              % runs over a chain
+\newcommand{\Pgraph}{\mathcal{P}}               % the paper polygraph
+\newcommand{\Polygraph}{\mathbf{Poly}}          % the category of 2-polygraphs
+\newcommand{\pres}[1]{\left\langle #1 \right\rangle}
+\newcommand{\symdiff}{\mathbin{\triangle}}
+% \BraidPos already carries a superscript, so its opposite needs its own name.
+\newcommand{\BraidPosOp}{\mathbf{Braid}^{+,\mathrm{op}}}
+% The two extreme runs over a chain, and the runs of K they sit on.
+\newcommand{\lorun}[1]{\underline{#1}}          % the run #1 is merged from
+\newcommand{\hirun}[1]{\overline{#1}}           % the run at the top of #1
