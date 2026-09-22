@@ -41,40 +41,42 @@ However, it trivializes on any Euclidean complex, see {\cite[Prop.~6.1]{PZ}}.
 The proof is one line: the invariant factors through $|\Ch(\cube n)|$, which is contractible.
 
 This paper explains that the braid structure is present in $\Ch(K)$ without passing through 
-any homotopy equivalences. We will construct a small set of morphisms, $W$, in $\Ch(K)$. 
+any homotopy equivalences. We will construct a set of morphisms, $W$, in $\Ch(K)$. 
 And define the localization $\Br(K) \;:=\; \Ch(K)\op\bigl[(W\op)\inv\bigr]$. Then we will build a 
 2-polygraph giving an artin-like presentation for $\Br(K)$ in terms of chains of $K$. 
 We do not pass via a homotopy equivalence to the path space, as it gives us several advantages. 
-Firstly, we preserve much of the directed structure in $K$ and $\Br(\cube n)$ it does not collapse.
-Secondly, it permits us to stay with positive braids which gives us a simpler theory.
+Firstly, we preserve a lot of the directed structure of in $K$, so $\Br(\cube n)$ it does not collapse.
+Secondly, it permits us to stay with positive braids which yields a simpler theory.
 
 The the cells of our polygraph are straightforward. A chain of $K$ has a list of positive integers
 for the dimension of the cubes. Let the degree of a chain be the sum of the list minus the length.
 Then the polygraph's $n$-cells are the degree $n$ chains, for $n \in \{0,1,2\}$. The attachements
-of the 2 cells to the 1 cells is slightly subtle, and we will spend some time building them.
+of the 2 cells to the 1 cells will take some work to formalize, but the following pictures gives 
+a clear intuition about the attachements. The key point is that every degree 2 chain has one 
+of these forms.
 
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}
-  \PanelSqSq{(0,0)}{.6}{.6}       \PanelSqSq{(4.0,1.5)}{-.6}{.6}
-  \PanelSqSq{(4.0,-1.5)}{.6}{-.6} \PanelSqSq{(8.0,0)}{-.6}{-.6}
-  \draw[ar] (1.62,0.45) -- (2.30,1.05);   \draw[ar] (5.70,1.05) -- (6.38,0.45);
-  \draw[ar] (1.62,-0.45) -- (2.30,-1.05); \draw[ar] (5.70,-1.05) -- (6.38,-0.45);
-  \IconSqSq{(3.05,0.42)}{-1}   \IconSqSq{(4.95,0.42)}{1}
-  \IconSqSq{(3.05,-0.42)}{1}   \IconSqSq{(4.95,-0.42)}{-1}
-  \node[gen] at (1.35,0.98)  {$\sigma_1$};  \node[gen] at (6.65,0.98)  {$\sigma_3$};
-  \node[gen] at (1.35,-0.98) {$\sigma_3$};  \node[gen] at (6.65,-0.98) {$\sigma_1$};
+  \PanelSqSq{(0,0)}{.6}{.6}        \PanelSqSq{(4.6,1.75)}{-.6}{.6}
+  \PanelSqSq{(4.6,-1.75)}{.6}{-.6} \PanelSqSq{(9.2,0)}{-.6}{-.6}
+  \draw[ar] (1.60,0.42) -- (2.75,1.35);   \draw[ar] (6.45,1.35) -- (7.60,0.42);
+  \draw[ar] (1.60,-0.42) -- (2.75,-1.35); \draw[ar] (6.45,-1.35) -- (7.60,-0.42);
+  \IconSqSq{(1.35,1.45)}{-1}   \IconSqSq{(7.85,1.45)}{1}
+  \IconSqSq{(1.35,-1.45)}{1}   \IconSqSq{(7.85,-1.45)}{-1}
+  \node[gen] at (1.35,1.95)  {$\sigma_i$};  \node[gen] at (7.85,1.95)  {$\sigma_j$};
+  \node[gen] at (1.35,-1.95) {$\sigma_j$};  \node[gen] at (7.85,-1.95) {$\sigma_i$};
+  \draw[twocell] (4.6,0.62) -- (4.6,-0.62);
+  \node[wd] at (5.05,0)    {$e$};
   \node[wd] at (0,-0.62)   {$\bot_e = 1234$};
-  \node[wd] at (8.0,-0.62) {$2143 = \top_e$};
-  \node[wd] at (4.0,2.05)  {$2134$};   \node[wd] at (4.0,-2.05) {$1243$};
+  \node[wd] at (9.2,-0.62) {$2143 = \top_e$};
+  \node[wd] at (4.6,2.40)  {$2134$};   \node[wd] at (4.6,-2.40) {$1243$};
 \end{tikzpicture}
-\caption{The four runs over the degree-two chain $e = \bigvee[2,2]$, whose two blocks are the
-events $\{1,2\}$ and $\{3,4\}$. Each panel draws the blocks as squares, with the edges of the chain
-before and after them as a tail and a tip; the run passes over a square when it fires that block's
-two events in order, and under it when it reverses them. The four runs form a diamond,
-$\RunOver(e)$ (\Cref{def:runover}), whose two routes are the words $\src(e) = \sigma_1\sigma_3$ and
-$\tgt(e) = \sigma_3\sigma_1$ that $e$ contributes as a $2$-cell (\Cref{def:words}). Each arrow
-carries a small copy of $e$ with the square it flips shaded.}
+\caption{The four runs over the degree-two chain $e = \bigvee[2,2]$. 
+Each arrow is decorated with the square that witnesses the reordering. 
+And each node is decorated with the degree 0 refinement's permutation.
+So the 2 cell attaches $\sigma_j\sigma_i \to \sigma_i \sigma_j$.
+}
 \label{fig:species-sq}
 \end{figure}
 
@@ -87,24 +89,23 @@ carries a small copy of $e$ with the square it flips shaded.}
   \draw[ar] (1.55,0.90) -- (2.20,1.60);    \draw[ar] (4.70,2.50) -- (6.00,2.50);
   \draw[ar] (8.50,1.60) -- (9.15,0.90);    \draw[ar] (1.55,-0.90) -- (2.20,-1.60);
   \draw[ar] (4.70,-2.50) -- (6.00,-2.50);  \draw[ar] (8.50,-1.60) -- (9.15,-0.90);
-  \IconCube{(2.60,0.85)}{o}{x}{xy}{y}      \IconCube{(5.35,1.72)}{y}{xy}{xyz}{yz}
-  \IconCube{(8.10,0.85)}{o}{y}{yz}{z}      \IconCube{(2.60,-0.85)}{x}{xy}{xyz}{xz}
-  \IconCube{(5.35,-1.72)}{o}{x}{xz}{z}     \IconCube{(8.10,-0.85)}{z}{xz}{xyz}{yz}
-  \node[gen] at (1.25,1.70)  {$\sigma_1$};  \node[gen] at (5.35,3.05) {$\sigma_2$};
-  \node[gen] at (9.45,1.70)  {$\sigma_1$};  \node[gen] at (1.25,-1.70){$\sigma_2$};
-  \node[gen] at (5.35,-3.05) {$\sigma_1$};  \node[gen] at (9.45,-1.70){$\sigma_2$};
+  \IconCube{(1.05,2.05)}{o}{x}{xy}{y}      \IconCube{(5.35,3.45)}{y}{xy}{xyz}{yz}
+  \IconCube{(9.65,2.05)}{o}{y}{yz}{z}      \IconCube{(1.05,-2.05)}{x}{xy}{xyz}{xz}
+  \IconCube{(5.35,-3.45)}{o}{x}{xz}{z}     \IconCube{(9.65,-2.05)}{z}{xz}{xyz}{yz}
+  \node[gen] at (1.05,2.80)  {$\sigma_1$};  \node[gen] at (5.35,4.15) {$\sigma_2$};
+  \node[gen] at (9.65,2.80)  {$\sigma_1$};  \node[gen] at (1.05,-2.80){$\sigma_2$};
+  \node[gen] at (5.35,-4.15) {$\sigma_1$};  \node[gen] at (9.65,-2.80){$\sigma_2$};
+  \draw[twocell] (5.35,0.78) -- (5.35,-0.78);
+  \node[wd] at (5.82,0)      {$e$};
   \node[wd] at (0,-1.18)     {$\bot_e = 123$};
   \node[wd] at (10.7,-1.18)  {$321 = \top_e$};
   \node[wd] at (3.3,3.62)    {$213$};   \node[wd] at (7.4,3.62)  {$231$};
   \node[wd] at (3.3,-3.62)   {$132$};   \node[wd] at (7.4,-3.62) {$312$};
 \end{tikzpicture}
-\caption{The six runs over the degree-two chain $e = \bigvee[3]$, whose single block is the events
-$\{1,2,3\}$. Each panel draws the block as a cube, with the initial vertex of $e$ at the near
-bottom left and its final vertex at the far top right, the run as the monotone edge path between
-them, and the edges of the chain before and after $e$ as a tail and a tip. The six runs form a
-hexagon, whose two routes are $\src(e) = \sigma_1\sigma_2\sigma_1$ and
-$\tgt(e) = \sigma_2\sigma_1\sigma_2$. Each arrow carries a small copy of the cube with the square
-it flips shaded: the run is pushed across that face.}
+\caption{The six runs over the degree-two chain $e = \bigvee[3]$. 
+Again each arrow is decorated with the square that witnesses the reordering. 
+And each node is decorated with the degree 0 refinement's permutation.
+So we get the attachement $\sigma_1\sigma_2\sigma_1 \to \sigma_2 \sigma_1\sigma_2$.}
 \label{fig:species-cube}
 \end{figure}
 
