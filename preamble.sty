@@ -236,13 +236,20 @@
   gen/.style = {font=\scriptsize, inner sep=1.5pt},
   wd/.style  = {font=\scriptsize, inner sep=1.5pt},
 }
-% A run of \bigvee[2,2]: two squares in a row.  #1 shift; #2,#3 are .6 for the
-% block fired in increasing order and -.6 for the block fired reversed.
+% A run of \bigvee[2,2]: the two blocks drawn as squares glued at a vertex, on
+% the same oblique axes as the cube below, with the edges of the chain before
+% and after them as a tail and a tip.  #1 shift; #2, #3 name the vertex the run
+% passes in each square, q1a/q1b in the first and q2a/q2b in the second.
 \newcommand{\PanelSqSq}[3]{%
-  \begin{scope}[shift={#1}, scale=0.5]
-    \draw[te] (-2.9,0)--(-2,0)--(-1,.6)--(0,0)--(1,.6)--(2,0)--(2.9,0);
-    \draw[te] (-2,0)--(-1,-.6)--(0,0)--(1,-.6)--(2,0);
-    \draw[rt] (-2.9,0)--(-2,0)--(-1,#2)--(0,0)--(1,#3)--(2,0)--(2.9,0);
+  \begin{scope}[shift={#1}, scale=0.85]
+    \coordinate (q0)   at (-1.52,-0.5);   \coordinate (q1a)  at (-0.52,-0.5);
+    \coordinate (q1b)  at (-1.00, 0.0);   \coordinate (qj)   at ( 0.00, 0.0);
+    \coordinate (q2a)  at ( 1.00, 0.0);   \coordinate (q2b)  at ( 0.52, 0.5);
+    \coordinate (q3)   at ( 1.52, 0.5);
+    \coordinate (qin)  at (-2.22,-0.5);   \coordinate (qout) at ( 2.22, 0.5);
+    \draw[te] (qin)--(q0) (q0)--(q1a) (q1a)--(qj) (q0)--(q1b) (q1b)--(qj)
+              (qj)--(q2a) (q2a)--(q3) (qj)--(q2b) (q2b)--(q3) (q3)--(qout);
+    \draw[rt] (qin)--(q0)--(#2)--(qj)--(#3)--(q3)--(qout);
   \end{scope}}
 % A run of \bigvee[3]: the block drawn as a cube, initial vertex at the near
 % bottom left and final vertex at the far top right, with the edges of the
@@ -270,10 +277,15 @@
 % The square a cover flips, shown on the arrow: a small copy with that face
 % shaded.  \IconSqSq{shift}{-1 or 1} picks the first or second square;
 % \IconCube{shift}{four corner names} shades that face of the cube.
-\newcommand{\IconSqSq}[2]{%
-  \begin{scope}[shift={#1}, scale=0.30]
-    \fill[black!18] ({#2-1},0)--({#2},.6)--({#2+1},0)--({#2},-.6)--cycle;
-    \draw[te] (-2,0)--(-1,.6)--(0,0)--(1,.6)--(2,0)--(1,-.6)--(0,0)--(-1,-.6)--(-2,0);
+\newcommand{\IconSqSq}[5]{%
+  \begin{scope}[shift={#1}, scale=0.50]
+    \coordinate (q0)  at (-1.52,-0.5);   \coordinate (q1a) at (-0.52,-0.5);
+    \coordinate (q1b) at (-1.00, 0.0);   \coordinate (qj)  at ( 0.00, 0.0);
+    \coordinate (q2a) at ( 1.00, 0.0);   \coordinate (q2b) at ( 0.52, 0.5);
+    \coordinate (q3)  at ( 1.52, 0.5);
+    \fill[black!18] (#2)--(#3)--(#4)--(#5)--cycle;
+    \draw[te] (q0)--(q1a) (q1a)--(qj) (q0)--(q1b) (q1b)--(qj)
+              (qj)--(q2a) (q2a)--(q3) (qj)--(q2b) (q2b)--(q3);
   \end{scope}}
 \newcommand{\IconCube}[5]{%
   \begin{scope}[shift={#1}, scale=0.50]

@@ -539,29 +539,26 @@ spans, and a $0$-cell is a run.}
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}
-  \PanelCube{(0,0)}{x}{xy}          \PanelCube{(3.3,2.5)}{y}{xy}
-  \PanelCube{(7.4,2.5)}{y}{yz}      \PanelCube{(10.7,0)}{z}{yz}
-  \PanelCube{(7.4,-2.5)}{z}{xz}     \PanelCube{(3.3,-2.5)}{x}{xz}
-  \draw[ar] (1.55,0.90) -- (2.20,1.60);    \draw[ar] (4.70,2.50) -- (6.00,2.50);
-  \draw[ar] (8.50,1.60) -- (9.15,0.90);    \draw[ar] (1.55,-0.90) -- (2.20,-1.60);
-  \draw[ar] (4.70,-2.50) -- (6.00,-2.50);  \draw[ar] (8.50,-1.60) -- (9.15,-0.90);
-  \IconCube{(2.60,0.85)}{o}{x}{xy}{y}      \IconCube{(5.35,1.72)}{y}{xy}{xyz}{yz}
-  \IconCube{(8.10,0.85)}{o}{y}{yz}{z}      \IconCube{(2.60,-0.85)}{x}{xy}{xyz}{xz}
-  \IconCube{(5.35,-1.72)}{o}{x}{xz}{z}     \IconCube{(8.10,-0.85)}{z}{xz}{xyz}{yz}
-  \node[gen] at (1.25,1.70)  {$\sigma_1$};  \node[gen] at (5.35,3.05) {$\sigma_2$};
-  \node[gen] at (9.45,1.70)  {$\sigma_1$};  \node[gen] at (1.25,-1.70){$\sigma_2$};
-  \node[gen] at (5.35,-3.05) {$\sigma_1$};  \node[gen] at (9.45,-1.70){$\sigma_2$};
-  \node[wd] at (0,-1.18)     {$\bot_e = 123$};
-  \node[wd] at (10.7,-1.18)  {$321 = \top_e$};
-  \node[wd] at (3.3,3.62)    {$213$};   \node[wd] at (7.4,3.62)  {$231$};
-  \node[wd] at (3.3,-3.62)   {$132$};   \node[wd] at (7.4,-3.62) {$312$};
+  \PanelSqSq{(0,0)}{q1a}{q2a}       \PanelSqSq{(4.6,1.6)}{q1b}{q2a}
+  \PanelSqSq{(4.6,-1.6)}{q1a}{q2b}  \PanelSqSq{(9.2,0)}{q1b}{q2b}
+  \draw[ar] (2.05,0.50) -- (2.60,1.15);   \draw[ar] (6.60,1.15) -- (7.15,0.50);
+  \draw[ar] (2.05,-0.50) -- (2.60,-1.15); \draw[ar] (6.60,-1.15) -- (7.15,-0.50);
+  \IconSqSq{(3.45,0.62)}{q0}{q1a}{qj}{q1b}
+  \IconSqSq{(5.75,0.62)}{qj}{q2a}{q3}{q2b}
+  \IconSqSq{(3.45,-0.62)}{qj}{q2a}{q3}{q2b}
+  \IconSqSq{(5.75,-0.62)}{q0}{q1a}{qj}{q1b}
+  \node[gen] at (1.70,1.20)  {$\sigma_1$};  \node[gen] at (7.50,1.20)  {$\sigma_3$};
+  \node[gen] at (1.70,-1.20) {$\sigma_3$};  \node[gen] at (7.50,-1.20) {$\sigma_1$};
+  \node[wd] at (0,-0.95)   {$\bot_e = 1234$};
+  \node[wd] at (9.2,-0.95) {$2143 = \top_e$};
+  \node[wd] at (4.6,2.35)  {$2134$};   \node[wd] at (4.6,-2.35) {$1243$};
 \end{tikzpicture}
 \caption{The four runs over a degree-two chain $e = \bigvee[2,2]$. Each panel draws the two blocks
-of $e$ as squares and the run as the monotone path by which it traverses them, the upper route
-through a block firing its two events in order and the lower route reversing them. The poset
-$\RunOver(e)$ is the diamond, and the two routes from $\bot_e$ to $\top_e$ are
-$\src(e) = \sigma_1\sigma_3$ and $\tgt(e) = \sigma_3\sigma_1$. Each arrow carries a small copy of
-$e$ with the square it flips shaded.}
+of $e$ as squares glued at a vertex, with the edges of the chain before and after them as a tail
+and a tip, and the run as the monotone edge path it traverses them by. Here $\RunOver(e)$ is a
+diamond, and its two routes are $\src(e) = \sigma_1\sigma_3$ and $\tgt(e) = \sigma_3\sigma_1$. Each
+arrow carries a small copy of $e$ with the square it flips shaded: the run is pushed across that
+square.}
 \label{fig:species-sq}
 \end{figure}
 
