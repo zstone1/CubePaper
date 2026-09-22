@@ -32,22 +32,32 @@ All this work is formalized in Lean \cite{Cubical}.
 
 \section{Introduction}\label{sec:intro}
 
-\gap{Background: $\Ch(K)$ as a model of executions \cite{Z2}; the Paliga--Ziemiański invariant and
-why it trivializes on Euclidean complexes \cite[Prop.~6.1]{PZ}.}
+Ziemiański's cube chain category $\Ch(K)$ is a combinatorial model for the executions of a
+bipointed precubical set $K$ \cite[Thm.~7.6]{Z2}. Paliga and Ziemiański established a homotopy 
+equivalence between $|\Ch(Z)|$ and configuration spaces of points in the plane, 
+where $Z$ is the terminal precubical set.
+It extends, by naturality, to an invariant of any precubical set $K$.
+However, it trivializes on any Euclidean complex, see {\cite[Prop.~6.1]{PZ}}. 
+The proof is one line: the invariant factors through $|\Ch(\cube n)|$, which is contractible.
 
-\gap{The move: an object of $\Ch(K)$ cuts an execution of $N$ events into consecutive blocks of
-simultaneous ones, a morphism relabels the events and coarsens the blocking. Say which refinements
-are order preserving, and that inverting them is a localization and not a quotient, so the arrows
-of $\Br(K)$ still record which events crossed which and how often.}
+This paper explains that the braid structure is present in $\Ch(K)$ without passing through 
+any homotopy equivalences. We will construct a small set of morphisms, $W$, in $\Ch(K)$. 
+And define the localization $\Br(K) \;:=\; \Ch(K)\op\bigl[(W\op)\inv\bigr]$. Then we will build a 
+2-polygraph giving an artin-like presentation for $\Br(K)$ in terms of chains of $K$. 
+We do not pass via a homotopy equivalence to the path space, as it gives us several advantages. 
+Firstly, we preserve much of the directed structure in $K$ and $\Br(\cube n)$ it does not collapse.
+Secondly, it permits us to stay with positive braids which gives us a simpler theory.
 
-\gap{Why the generators and relations are not chosen: they are the chains of degree $1$ and $2$,
-and a chain is already arrow-shaped, from $\dom\bot_e$ to $\dom\top_e$.}
+The the cells of our polygraph are straightforward. A chain of $K$ has a list of positive integers
+for the dimension of the cubes. Let the degree of a chain be the sum of the list minus the length.
+Then the polygraph's $n$-cells are the degree $n$ chains, for $n \in \{0,1,2\}$. The attachements
+of the 2 cells to the 1 cells is slightly subtle, and we will spend some time building them.
 
 \begin{theorem}[\Cref{thm:A}, \Cref{thm:B}, \Cref{thm:C}]\label{thm:ABC}
   Let $K$ be a bipointed precubical set, $\Br(K)$ the localization of $\Ch(K)\op$ at the
   order-preserving refinements (\Cref{def:W}), and $\Art(K)$ the $2$-polygraph of
-  \Cref{def:poly}, whose $0$-cells are the runs of $K$ and whose $1$- and $2$-cells are its chains
-  of degree $1$ and $2$.
+  \Cref{def:poly}.
+........................
   \begin{enumerate}
     \item There is a functor $E_K : \pres{\Art(K)} \to \Br(K)$, sending a $1$-cell $\alpha$ to
       $Q(\top_\alpha\op) \circ Q(\bot_\alpha\op)\inv$, and it is an equivalence.
@@ -525,6 +535,57 @@ spans, and a $0$-cell is a run.}
   $|\Cross|$. Finally $\deg e = 2$ forces the block dimensions above $1$ to be $\{3\}$ or
   $\{2,2\}$, and \Cref{def:squares} counts $\binom32 = 3$ and $2\binom22 = 2$.
 \end{proof}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  >=Stealth,
+  run/.style = {font=\small, inner sep=1pt},
+  gen/.style = {font=\scriptsize, inner sep=2pt},
+  ext/.style = {font=\scriptsize, inner sep=1pt}]
+
+  % two blocks of dimension two
+  \node[run] (a0) at (0,0)      {$1234$};
+  \node[run] (a1) at (1.75,0.95){$2134$};
+  \node[run] (a2) at (1.75,-0.95){$1243$};
+  \node[run] (a3) at (3.5,0)    {$2143$};
+  \draw[->, very thick] (a0) -- node[gen, above left]  {$\sigma_1$} (a1);
+  \draw[->, very thick] (a1) -- node[gen, above right] {$\sigma_3$} (a3);
+  \draw[->, dashed]     (a0) -- node[gen, below left]  {$\sigma_3$} (a2);
+  \draw[->, dashed]     (a2) -- node[gen, below right] {$\sigma_1$} (a3);
+  \node[ext] at (-0.75,0) {$\bot_e$};
+  \node[ext] at (4.25,0)  {$\top_e$};
+  \node[font=\small] at (1.75,-1.85) {$e = \bigvee[2,2]$};
+
+  % one block of dimension three
+  \begin{scope}[xshift=6.6cm]
+    \node[run] (b0) at (0,0)      {$123$};
+    \node[run] (b1) at (1.35,0.95){$213$};
+    \node[run] (b2) at (3.25,0.95){$231$};
+    \node[run] (b3) at (4.6,0)    {$321$};
+    \node[run] (b4) at (3.25,-0.95){$312$};
+    \node[run] (b5) at (1.35,-0.95){$132$};
+    \draw[->, very thick] (b0) -- node[gen, above left]  {$\sigma_1$} (b1);
+    \draw[->, very thick] (b1) -- node[gen, above]       {$\sigma_2$} (b2);
+    \draw[->, very thick] (b2) -- node[gen, above right] {$\sigma_1$} (b3);
+    \draw[->, dashed]     (b0) -- node[gen, below left]  {$\sigma_2$} (b5);
+    \draw[->, dashed]     (b5) -- node[gen, below]       {$\sigma_1$} (b4);
+    \draw[->, dashed]     (b4) -- node[gen, below right] {$\sigma_2$} (b3);
+    \node[ext] at (-0.7,0)  {$\bot_e$};
+    \node[ext] at (5.3,0)   {$\top_e$};
+    \node[font=\small] at (2.3,-1.85) {$e = \bigvee[3]$};
+  \end{scope}
+\end{tikzpicture}
+\caption{The poset $\RunOver(e)$ for the two species of degree-two chain
+(\Cref{prop:polygon}). A vertex is labelled by the order in which that run fires the events of
+$e$, an edge by the $1$-cell it reads as under $\gamma$ (\Cref{lem:pos}). The solid chain is
+$\src(e)$ and the dashed one $\tgt(e)$.}
+\label{fig:species}
+\end{figure}
+
+\gap{One paragraph reading \Cref{fig:species}: the two species are the two Artin relations, and
+the picture is where the reader should see that the relations are not imposed but are the two ways
+round a polygon of runs.}
 
 \begin{definition}\label{def:poly}
   The \textbf{Artin polygraph} $\Art(K)$ has $0$-cells the runs of $K$, $1$-cells
