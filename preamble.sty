@@ -291,3 +291,24 @@
               (xy)--(xyz) (xz)--(xyz) (yz)--(xyz);
     \draw[te, densely dashed] (o)--(y) (y)--(xy) (y)--(yz);
   \end{scope}}
+
+% The 2-cell itself, in the same style as the 1-cells: for \bigvee[2,2] both
+% squares shaded, for \bigvee[3] the whole cube.  These label the double arrow
+% filling a polygon of runs.
+\newcommand{\IconSqSqBoth}[1]{%
+  \begin{scope}[shift={#1}, scale=0.30]
+    \fill[black!18] (-2,0)--(-1,.6)--(0,0)--(-1,-.6)--cycle;
+    \fill[black!18] (0,0)--(1,.6)--(2,0)--(1,-.6)--cycle;
+    \draw[te] (-2,0)--(-1,.6)--(0,0)--(1,.6)--(2,0)--(1,-.6)--(0,0)--(-1,-.6)--(-2,0);
+  \end{scope}}
+\newcommand{\IconCubeFull}[1]{%
+  \begin{scope}[shift={#1}, scale=0.50]
+    \coordinate (o)   at (-0.76,-0.76);   \coordinate (x)   at ( 0.24,-0.76);
+    \coordinate (y)   at (-0.24,-0.26);   \coordinate (z)   at (-0.76, 0.26);
+    \coordinate (xy)  at ( 0.76,-0.26);   \coordinate (xz)  at ( 0.24, 0.26);
+    \coordinate (yz)  at (-0.24, 0.76);   \coordinate (xyz) at ( 0.76, 0.76);
+    \fill[black!18] (o)--(x)--(xy)--(xyz)--(yz)--(z)--cycle;
+    \draw[te] (o)--(x) (o)--(z) (x)--(xy) (x)--(xz) (z)--(xz) (z)--(yz)
+              (xy)--(xyz) (xz)--(xyz) (yz)--(xyz);
+    \draw[te, densely dashed] (o)--(y) (y)--(xy) (y)--(yz);
+  \end{scope}}
