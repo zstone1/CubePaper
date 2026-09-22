@@ -224,3 +224,42 @@
 \newcommand{\gap}[1]{%
   \par\smallskip\noindent
   \textcolor{BrickRed}{$\blacktriangleright$ \textit{#1}}\par\smallskip}
+
+% --- Figure helpers: a run drawn as a monotone path through the blocks ---
+% Each block of a chain is a cube; a run traverses each one by a monotone
+% edge path, so a run is a route through a row of cubes.  Thin lines are the
+% cubes' edges, the heavy line is the run.
+\tikzset{
+  te/.style  = {line width=0.4pt, black!45},
+  rt/.style  = {line width=1.5pt, line cap=round, line join=round},
+  ar/.style  = {->, >=Stealth, line width=0.5pt, black!75},
+  gen/.style = {font=\scriptsize, inner sep=1.5pt},
+  wd/.style  = {font=\scriptsize, inner sep=1.5pt},
+}
+% A run of \bigvee[2,2]: two squares in a row.  #1 shift; #2,#3 are .6 for the
+% block fired in increasing order and -.6 for the block fired reversed.
+\newcommand{\PanelSqSq}[3]{%
+  \begin{scope}[shift={#1}, scale=0.5]
+    \draw[te] (-2.9,0)--(-2,0)--(-1,.6)--(0,0)--(1,.6)--(2,0)--(2.9,0);
+    \draw[te] (-2,0)--(-1,-.6)--(0,0)--(1,-.6)--(2,0);
+    \draw[rt] (-2.9,0)--(-2,0)--(-1,#2)--(0,0)--(1,#3)--(2,0)--(2.9,0);
+  \end{scope}}
+% A run of \bigvee[3]: the block drawn as a cube, initial vertex at the near
+% bottom left and final vertex at the far top right, the run the monotone edge
+% path between them.  #1 shift; #2, #3 name the two intermediate vertices,
+% from  x, y, z  (one axis used) and  xy, xz, yz  (two).
+\newcommand{\PanelCube}[3]{%
+  \begin{scope}[shift={#1}, scale=0.85]
+    \coordinate (o)   at (-0.76,-0.76);
+    \coordinate (x)   at ( 0.24,-0.76);
+    \coordinate (y)   at (-0.24,-0.26);
+    \coordinate (z)   at (-0.76, 0.26);
+    \coordinate (xy)  at ( 0.76,-0.26);
+    \coordinate (xz)  at ( 0.24, 0.26);
+    \coordinate (yz)  at (-0.24, 0.76);
+    \coordinate (xyz) at ( 0.76, 0.76);
+    \draw[te] (o)--(x) (o)--(z) (x)--(xy) (x)--(xz) (z)--(xz) (z)--(yz)
+              (xy)--(xyz) (xz)--(xyz) (yz)--(xyz);
+    \draw[te, densely dashed] (o)--(y) (y)--(xy) (y)--(yz);
+    \draw[rt] (o)--(#2)--(#3)--(xyz);
+  \end{scope}}

@@ -538,68 +538,58 @@ spans, and a $0$-cell is a run.}
 
 \begin{figure}[ht]
 \centering
-\begin{tikzpicture}[
-  vtx/.style  = {circle, fill=black, inner sep=1.1pt},
-  wd/.style   = {font=\scriptsize, inner sep=2.5pt},
-  gen/.style  = {font=\scriptsize, inner sep=2pt},
-  route/.style= {line width=1.7pt, line cap=round},
-  alt/.style  = {line width=0.6pt, black!50},
-  stub/.style = {line width=0.6pt, black!35, dotted}]
-
-  %%% (a) two blocks of dimension two: a diamond
-  \node[vtx] (aL) at (0,0)       {};
-  \node[vtx] (aT) at (1.6,0.85)  {};
-  \node[vtx] (aB) at (1.6,-0.85) {};
-  \node[vtx] (aR) at (3.2,0)     {};
-  \draw[stub] (-1.3,0) -- (aL);
-  \draw[stub] (aR) -- (4.5,0);
-  \draw[route] (aL) -- node[gen, above] {$\sigma_1$} (aT);
-  \draw[route] (aT) -- node[gen, above] {$\sigma_3$} (aR);
-  \draw[alt]   (aL) -- node[gen, below] {$\sigma_3$} (aB);
-  \draw[alt]   (aB) -- node[gen, below] {$\sigma_1$} (aR);
-  \node[wd, above=1pt] at (aT) {$2134$};
-  \node[wd, below=1pt] at (aB) {$1243$};
-  \node[wd] at (-0.62,-0.34) {$\bot_e = 1234$};
-  \node[wd] at (3.86,-0.34)  {$2143 = \top_e$};
-  \node[font=\small] at (1.6,-2.05) {(a)\quad $e = \bigvee[2,2]$};
-
-  %%% (b) one block of dimension three: a hexagon
-  \begin{scope}[xshift=7.4cm]
-    \node[vtx] (bL)  at (0,0)        {};
-    \node[vtx] (bUL) at (1.25,0.85)  {};
-    \node[vtx] (bUR) at (3.0,0.85)   {};
-    \node[vtx] (bR)  at (4.25,0)     {};
-    \node[vtx] (bLR) at (3.0,-0.85)  {};
-    \node[vtx] (bLL) at (1.25,-0.85) {};
-    \draw[stub] (-1.3,0) -- (bL);
-    \draw[stub] (bR) -- (5.55,0);
-    \draw[route] (bL)  -- node[gen, above] {$\sigma_1$} (bUL);
-    \draw[route] (bUL) -- node[gen, above] {$\sigma_2$} (bUR);
-    \draw[route] (bUR) -- node[gen, above] {$\sigma_1$} (bR);
-    \draw[alt]   (bL)  -- node[gen, below] {$\sigma_2$} (bLL);
-    \draw[alt]   (bLL) -- node[gen, below] {$\sigma_1$} (bLR);
-    \draw[alt]   (bLR) -- node[gen, below] {$\sigma_2$} (bR);
-    \node[wd, above=1pt] at (bUL) {$213$};
-    \node[wd, above=1pt] at (bUR) {$231$};
-    \node[wd, below=1pt] at (bLL) {$132$};
-    \node[wd, below=1pt] at (bLR) {$312$};
-    \node[wd] at (-0.60,-0.34) {$\bot_e = 123$};
-    \node[wd] at (4.86,-0.34)  {$321 = \top_e$};
-    \node[font=\small] at (2.12,-2.05) {(b)\quad $e = \bigvee[3]$};
-  \end{scope}
+\begin{tikzpicture}
+  \PanelSqSq{(0,0)}{.6}{.6}
+  \PanelSqSq{(3.6,1.4)}{-.6}{.6}
+  \PanelSqSq{(3.6,-1.4)}{.6}{-.6}
+  \PanelSqSq{(7.2,0)}{-.6}{-.6}
+  \draw[ar] (1.60,0.45) -- node[gen, above left=-1pt] {$\sigma_1$} (2.15,0.95);
+  \draw[ar] (1.60,-0.45) -- node[gen, below left=-1pt] {$\sigma_3$} (2.15,-0.95);
+  \draw[ar] (5.05,0.95) -- node[gen, above right=-1pt] {$\sigma_3$} (5.60,0.45);
+  \draw[ar] (5.05,-0.95) -- node[gen, below right=-1pt] {$\sigma_1$} (5.60,-0.45);
+  \node[wd] at (0,-0.62)   {$\bot_e = 1234$};
+  \node[wd] at (7.2,-0.62) {$2143 = \top_e$};
+  \node[wd] at (3.6,1.95)  {$2134$};
+  \node[wd] at (3.6,-1.95) {$1243$};
 \end{tikzpicture}
-\caption{The polygon $\RunOver(e)$ for the two species of degree-two chain
-(\Cref{prop:polygon}). A vertex is the run firing the events of $e$ in the order shown; an edge is
-the $1$-cell it reads as under $\gamma$ (\Cref{lem:pos}). The heavy route is $\src(e)$ and the
-light one $\tgt(e)$. The dotted stubs are the rest of $\RunOver(d)$ for a chain $d$ that $e$
-refines to, into which the polygon order-embeds (\Cref{prop:push}).}
-\label{fig:species}
+\caption{The four runs over a degree-two chain $e = \bigvee[2,2]$. Each panel draws the two blocks
+of $e$ as squares and the run as the monotone path by which it traverses them, the upper route
+through a block firing its two events in order and the lower route reversing them. The poset
+$\RunOver(e)$ is the diamond, and the two routes from $\bot_e$ to $\top_e$ are
+$\src(e) = \sigma_1\sigma_3$ and $\tgt(e) = \sigma_3\sigma_1$.}
+\label{fig:species-sq}
 \end{figure}
 
-\gap{One paragraph reading \Cref{fig:species}: a $2$-cell is a place where a path through
-$\RunOver(d)$ has two routes, and the relation it imposes is that the two routes agree. The two
-species are the two Artin relations, and the point of the picture is that the relations are not
-chosen but are the two ways round a polygon of runs.}
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \PanelCube{(0,0)}{x}{xy}          \PanelCube{(2.35,1.85)}{y}{xy}
+  \PanelCube{(5.35,1.85)}{y}{yz}    \PanelCube{(7.7,0)}{z}{yz}
+  \PanelCube{(5.35,-1.85)}{z}{xz}   \PanelCube{(2.35,-1.85)}{x}{xz}
+  \draw[ar] (0.95,0.75) -- (1.40,1.10);    \draw[ar] (3.20,1.85) -- (4.50,1.85);
+  \draw[ar] (6.30,1.10) -- (6.75,0.75);    \draw[ar] (0.95,-0.75) -- (1.40,-1.10);
+  \draw[ar] (3.20,-1.85) -- (4.50,-1.85);  \draw[ar] (6.30,-1.10) -- (6.75,-0.75);
+  \node[gen] at (0.72,1.18)  {$\sigma_1$};  \node[gen] at (3.85,2.12) {$\sigma_2$};
+  \node[gen] at (6.98,1.18)  {$\sigma_1$};  \node[gen] at (0.72,-1.18){$\sigma_2$};
+  \node[gen] at (3.85,-2.12) {$\sigma_1$};  \node[gen] at (6.98,-1.18){$\sigma_2$};
+  \node[wd] at (0,-1.12)     {$\bot_e = 123$};
+  \node[wd] at (7.7,-1.12)   {$321 = \top_e$};
+  \node[wd] at (2.35,2.95)   {$213$};   \node[wd] at (5.35,2.95)  {$231$};
+  \node[wd] at (2.35,-2.95)  {$132$};   \node[wd] at (5.35,-2.95) {$312$};
+\end{tikzpicture}
+\caption{The six runs over a degree-two chain $e = \bigvee[3]$. Each panel draws the single block
+of $e$ as a cube, with the initial vertex of $e$ at the near bottom left and its final vertex at
+the far top right, and the run as the monotone edge path between them. Here $\RunOver(e)$ is a
+hexagon, and its two routes are $\src(e) = \sigma_1\sigma_2\sigma_1$ and
+$\tgt(e) = \sigma_2\sigma_1\sigma_2$.}
+\label{fig:species-cube}
+\end{figure}
+
+\gap{One paragraph reading \Cref{fig:species-sq} and \Cref{fig:species-cube}: a run is a way of
+traversing the blocks of a chain, a $1$-cell flips one square of one block, and a $2$-cell is a
+place where two flips are available, so that a path has two routes. The two species are the two
+Artin relations, and the point is that the relations are not chosen but are the two ways round a
+polygon of runs.}
 
 \begin{definition}\label{def:poly}
   The \textbf{Artin polygraph} $\Art(K)$ has $0$-cells the runs of $K$, $1$-cells
