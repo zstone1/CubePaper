@@ -152,11 +152,10 @@ $\Br(K)$, $W$ and $\Art(K)$ are \texttt{ChainCat.Br}, \texttt{ChainCat.W} and
 \texttt{CubeChains/Paper.lean} as an \texttt{example} discharged by one citation.
 
 \paragraph{Conventions.}
-$\Cube$ is the box category, $\pSet = \widehat{\Cube}$ the precubical sets, $\BPSet$ the bipointed
-ones with $Z$ final, and $\cube n$ the $n$-cube, bipointed by $(0,\dots,0)$ and $(1,\dots,1)$. We
-set $[n] := \{1,\dots,n\}$ and identify $K_n = \Hom_{\pSet}(\cube n, K)$ by Yoneda. Composition is
-classical: $gf$ means ``first $f$, then $g$''. A word in a polygraph is a path read left to right,
-so $\sigma_i\sigma_k$ is the arrow $\sigma_k \circ \sigma_i$.
+We assume the reader knows \cite{PZ,Z2} and use its notation: $\pSet$ is the category of precubical
+sets, $\BPSet$ the bipointed ones with $Z$ final, and $\cube n$ the $n$-cube. Put
+$[n] := \{1,\dots,n\}$. Composition is classical: $gf$ means ``first $f$, then $g$''. A word in a
+polygraph is a path read left to right, so $\sigma_i\sigma_k$ is the arrow $\sigma_k \circ \sigma_i$.
 
 \gap{Explain the two $\op$s: refinements run from finer to coarser \cite{PZ,Z2}, and words read
 left to right, so $\Br(K)$ localizes $\Ch(K)\op$ and $\pres{\ArtBraid}$ is $\BraidPosOp$.}
@@ -166,24 +165,21 @@ left to right, so $\Br(K)$ localizes $\Ch(K)\op$ and $\pres{\ArtBraid}$ is $\Bra
 \gap{One paragraph placing \Cref{prop:coords}: everything downstream is bookkeeping about the
 events of a wedge, and this is the only place the precubical structure is touched.}
 
-\paragraph{Cube chains \cite{PZ,Z2}.}
-The \textbf{wedge} $P \vee Q$ of $P,Q \in \BPSet$ is the pushout in $\pSet$ gluing $\fin_P$ to
-$\init_Q$, bipointed by $\init_P$ and $\fin_Q$; $(\BPSet, \vee, \cube 0)$ is monoidal. A
-\textbf{shape} is a list $a = [a_1,\dots,a_r]$ of positive integers, with \textbf{serial wedge}
-$\bigvee a := \cube{a_1} \vee \cdots \vee \cube{a_r}$ and \textbf{blocks} the $\cube{a_i}$; put
-$|a| := \sum_i a_i$ and $\deg a := \sum_i (a_i - 1) = |a| - r$. Then $\Ch(K)$ is the full
-subcategory of $\BPSet/K$ spanned by the serial wedges: an object is a bipointed map
-$\bigvee a \to K$ and a morphism, a \textbf{refinement}, is a map of wedges commuting over $K$. We
-write $\deg d$ and $|d|$ for the degree and event count of a chain's shape and
-$\Ch(u) : \Ch(K) \to \Ch(L)$ for the pushforward along $u : K \to L$, which postcomposes the
-classifying map and leaves the shape alone. A chain of degree $0$ is a \textbf{run}; the full
-subcategory of runs is discrete, a refinement losing no block being an identity.
+\paragraph{Cube chains.}
+A \textbf{shape} is a list $a = [a_1,\dots,a_r]$ of positive integers; it names the serial wedge
+$\bigvee a := \cube{a_1} \vee \cdots \vee \cube{a_r}$, whose \textbf{blocks} are the $\cube{a_i}$,
+and we put $|a| := \sum_i a_i$ and $\deg a := |a| - r$. Objects of $\Ch(K)$ are the bipointed maps
+$\bigvee a \to K$ and its morphisms, the refinements, the maps of wedges over $K$. We write $|d|$
+and $\deg d$ for the event count and degree of a chain's shape, and $\Ch(u)$ for the pushforward
+along $u : K \to L$, which postcomposes the classifying map and leaves the shape alone. A chain of
+degree $0$ is a \textbf{run}, and the subcategory of runs is discrete, a refinement losing no block
+being an identity.
 
-We use three facts from \cite[\S2]{PZ}: serial wedges are non-self-linked and admit an altitude
-function $\alt : K_0 \to \Z$ with $\alt(\fin e) = \alt(\init e) + 1$ on edges, the final vertex of
-$\bigvee a$ having altitude $|a|$; a bipointed map between connected objects admitting altitude
-preserves it \cite[Prop.~2.7]{PZ}; and $\Ch(P) \times \Ch(Q) \to \Ch(P \vee Q)$, concatenation, is
-an isomorphism when $P \vee Q$ is non-self-linked and admits altitude \cite[Lem.~2.11]{PZ}.
+We import three facts from \cite[\S2]{PZ}: serial wedges are non-self-linked and admit an altitude,
+for which the final vertex of $\bigvee a$ has altitude $|a|$; a bipointed map between connected
+objects admitting altitude preserves it \cite[Prop.~2.7]{PZ}; and concatenation
+$\Ch(P) \times \Ch(Q) \to \Ch(P \vee Q)$ is an isomorphism when $P \vee Q$ is non-self-linked and
+admits altitude \cite[Lem.~2.11]{PZ}.
 
 \paragraph{The events of a shape.}
 Send $\cube n$ to its set of directions $[n]$, and a face embedding to the monotone injection
