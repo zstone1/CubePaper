@@ -127,7 +127,7 @@ pictures are the only shapes this can take, which is why the relations come out 
         E_L \circ \pres{\Art(f)} \;=\; \Br(f) \circ E_K .
       \]
     \item $\Art(Z)$ is isomorphic to Artin's braid polygraph (\Cref{def:artin-poly}).
-      Consequently $\Br(Z)$ is equivalent to the opposite of the positive braid category.
+      Consequently $\Br(Z)$ is equivalent to the positive braid category.
   \end{enumerate}
   None of the three assumes anything about $K$.
 \end{theorem}
@@ -150,11 +150,10 @@ $\Br(K)$, $W$ and $\Art(K)$ are \texttt{ChainCat.Br}, \texttt{ChainCat.W} and
 \paragraph{Conventions.}
 We assume the reader knows \cite{PZ,Z2} and use its notation: $\BPSet$ is the category of bipointed
 precubical sets, with $Z$ final and $\cube n$ the $n$-cube. Put
-$[n] := \{1,\dots,n\}$. Composition is classical: $gf$ means ``first $f$, then $g$''. A word in a
-polygraph is a path read left to right, so $\sigma_i\sigma_k$ is the arrow $\sigma_k \circ \sigma_i$.
+$[n] := \{1,\dots,n\}$.
 
-\gap{Explain the two $\op$s: refinements run from finer to coarser \cite{PZ,Z2}, and words read
-left to right, so $\Br(K)$ localizes $\Ch(K)\op$ and $\pres{\ArtBraid}$ is $\BraidPosOp$.}
+\gap{Explain the $\op$: refinements run from finer to coarser \cite{PZ,Z2}, so the arrows that add
+crossings run the other way and $\Br(K)$ localizes $\Ch(K)\op$.}
 
 \section{Background}\label{sec:background}
 
@@ -236,7 +235,7 @@ functor $q$.
 \end{proposition}
 
 \gap{One sentence: the only arrows of $\Br(K)$ written down below are composites
-$Q(g\op)Q(m\op)\inv$ coming from a cospan whose first leg is order preserving, and every identity
+$Q(g)Q(m)\inv$ coming from a cospan whose first leg is order preserving, and every identity
 used about them is an instance of $Q$ being a functor.}
 
 \paragraph{Newman's lemma.}
@@ -323,6 +322,10 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
     \Br(K) \;:=\; \Ch(K)\op\bigl[(W\op)\inv\bigr] .
   \]
 \end{definition}
+
+Write $Q : \Ch(K)\op \to \Br(K)$ for the localization functor of \Cref{prop:loc}. We leave the
+$\op$ on morphisms implicit: for a refinement $u : c \to d$ we write $Q(u) : Q(d) \to Q(c)$, so $Q$
+reverses composition.
 
 \begin{proposition}\label{prop:W}
   A refinement $f$ is order preserving if and only if $f_* = \id_{[N]}$. Hence $W$ contains the
@@ -604,29 +607,29 @@ $\Theta_K$, $\Phi_K$ elsewhere.
 
 An $n$-cell $\alpha$ from $X$ to $Y$ comes with the two refinements $\bot_\alpha : X \to \alpha$ and
 $\top_\alpha : Y \to \alpha$, of which the first is order preserving; since $Q$ inverts
-$\bot_\alpha\op$, we may set
+$\bot_\alpha$, we may set
 \[
   E(X) := Q(X), \qquad
-  E(\alpha) \;:=\; Q(\top_\alpha\op) \circ Q(\bot_\alpha\op)\inv \;:\; Q(X) \to Q(Y) .
+  E(\alpha) \;:=\; Q(\top_\alpha) \circ Q(\bot_\alpha)\inv \;:\; Q(X) \to Q(Y) .
 \]
 
 \begin{lemma}\label{lem:telescope}
   Let $d$ be a chain and $z \in \RunOver(d)$. Every path from $\bot_d$ to $z$ in
   $\mathrm{Hasse}(\RunOver(d))$ reads, under $E \circ \gamma$, as
-  $Q(z\op) \circ Q(\bot_d\op)\inv$. Consequently $E$ extends to a functor
+  $Q(z) \circ Q(\bot_d)\inv$. Consequently $E$ extends to a functor
   $\pres{\Art(K)} \to \Br(K)$.
 \end{lemma}
 \begin{proof}
   Induct on the length of the path, the empty path reading as the identity. For a cover
   $x \lessdot y$ with step $s$, put $\beta := \gamma(x \lessdot y)$ and $q := \pi_{\{s\}}$, so
-  $x = q\bot_\beta$ and $y = q\top_\beta$ (\Cref{cor:covercell}) and $x\op = \bot_\beta\op q\op$.
+  $x = q\bot_\beta$ and $y = q\top_\beta$ (\Cref{cor:covercell}), so $Q(x) = Q(\bot_\beta)Q(q)$.
   The middle two factors of
   \[
-    E(\beta) \circ Q(x\op) \circ Q(\bot_d\op)\inv
-      \;=\; Q(\top_\beta\op) \circ Q(\bot_\beta\op)\inv \circ Q(\bot_\beta\op) \circ Q(q\op)
-            \circ Q(\bot_d\op)\inv
+    E(\beta) \circ Q(x) \circ Q(\bot_d)\inv
+      \;=\; Q(\top_\beta) \circ Q(\bot_\beta)\inv \circ Q(\bot_\beta) \circ Q(q)
+            \circ Q(\bot_d)\inv
   \]
-  cancel, leaving $Q(\top_\beta\op)Q(q\op)Q(\bot_d\op)\inv = Q(y\op)Q(\bot_d\op)\inv$.
+  cancel, leaving $Q(\top_\beta)Q(q)Q(\bot_d)\inv = Q(y)Q(\bot_d)\inv$.
 
   The two words of a $2$-cell $e$ are both paths from $\bot_e$ to $\top_e$ (\Cref{prop:polygon}),
   hence have equal image, so \Cref{prop:present-univ}(i) gives the extension.
@@ -636,10 +639,10 @@ $\bot_\alpha\op$, we may set
 \begin{lemma}\label{lem:theta}
   Setting $\Theta(d) := \dom\bot_d$ and, for a refinement $u : c \to d$,
   \[
-    \Theta(u\op) \;:=\; \Gamma_d\bigl(\bot_d \le u\bot_c\bigr)
+    \Theta(u) \;:=\; \Gamma_d\bigl(\bot_d \le u\bot_c\bigr)
       \;:\; \dom\bot_d \to \dom\bot_c ,
   \]
-  defines a functor $\Theta : \Ch(K)\op \to \pres{\Art(K)}$; it sends $u\op$ to an identity whenever $u$ is
+  defines a functor $\Theta : \Ch(K)\op \to \pres{\Art(K)}$; it sends $u$ to an identity whenever $u$ is
   order preserving, so it descends uniquely to $\Phi : \Br(K) \to \pres{\Art(K)}$ with
   $\Phi Q = \Theta$.
 \end{lemma}
@@ -647,8 +650,8 @@ $\bot_\alpha\op$, we may set
   The stated target is the right one: $u\bot_c$ lies in $\RunOver(d)$ with source $\dom\bot_c$.
   Let $v : b \to c$ and $u : c \to d$. Composition with $u$ is monotone (\Cref{prop:push}), so
   $\bot_d \le u\bot_c \le uv\bot_b$, and $\Gamma_d$ being a functor,
-  $\Theta((uv)\op) = \Gamma_d(u\bot_c \le uv\bot_b) \circ \Theta(u\op)$; the left factor is
-  $\Gamma_c(\bot_c \le v\bot_b) = \Theta(v\op)$ by the last clause of \Cref{prop:closes}. If $u$
+  $\Theta(uv) = \Gamma_d(u\bot_c \le uv\bot_b) \circ \Theta(u)$; the left factor is
+  $\Gamma_c(\bot_c \le v\bot_b) = \Theta(v)$ by the last clause of \Cref{prop:closes}. If $u$
   is order preserving then $u\bot_c = \bot_d$ (\Cref{prop:push}), so the comparison is an identity.
   The descent is \Cref{prop:loc}.
 \end{proof}
@@ -660,20 +663,20 @@ $\bot_\alpha\op$, we may set
 \begin{proof}
   On a $0$-cell, $\Phi(E(X)) = \Theta(X) = \dom\bot_X = X$ (\Cref{prop:push}). On a $1$-cell
   $\alpha$, applying $\Phi$ to the defining composite gives
-  $\Phi(E(\alpha)) = \Theta(\top_\alpha\op) \circ \Theta(\bot_\alpha\op)\inv$, whose second
+  $\Phi(E(\alpha)) = \Theta(\top_\alpha) \circ \Theta(\bot_\alpha)\inv$, whose second
   factor is an identity because $\bot_\alpha$ is order preserving (\Cref{lem:theta}). Since
   $\top_\alpha\bot_Y = \top_\alpha$ and $\RunOver(\alpha)$ is the two-element poset
   $\bot_\alpha \lessdot \top_\alpha$,
   \[
-    \Theta(\top_\alpha\op) \;=\; \Gamma_\alpha(\bot_\alpha \le \top_\alpha)
+    \Theta(\top_\alpha) \;=\; \Gamma_\alpha(\bot_\alpha \le \top_\alpha)
       \;=\; q\bigl(\gamma(\bot_\alpha \lessdot \top_\alpha)\bigr) \;=\; q(\alpha)
   \]
   by \Cref{cor:covercell}. So $\Phi E$ agrees with the identity on $0$- and $1$-cells, hence is
   the identity (\Cref{prop:present-univ}(ii)).
 
   For the other composite, \Cref{lem:telescope} gives
-  $E(\Theta(u\op)) = Q((u\bot_c)\op)Q(\bot_d\op)\inv
-   = Q(\bot_c\op) \circ Q(u\op) \circ Q(\bot_d\op)\inv$, which is $Q(u\op)$ conjugated by the
+  $E(\Theta(u)) = Q(u\bot_c)Q(\bot_d)\inv
+   = Q(\bot_c) \circ Q(u) \circ Q(\bot_d)\inv$, which is $Q(u)$ conjugated by the
   isomorphisms $Q(c) \cong Q(\dom\bot_c)$ that $Q$ makes of the order-preserving refinements
   $\bot_c$. So $E\Theta \cong Q$, and $E\Phi \cong \id$ by uniqueness of descent
   (\Cref{prop:loc}).
@@ -704,8 +707,8 @@ runs are a skeleton of $\Br(K)$.}
   $f$ because $\Ch$ is a functor.
 
   Both composites send a run $X$ to $Q(\Ch(f)X)$. On a $1$-cell $\alpha$, $\Br(f)$ is the
-  descent of $Q_L \circ \Ch(f)\op$, so it sends $E_K(\alpha)$ to
-  $Q((\Ch(f)\top_\alpha)\op) \circ Q((\Ch(f)\bot_\alpha)\op)\inv$. Here $\Ch(f)\bot_\alpha$
+  descent of the functor induced by $\Ch(f)$, so it sends $E_K(\alpha)$ to
+  $Q(\Ch(f)\top_\alpha) \circ Q(\Ch(f)\bot_\alpha)\inv$. Here $\Ch(f)\bot_\alpha$
   is an order-preserving refinement into $\Ch(f)\alpha$ out of a run, hence is
   $\bot_{\Ch(f)\alpha}$ (\Cref{prop:push}), and likewise
   $\Ch(f)\top_\alpha = \top_{\Ch(f)\alpha}$. So both composites send $\alpha$ to
@@ -808,7 +811,7 @@ events of $s$; so $x$ passes $s$ between positions $\pos_x(s)$ and $\pos_x(s)+1$
 
 \gap{One or two sentences: unwind \Cref{def:artin-poly} to Artin's relations \cite{Artin}, so
 $\pres{\ArtBraid}$ has endomorphism monoid $(B_N^+)\op$ at $N$ and no arrows between distinct
-objects, i.e. $\pres{\ArtBraid} = \BraidPosOp$.}
+objects; then invoke \Cref{cor:brZ}'s reversal to read it as $\BraidPos$.}
 
 \begin{theorem}\label{thm:C}
   $\Art(Z) \cong \ArtBraid$ in $\Polygraph$.
@@ -823,10 +826,13 @@ objects, i.e. $\pres{\ArtBraid} = \BraidPosOp$.}
 \end{proof}
 
 \begin{corollary}\label{cor:brZ}
-  $\Br(Z) \simeq \BraidPosOp$.
+  $\Br(Z) \simeq \BraidPos$.
 \end{corollary}
 \begin{proof}
-  \Cref{thm:A} at $K = Z$ and \Cref{thm:C}.
+  \Cref{thm:A} at $K = Z$ and \Cref{thm:C} give $\Br(Z) \simeq \pres{\ArtBraid}$, whose
+  endomorphism monoid at $N$ is $B_N^+$ read with words composing left to right, that is
+  $(B_N^+)\op$. Reversing words is an anti-automorphism of $B_N^+$, both Artin relations being
+  invariant under reversal, so $(B_N^+)\op \cong B_N^+$.
 \end{proof}
 
 \gap{Closing paragraph: combining with \Cref{thm:B}, the terminal map gives
