@@ -679,8 +679,8 @@ runs are a skeleton of $\Br(K)$.}
 
 \gap{One sentence: the square is an equality, not an isomorphism, because an order-preserving
 refinement is determined by its source and target (\Cref{prop:W}), so transporting the two legs of
-a cell involves no choice. The tree states it as an isomorphism pinned at the identity, which is
-this equality read through \texttt{eqToIso}.}
+a cell involves no choice. The tree states the equality, \texttt{paperSquare}, and derives the
+comparison isomorphism from it as \texttt{eqToIso}.}
 
 \section{The point}\label{sec:thmC}
 
@@ -766,8 +766,10 @@ events of $s$; so $x$ passes $s$ between positions $\pos_x(s)$ and $\pos_x(s)+1$
 \end{definition}
 
 \gap{One or two sentences: unwind \Cref{def:artin-poly} to Artin's relations \cite{Artin}, so
-$\pres{\ArtBraid}$ has endomorphism monoid $(B_N^+)\op$ at $N$ and no arrows between distinct
-objects; then invoke \Cref{cor:brZ}'s reversal to read it as $\BraidPos$.}
+$\pres{\ArtBraid}$ has endomorphism monoid $B_N^+$ at $N$ and no arrows between distinct objects.}
+
+Write $\BraidPos$ for the category with objects $N \in \N$, no arrows between distinct objects, and
+$\End(N) = B_N^+$ composed left to right, as we read words.
 
 \begin{theorem}\label{thm:C}
   $\Art(Z) \cong \ArtBraid$ in $\Polygraph$.
@@ -785,10 +787,7 @@ objects; then invoke \Cref{cor:brZ}'s reversal to read it as $\BraidPos$.}
   $\Br(Z) \simeq \BraidPos$.
 \end{corollary}
 \begin{proof}
-  \Cref{thm:A} at $K = Z$ and \Cref{thm:C} give $\Br(Z) \simeq \pres{\ArtBraid}$, whose
-  endomorphism monoid at $N$ is $B_N^+$ read with words composing left to right, that is
-  $(B_N^+)\op$. Reversing words is an anti-automorphism of $B_N^+$, both Artin relations being
-  invariant under reversal, so $(B_N^+)\op \cong B_N^+$.
+  \Cref{thm:A} at $K = Z$ and \Cref{thm:C}.
 \end{proof}
 
 \gap{Closing paragraph: combining with \Cref{thm:B}, the terminal map gives
