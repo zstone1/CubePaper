@@ -234,9 +234,9 @@ functor $q$.
 \begin{proposition}[{\cite[Ch.~2]{Polygraphs}}]\label{prop:present-univ}
   Let $\Pg$ be a $2$-polygraph and $C$ a category.
   \begin{enumerate}
-    \item A functor $\pres{\Pg} \to C$ is the same thing as a map $V \to \Ob C$ together with an
-      arrow of $C$ for each $1$-cell, such that the two words of every $2$-cell are sent to the
-      same arrow.
+    \item To give a functor $\pres{\Pg} \to C$ is to give an object of $C$ for each $0$-cell and
+      an arrow of $C$ for each $1$-cell, subject to the two words of every $2$-cell being sent to
+      the same arrow.
     \item Two functors out of $\pres{\Pg}$ that agree on $0$-cells and $1$-cells are equal.
     \item A morphism of polygraphs bijective in every dimension is an isomorphism.
   \end{enumerate}
@@ -315,8 +315,7 @@ intervals (\Cref{conv:events}).
 
 \begin{lemma}\label{lem:sq-range}
   The map $f_*\inv$ preserves the order of any two events lying in distinct blocks of $b$. Hence
-  $\Cross(f) \subseteq \Sq(b)$: the two events of a crossing share a block, so no squareness
-  condition need be imposed. Moreover a square $(p,q)$ of $b$ lies in the image of $f_*$ if and
+  $\Cross(f) \subseteq \Sq(b)$, the two events of a crossing lying in one block of $b$. A square $(p,q)$ of $b$ lies in the image of $f_*$ if and
   only if $f_*\inv p$ and $f_*\inv q$ lie in one block of $a$.
 \end{lemma}
 \begin{proof}
@@ -349,7 +348,7 @@ intervals (\Cref{conv:events}).
   A refinement $f$ is \textbf{order preserving} when $\Cross(f) = \emptyset$. Write $W = W_K$ for
   the class of order-preserving refinements of $\Ch(K)$, and
   \[
-    \Br(K) \;:=\; \Ch(K)\op\bigl[(W\op)\inv\bigr], \qquad [c] := Q(c) .
+    \Br(K) \;:=\; \Ch(K)\op\bigl[(W\op)\inv\bigr] .
   \]
 \end{definition}
 
@@ -381,20 +380,19 @@ Fix $K$, and let $d$ be a chain of $K$ on $N$ events.
 \subsection{Runs over a chain}
 
 \begin{definition}\label{def:runover}
-  A \textbf{run over $d$} is a refinement $x : X \to d$ whose source $X$ is a run; write
-  $\RunOver(d)$ for the set of these. Since $X$ has shape $[1,\dots,1]$, the permutation $x_*$
-  enumerates the events of $d$ in the order $x$ fires them; write $p <_x q$ when
-  $x_*\inv(p) < x_*\inv(q)$, the \textbf{firing order} of $x$.
+  A \textbf{run over $d$} is a refinement $x : X \to d$ whose source is a run; write $\RunOver(d)$
+  for the set of these.
 \end{definition}
 
-A refinement out of a run is determined by its map of wedges, the classifying map of the source
-being forced; so $\RunOver(d)$ is the set of runs of the wedge $\bigvee a$, and $\Cross(x)$ is the
-inversion set of the firing order.
+Such a refinement is determined by its map of wedges, the classifying map of its source being
+forced, so $\RunOver(d)$ is the set of runs of $\bigvee a$. That source has shape $[1,\dots,1]$,
+so $x_*$ enumerates the events of $d$; write $p <_x q$ when $x_*$ reaches $p$ before $q$. Then
+$\Cross(x)$ is the inversion set of $<_x$.
 
 \begin{lemma}\label{lem:firing-blocks}
-  A run over $d$ fires the blocks of $d$ in order: $\blk(p) < \blk(q)$ implies $p <_x q$. So $x$ is
-  a choice of linear order on each block of $d$, and $\blk$ is a monotone surjection from the
-  firing order onto the blocks, with interval fibres.
+  The order $<_x$ takes the blocks of $d$ in turn: if $\blk(p) < \blk(q)$ then $p <_x q$. Hence $x$
+  amounts to a choice of linear order on each block, and $\blk$ is monotone for $<_x$ with interval
+  fibres.
 \end{lemma}
 \begin{proof}
   The blocks of the source are singletons, so $\blk \circ x_* = \blk(x)$, monotone by
@@ -406,7 +404,7 @@ inversion set of the firing order.
   $x \mapsto \Cross(x)$ is a bijection from $\RunOver(d)$ onto the biclosed subsets of $\Sq(d)$.
 \end{theorem}
 \begin{proof}
-  Both sides are local to a block (\Cref{lem:firing-blocks}), so fix one. A run restricts there to
+  The map and the condition are both local to a block (\Cref{lem:firing-blocks}), so fix one. A run restricts there to
   a linear order; its tournament is that order, which has no cycle at all, and $\Cross$ restricts
   to its inversion set. Conversely a biclosed $R$ gives a tournament with no $3$-cycle, hence a
   transitive one --- if $p \to q$ and $q \to r$ then $r \to p$ would close a $3$-cycle --- and a
@@ -440,29 +438,30 @@ biclosed.
 
 \subsection{Steps, covers, and cells}
 
+A square $s$ is a \textbf{step} of $x \in \RunOver(d)$ when $\Cross(x) \symdiff \{s\}$ is
+biclosed; the run reversing that set is the \textbf{flip} of $x$ at $s$, written $x^s$.
+
 \begin{lemma}\label{lem:steps}
-  Call a square $s$ a \textbf{step} of $x \in \RunOver(d)$ when $\Cross(x) \symdiff \{s\}$ is
-  biclosed, and write $x^s$ for the run with $\Cross(x^s) = \Cross(x) \symdiff \{s\}$, the
-  \textbf{flip} of $x$ at $s$. Then $s$ is a step of $x$ if and only if its two events are
-  consecutive in the firing order of $x$, and $x$ has exactly $\deg d$ steps.
+  A square is a step of $x$ if and only if its two events are consecutive for $<_x$, and $x$ has
+  exactly $\deg d$ steps.
 \end{lemma}
 \begin{proof}
-  A block's events are consecutive in the firing order (\Cref{lem:firing-blocks}), so ``consecutive
+  A block's events are consecutive for $<_x$ (\Cref{lem:firing-blocks}), so ``consecutive
   in the block'' and ``consecutive overall'' agree. If the two events of $s$ are consecutive,
   toggling $s$ swaps an adjacent pair of a linear order, so the result is again a linear order and
   is biclosed by \Cref{thm:structure}. If a third event of the block fires strictly between them,
   toggling $s$ swaps the pair but not the order of either event against that third one, which would
   then have to lie both before and after the pair.
 
-  So the steps are the covers of the firing order lying inside a block. The firing order is a chain
+  So the steps are the covers of $<_x$ lying inside a block, and $<_x$ is a chain
   on $N$ elements and $\blk$ is a monotone surjection from it onto the $r$ blocks
   (\Cref{lem:firing-blocks}); such a map collapses exactly $N - r = \deg d$ covers.
 \end{proof}
 
 \begin{lemma}\label{lem:cover}
-  If $x < z$ in $\RunOver(d)$ then some step $s$ of $x$ outside $\Cross(x)$ lies in $\Cross(z)$.
-  Hence $x \lessdot y$ if and only if $\Cross(y) = \Cross(x) \cup \{s\}$ for such an $s$, in which
-  case $y = x^s$; and $\RunOver(d)$ is graded by $|\Cross|$, from $0$ at $\bot_d$ to $|\Sq(d)|$ at
+  If $x < z$ in $\RunOver(d)$ then $\Cross(z)$ contains a step of $x$ that $\Cross(x)$ does not.
+  Consequently $x \lessdot y$ exactly when $\Cross(y) = \Cross(x) \cup \{s\}$ for such a step $s$,
+  and then $y = x^s$. So $|\Cross|$ grades $\RunOver(d)$, from $0$ at $\bot_d$ to $|\Sq(d)|$ at
   $\top_d$.
 \end{lemma}
 \begin{proof}
@@ -477,27 +476,28 @@ biclosed.
   differing by one element are a covering pair, by \Cref{thm:structure}.
 \end{proof}
 
+Say that a set $S$ of steps of $x$ \textbf{rises} from $x$ when $S \cap \Cross(x) = \emptyset$.
+
 \begin{proposition}\label{prop:factorisations}
   Let $x \in \RunOver(d)$. Sending a factorisation $X \to m \to d$ of $x$ to the set of steps of
-  $x$ whose two events share a block of $m$ is a bijection onto the sets of steps of $x$; write
-  $m_S$ for the middle at $S$ and $\iota_S : X \to m_S$, $\pi_S : m_S \to d$ for its legs. Then
-  $\deg m_S = |S|$, and if $S \cap \Cross(x) = \emptyset$ --- we then say $S$ \textbf{rises} from
-  $x$ --- then $\iota_S$ is order preserving.
+  $x$ whose two events share a block of $m$ is a bijection onto the sets of steps of $x$. Write
+  $m_S$ for the middle it sends to $S$, and $\iota_S : X \to m_S$, $\pi_S : m_S \to d$ for the two
+  legs. Then $\deg m_S = |S|$, and $\iota_S$ is order preserving whenever $S$ rises from $x$.
 \end{proposition}
 \begin{proof}
   A middle $m$ makes the $N$ events into its blocks, which by \Cref{lem:firing-blocks} applied to
-  $\iota$ are intervals of the firing order of $x$, and $\pi$ requires each such interval to lie
+  $\iota$ are intervals of $<_x$, and $\pi$ requires each such interval to lie
   inside one block of $d$; conversely such an interval partition arises from the chain whose blocks
   are its parts, in order. The factorisation is determined by that shape: a map of wedges is
   determined by its action on events and injective there (\Cref{prop:coords}), hence a
   monomorphism, while the first leg is forced by which events fall in which part. An interval
-  partition of a chain is the same thing as the set of covers it does not cut; those covers lie
+  partition of a chain is recorded by the set of covers it does not cut; those covers lie
   inside a block, so they are steps (\Cref{lem:steps}); and $\deg m$ is $N$ minus the number of
   parts, which is the number of uncut covers.
 
   Let $S$ rise from $x$. Since $\iota_S$ is a run over $m_S$, its crossings are the squares of
-  $m_S$ that $x$ reverses, that is the pairs inside one part that $x$ reverses. The covers of the
-  firing order inside a part all lie in $S$, hence none is reversed, so the firing order agrees
+  $m_S$ that $x$ reverses, that is the pairs inside one part that $x$ reverses. The covers of $<_x$
+  inside a part all lie in $S$, hence none is reversed, so $<_x$ agrees
   with the event order on consecutive pairs of the part and hence, by transitivity, on every pair
   of it. So $\Cross(\iota_S) = \emptyset$.
 \end{proof}
@@ -525,7 +525,7 @@ spans, and a $0$-cell is a run.}
   $\Cross(\pi_S) = \Cross(x)$.
 
   For the second claim list a part as $p_1 < \cdots < p_k$; as in the previous proof this is also
-  its firing order, so each $(p_i,p_{i+1})$ lies in $S$ and is reversed by $z$. Since $\Cross(z)$
+  the restriction of $<_z$ to it, so each $(p_i,p_{i+1})$ lies in $S$ and is reversed by $z$. Since $\Cross(z)$
   is biclosed, the first clause applied to the triples $(p_i, p_{i+1}, p_j)$ gives, by induction on
   $j-i$, that $z$ reverses every pair of the part.
 \end{proof}
@@ -541,11 +541,11 @@ spans, and a $0$-cell is a run.}
 \end{corollary}
 \begin{proof}
   $m_{\{s\}}$ has degree $1$ and $\dom\bot_{m_{\{s\}}} = \dom x$ by \Cref{prop:factorisations}; by
-  \Cref{lem:closure} its top composes forward to the least element above $x$ reversing $s$, namely
+  \Cref{lem:closure} the image of its top is the least element above $x$ that reverses $s$, which is
   $x^s = y$. Conversely a chain $\alpha$ of degree $1$ has one square, so $\RunOver(\alpha)$ is the
   two-element poset $\bot_\alpha \lessdot \top_\alpha$, and the factorisation through its one step
   is $\alpha$. For the last claim the step of $qe$ is $q_*$ of the step of $e$ (\Cref{prop:push}),
-  and $q_*$ carries the firing order of $x$ to that of $qx$, so the two factorisations cut the same
+  and $q_*$ carries $<_x$ to $<_{qx}$, so the two factorisations cut the same
   partition and have the same middle.
 \end{proof}
 
@@ -587,9 +587,10 @@ spans, and a $0$-cell is a run.}
 
 The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
 \begin{definition}\label{def:poly}
-  The \textbf{Artin polygraph} $\Art(K)$ has $0$-cells the runs of $K$, $1$-cells
-  the $1$-cells and $2$-cells of \Cref{def:cell} --- the chains of degree $1$ and $2$ spanning a
-  given pair of runs --- and the words $\src$, $\tgt$ of \Cref{prop:polygon}.
+  The \textbf{Artin polygraph} $\Art(K)$ has the runs of $K$ as $0$-cells. Its $1$-cells and
+  $2$-cells from $X$ to $Y$ are the $1$-cells and $2$-cells from $X$ to $Y$ of \Cref{def:cell},
+  that is the chains of degree $1$ and $2$ spanning those two runs, and each $2$-cell $e$ is
+  attached along the pair of words $\src(e)$, $\tgt(e)$ of \Cref{prop:polygon}.
 \end{definition}
 
 \gap{One paragraph on the name: $\Art(K)$ is built from $K$ alone, with no braid theory in it, and
@@ -604,14 +605,14 @@ The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
 \end{proposition}
 \begin{proof}
   Let $x \lessdot y_1$, $x \lessdot y_2$ be distinct covers with steps $s_1 \neq s_2$, and $z$ a
-  common upper bound. Then $S = \{s_1,s_2\}$ rises from $x$, so $\alpha := m_S$ is a chain of
-  degree $2$, that is a $2$-cell (\Cref{prop:factorisations}), and $j := \pi_S\top_\alpha$
+  common upper bound. Then $S = \{s_1,s_2\}$ rises from $x$, so $m_S$ is a chain of
+  degree $2$, that is a $2$-cell (\Cref{prop:factorisations}), and $j := \pi_S\top_{m_S}$
   satisfies $j \le z$ (\Cref{lem:closure}). By \Cref{prop:polygon} the two maximal chains of
-  $\RunOver(\alpha)$ are $\src(\alpha)$ and $\tgt(\alpha)$, and they leave $\bot_\alpha$ by its two
-  covers. Composition with $\pi_S$ carries $\bot_\alpha$ to $x$ and $\top_\alpha$ to $j$, carries
+  $\RunOver(m_S)$ are $\src(m_S)$ and $\tgt(m_S)$, and they leave $\bot_{m_S}$ by its two
+  covers. Composition with $\pi_S$ carries $\bot_{m_S}$ to $x$ and $\top_{m_S}$ to $j$, carries
   covers to covers (\Cref{prop:push}, \Cref{lem:cover}) and keeps the $1$-cell each cover reads as
   (\Cref{cor:covercell}). So the two chains become two paths from $x$ to $j$, leaving by $y_1$ and
-  by $y_2$ and reading as $\src(\alpha)$ and $\tgt(\alpha)$, which are equal in $\pres{\Art(K)}$.
+  by $y_2$ and reading as $\src(m_S)$ and $\tgt(m_S)$, which are equal in $\pres{\Art(K)}$.
 
   For the last claim, composition with $q$ is monotone, so $x \mapsto \Gamma_d(qx)$ and $\Gamma_o$
   are functors out of $\RunOver(o)$; they agree on covers by \Cref{cor:covercell}, hence agree, by
@@ -632,16 +633,16 @@ An $n$-cell $\alpha$ from $X$ to $Y$ comes with the two refinements $\bot_\alpha
 $\top_\alpha : Y \to \alpha$, of which the first is order preserving; since $Q$ inverts
 $\bot_\alpha\op$, we may set
 \[
-  E(X) := [X], \qquad
-  E(\alpha) \;:=\; Q(\top_\alpha\op) \circ Q(\bot_\alpha\op)\inv \;:\; [X] \to [Y] .
+  E(X) := Q(X), \qquad
+  E(\alpha) \;:=\; Q(\top_\alpha\op) \circ Q(\bot_\alpha\op)\inv \;:\; Q(X) \to Q(Y) .
 \]
 
 \begin{lemma}\label{lem:telescope}
   Let $d$ be a chain and $z \in \RunOver(d)$. Every path from $\bot_d$ to $z$ in
   $\mathrm{Hasse}(\RunOver(d))$ reads, under $E \circ \gamma$, as
-  $Q(z\op) \circ Q(\bot_d\op)\inv$. In particular the two words of a $2$-cell $e$ are paths from
-  $\bot_e$ to $\top_e$ (\Cref{prop:polygon}), so they have the same image and $E$ extends to a
-  functor $\pres{\Art(K)} \to \Br(K)$ by \Cref{prop:present-univ}(i).
+  $Q(z\op) \circ Q(\bot_d\op)\inv$. The two words of a $2$-cell $e$ are both paths from $\bot_e$ to
+  $\top_e$ (\Cref{prop:polygon}); they therefore have equal image, and $E$ extends to a functor
+  $\pres{\Art(K)} \to \Br(K)$ by \Cref{prop:present-univ}(i).
 \end{lemma}
 \begin{proof}
   Induct on the length of the path, the empty path reading as the identity. For a cover
@@ -698,7 +699,7 @@ $\bot_\alpha\op$, we may set
   For the other composite, \Cref{lem:telescope} gives
   $E(\Theta(u\op)) = Q((u\bot_c)\op)Q(\bot_d\op)\inv
    = Q(\bot_c\op) \circ Q(u\op) \circ Q(\bot_d\op)\inv$, which is $Q(u\op)$ conjugated by the
-  isomorphisms $[c] \cong [\dom\bot_c]$ that $Q$ makes of the order-preserving refinements
+  isomorphisms $Q(c) \cong Q(\dom\bot_c)$ that $Q$ makes of the order-preserving refinements
   $\bot_c$. So $E\Theta \cong Q$, and $E\Phi \cong \id$ by uniqueness of descent
   (\Cref{prop:loc}).
 \end{proof}
@@ -718,22 +719,22 @@ runs are a skeleton of $\Br(K)$.}
   \]
 \end{theorem}
 \begin{proof}
-  Write $f_\bullet := \Ch(f)$. A run over a chain $e$ is determined by its map of wedges
-  (\Cref{def:runover}), and $f_\bullet e$ has the same shape and the same maps of wedges into it,
-  so $\RunOver(e) = \RunOver(f_\bullet e)$ as ordered sets. Everything in \Cref{def:crossings},
-  \Cref{lem:steps} and \Cref{cor:covercell} is defined from the map of wedges alone, so $f_\bullet$
+  A run over a chain $e$ is determined by its map of wedges
+  (\Cref{def:runover}), and $\Ch(f) e$ has the same shape and the same maps of wedges into it,
+  so $\RunOver(e) = \RunOver(\Ch(f) e)$ as ordered sets. Everything in \Cref{def:crossings},
+  \Cref{lem:steps} and \Cref{cor:covercell} is defined from the map of wedges alone, so $\Ch(f)$
   preserves $\bot$, $\top$, cells, steps, covers and $\gamma$; and it carries the lexicographic
-  order on $\Sq(e)$ to the lexicographic order on $\Sq(f_\bullet e) = \Sq(e)$, so it preserves
+  order on $\Sq(e)$ to the lexicographic order on $\Sq(\Ch(f) e) = \Sq(e)$, so it preserves
   $\src$ and $\tgt$ letter by letter. Hence $\Art(f)$ is a morphism of polygraphs, functorially in
   $f$ because $\Ch$ is a functor.
 
-  Both composites send a run $X$ to $[f_\bullet X]$. On a $1$-cell $\alpha$, $\Br(f)$ is the
-  descent of $Q_L \circ f_\bullet\op$, so it sends $E_K(\alpha)$ to
-  $Q((f_\bullet\top_\alpha)\op) \circ Q((f_\bullet\bot_\alpha)\op)\inv$. Here $f_\bullet\bot_\alpha$
-  is an order-preserving refinement into $f_\bullet\alpha$ out of a run, hence is
-  $\bot_{f_\bullet\alpha}$ (\Cref{prop:push}), and likewise
-  $f_\bullet\top_\alpha = \top_{f_\bullet\alpha}$. So both composites send $\alpha$ to
-  $E_L(f_\bullet\alpha)$, and \Cref{prop:present-univ}(ii) applies.
+  Both composites send a run $X$ to $Q(\Ch(f)X)$. On a $1$-cell $\alpha$, $\Br(f)$ is the
+  descent of $Q_L \circ \Ch(f)\op$, so it sends $E_K(\alpha)$ to
+  $Q((\Ch(f)\top_\alpha)\op) \circ Q((\Ch(f)\bot_\alpha)\op)\inv$. Here $\Ch(f)\bot_\alpha$
+  is an order-preserving refinement into $\Ch(f)\alpha$ out of a run, hence is
+  $\bot_{\Ch(f)\alpha}$ (\Cref{prop:push}), and likewise
+  $\Ch(f)\top_\alpha = \top_{\Ch(f)\alpha}$. So both composites send $\alpha$ to
+  $E_L(\Ch(f)\alpha)$, and \Cref{prop:present-univ}(ii) applies.
 \end{proof}
 
 \gap{One sentence: the square is an equality, not an isomorphism, because an order-preserving
@@ -766,10 +767,11 @@ $\cox(i,k) := 3$ when $|i-k| = 1$ and $\cox(i,k) := 2$ otherwise.
   otherwise $|\Sq(e)| = 2$, by \Cref{prop:polygon}.
 \end{proof}
 
+For a step $s$ of $x$, write $\pos_x(s)$ for the earlier of the two positions $<_x$ gives the
+events of $s$; so $x$ passes $s$ between positions $\pos_x(s)$ and $\pos_x(s)+1$.
+
 \begin{lemma}\label{lem:pos}
-  Let $d$ be a chain on $N$ events, $x \in \RunOver(d)$, and $s$ a step of $x$. Let $\pos_x(s)$ be
-  the earlier of the two times at which $x$ fires the events of $s$, so $x$ passes $s$ between
-  times $\pos_x(s)$ and $\pos_x(s)+1$. Then:
+  Let $d$ be a chain on $N$ events and $x \in \RunOver(d)$. Then:
   \begin{enumerate}
     \item $\pos_x$ is a bijection from the steps of $x$ onto $\cut(d)$;
     \item $\pos_{x^s}(s) = \pos_x(s)$;
@@ -779,9 +781,9 @@ $\cox(i,k) := 3$ when $|i-k| = 1$ and $\cox(i,k) := 2$ otherwise.
   $\gamma(x \lessdot y) = \sigma_{\pos_x(s)}$.
 \end{lemma}
 \begin{proof}
-  (i) The fibres of $\blk$ on the firing order are consecutive intervals of lengths
+  (i) The fibres of $\blk$ for $<_x$ are consecutive intervals of lengths
   $a_1,\dots,a_r$ (\Cref{lem:firing-blocks}), independent of $x$, so the set of times $t$ with $t$
-  and $t+1$ in one block is $\cut(d)$ for every $x$. A step is a cover of the firing order inside a
+  and $t+1$ in one block is $\cut(d)$ for every $x$. A step is a cover of $<_x$ inside a
   block (\Cref{lem:steps}), so $\pos_x$ lands in $\cut(d)$, and it is injective because distinct
   covers of a chain have distinct lower ends; both sides have $\deg d$ elements (\Cref{lem:steps},
   \Cref{lem:cuts}). (ii) Flipping $s$ exchanges its two times and changes no other. (iii) $\bot_d$
