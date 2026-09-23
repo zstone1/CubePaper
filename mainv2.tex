@@ -262,17 +262,7 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
 
 \begin{definition}\label{def:squares}
   A \textbf{square} of $a$ is a pair $s = (p,q)$ of events with $p < q$ and $\blk(p) = \blk(q)$;
-  write $\Sq(a)$ for the set of them, so $|\Sq(a)| = \sum_i \binom{a_i}{2}$. A set
-  $R \subseteq \Sq(a)$ orients the complete graph on each block: send $(p,q)$ to the edge
-  $q \to p$ when $(p,q) \in R$, and to $p \to q$ otherwise. Call $R$ \textbf{biclosed} when no
-  block's tournament has a directed $3$-cycle. On a triple $p<q<r$ of one block the two cycles are
-  $p \to r \to q \to p$ and $p \to q \to r \to p$, so this says
-  \[
-    (p,q) \in R \text{ and } (q,r) \in R \implies (p,r) \in R,
-    \qquad
-    (p,r) \in R \implies (p,q) \in R \text{ or } (q,r) \in R .
-  \]
-  We write $\Sq(d)$ for the squares of a chain's shape, and $f_*$ also for the induced injection
+  write $\Sq(a)$ for the set of them, so $|\Sq(a)| = \sum_i \binom{a_i}{2}$. We write $\Sq(d)$ for the squares of a chain's shape, and $f_*$ also for the induced injection
   $\Sq(a) \to \Sq(b)$, $(p,q) \mapsto (f_*p, f_*q)$, well defined because $f_*$ is increasing on
   blocks (\Cref{prop:coords}).
 \end{definition}
@@ -374,32 +364,23 @@ so $x_*$ enumerates the events of $d$; write $p <_x q$ when $x_*$ reaches $p$ be
 $\Cross(x)$ is the inversion set of $<_x$.
 
 \begin{lemma}\label{lem:firing-blocks}
-  If $\blk(p) < \blk(q)$ then $p <_x q$; hence $\blk$ is monotone for $<_x$, with interval fibres.
+  If $\blk(p) < \blk(q)$ then $p <_x q$; hence $\blk$ is monotone for $<_x$, with interval fibres,
+  and $x$ is exactly a choice of linear order on each block. In particular $\Cross$ is injective on
+  $\RunOver(d)$.
 \end{lemma}
 \begin{proof}
   The blocks of the source are singletons, so $\blk \circ x_* = \blk(x)$, monotone by
   \Cref{prop:coords}. A monotone surjection out of a chain has interval fibres, here the blocks of
-  $d$; the only freedom left is the order inside each.
+  $d$; the only freedom left is the order inside each. A linear order is determined by its inversion
+  set, and $\Cross(x)$ restricts on each block to the inversion set there.
 \end{proof}
 
-\begin{theorem}\label{thm:structure}
-  $x \mapsto \Cross(x)$ is a bijection from $\RunOver(d)$ onto the biclosed subsets of $\Sq(d)$.
-\end{theorem}
-\begin{proof}
-  The map and the condition are both local to a block (\Cref{lem:firing-blocks}), so fix one. A run restricts there to
-  a linear order; its tournament is that order, which has no cycle at all, and $\Cross$ restricts
-  to its inversion set. Conversely a biclosed $R$ gives a tournament with no $3$-cycle, hence a
-  transitive one --- if $p \to q$ and $q \to r$ then $r \to p$ would close a $3$-cycle --- and a
-  transitive tournament is a linear order, whose inversion set is $R$.
-\end{proof}
+\gap{Note that for a single block $\Cross$ is the classical inversion set and inclusion of them is
+the right weak order \cite[\S3.1]{BB}; the order theory below is that statement, block by block.}
 
-\gap{Note that for a single block this is the classical description of inversion sets, and that
-inclusion of them is the right weak order \cite[\S3.1]{BB}; the order theory below is that
-statement, block by block.}
-
-We order $\RunOver(d)$ by $x \le y :\!\iff \Cross(x) \subseteq \Cross(y)$, and write $\bot_d$,
-$\top_d$ for its least and greatest elements, which exist because $\emptyset$ and $\Sq(d)$ are
-biclosed.
+We order $\RunOver(d)$ by $x \le y :\!\iff \Cross(x) \subseteq \Cross(y)$, and write $\bot_d$ and
+$\top_d$ for the runs taking each block in event order and in reverse, its least and greatest
+elements.
 
 \begin{proposition}\label{prop:push}
   Let $q : o \to d$ be a refinement. Composition with $q$ is an order embedding
@@ -414,30 +395,24 @@ biclosed.
 \begin{proof}
   The formula is \Cref{lem:cocycle}. Since $q_*$ is injective with image disjoint from $\Cross(q)$
   (\Cref{lem:sq-range}), $qx \le qy$ if and only if $x \le y$, and $\Cross(q\bot_o) = \Cross(q)$.
-  The remaining equivalences are \Cref{thm:structure}, and the last clause is the formula applied
+  The remaining equivalences are \Cref{def:W} and the injectivity of $\Cross$
+  (\Cref{lem:firing-blocks}), and the last clause is the formula applied
   to $c \to d$.
 \end{proof}
 
 \subsection{Steps, covers, and cells}
 
-A square $s$ is a \textbf{step} of $x \in \RunOver(d)$ when $\Cross(x) \symdiff \{s\}$ is
-biclosed; the run reversing that set is the \textbf{flip} of $x$ at $s$, written $x^s$.
+A square $s$ is a \textbf{step} of $x \in \RunOver(d)$ when its two events are consecutive for
+$<_x$; the \textbf{flip} $x^s$ is $x$ with those two swapped.
 
 \begin{lemma}\label{lem:steps}
-  A square is a step of $x$ if and only if its two events are consecutive for $<_x$, and $x$ has
-  exactly $\deg d$ steps.
+  $\Cross(x^s) = \Cross(x) \symdiff \{s\}$, and $x$ has exactly $\deg d$ steps.
 \end{lemma}
 \begin{proof}
-  A block's events are consecutive for $<_x$ (\Cref{lem:firing-blocks}), so ``consecutive
-  in the block'' and ``consecutive overall'' agree. If the two events of $s$ are consecutive,
-  toggling $s$ swaps an adjacent pair of a linear order, so the result is again a linear order and
-  is biclosed by \Cref{thm:structure}. If a third event of the block fires strictly between them,
-  toggling $s$ swaps the pair but not the order of either event against that third one, which would
-  then have to lie both before and after the pair.
-
-  So the steps are the covers of $<_x$ lying inside a block, and $<_x$ is a chain
-  on $N$ elements and $\blk$ is a monotone surjection from it onto the $r$ blocks
-  (\Cref{lem:firing-blocks}); such a map collapses exactly $N - r = \deg d$ covers.
+  Swapping a consecutive pair changes the order of that pair and of no other. The steps are the
+  covers of $<_x$ lying inside a block; $<_x$ is a chain on $N$ elements and $\blk$ is a monotone
+  surjection from it onto the $r$ blocks (\Cref{lem:firing-blocks}), and such a map collapses
+  exactly $N - r = \deg d$ covers.
 \end{proof}
 
 \begin{lemma}\label{lem:cover}
@@ -449,12 +424,14 @@ biclosed; the run reversing that set is the \textbf{flip} of $x$ at $s$, written
   If $z$ agreed with $x$ on every pair covering for $<_x$, then $<_x$ would be contained in $<_z$
   by transitivity, and two linear orders so related are equal, so $z = x$. So some covering pair
   $p \lessdot_x q$ has $q <_z p$. Its two events share a block, since otherwise
-  \Cref{lem:firing-blocks} would make every run fire $p$ first, so the pair is a step $s$ of $x$
-  (\Cref{lem:steps}). If $s = (p,q)$ then $s \in \Cross(z) \setminus \Cross(x)$, as wanted; if
+  \Cref{lem:firing-blocks} would make every run fire $p$ first, so the pair is a step $s$ of $x$.
+  If $s = (p,q)$ then $s \in \Cross(z) \setminus \Cross(x)$, as wanted; if
   $s = (q,p)$ then $s \in \Cross(x) \subseteq \Cross(z)$, which says $p <_z q$, a contradiction.
 
-  Given such an $s$ we have $x \le x^s \le y$, forcing $y = x^s$; conversely two biclosed sets
-  differing by one element are a covering pair, by \Cref{thm:structure}.
+  Given such an $s$ we have $x \le x^s \le y$, forcing $y = x^s$; conversely if
+  $\Cross(y) = \Cross(x) \cup \{s\}$ then any $x \le w \le y$ has
+  $\Cross(x) \subseteq \Cross(w) \subseteq \Cross(y)$, so $w$ is $x$ or $y$ by injectivity
+  (\Cref{lem:firing-blocks}).
 \end{proof}
 
 Say that a set $S$ of steps of $x$ \textbf{rises} from $x$ when $S \cap \Cross(x) = \emptyset$.
@@ -473,7 +450,7 @@ Say that a set $S$ of steps of $x$ \textbf{rises} from $x$ when $S \cap \Cross(x
   determined by its action on events and injective there (\Cref{prop:coords}), hence a
   monomorphism, while the first leg is forced by which events fall in which part. An interval
   partition of a chain is recorded by the set of covers it does not cut; those covers lie
-  inside a block, so they are steps (\Cref{lem:steps}); and $\deg m$ is $N$ minus the number of
+  inside a block, so they are steps; and $\deg m$ is $N$ minus the number of
   parts, which is the number of uncut covers.
 
   Let $S$ rise from $x$. Since $\iota_S$ is a run over $m_S$, its crossings are the squares of
@@ -536,33 +513,32 @@ spans, and a $0$-cell is a run.}
   two blocks of dimension $2$ and $|\Sq(e)| = 2$. In both cases $\RunOver(e)$ has exactly two
   maximal chains from $\bot_e$ to $\top_e$, each of length $|\Sq(e)|$, and they leave $\bot_e$ by
   different covers. Write $\src(e)$ and $\tgt(e)$ for the words of $1$-cells that $\gamma$ reads off
+In both cases $\src(e)$ reverses the squares of $e$ in lexicographic order and $\tgt(e)$ in the
+reverse order.\footnote{The formalisation \cite{Cubical} works with the sets $\Cross(x)$ in place of
+the orders $<_x$: \texttt{reversedIso} identifies $\RunOver(d)$ with the subsets of $\Sq(d)$ that
+are \emph{biclosed}, meaning that no block's induced tournament has a directed $3$-cycle, and it
+takes the last sentence above as the definition of the two words. The four and the six runs are
+\texttt{card\_biclosed\_of\_isEmpty\_triangles} and \texttt{card\_biclosed\_of\_triangle}, and this
+proposition is derived twice there: as \texttt{eq\_srcPath\_or\_tgtPath\_of\_triangles}, from
+\texttt{subsingleton\_triangles} and \texttt{biclosed\_iff\_of\_triangle}, and as
+\texttt{eq\_srcPath\_or\_tgtPath}, from $2$-regularity of $\mathrm{Hasse}(\RunOver(e))$.}
+
   them, labelled so that $\src(e)$ begins with the least square for the lexicographic order on
   $\Sq(e)$, by the smaller event and then the larger.
 \end{proposition}
-In both cases $\src(e)$ reverses the squares of $e$ in lexicographic order and $\tgt(e)$ in the
-reverse order.\footnote{The formalisation \cite{Cubical} takes that last sentence as the definition
-of the two words, and carries both derivations of this proposition: the one above, as
-\texttt{eq\_srcPath\_or\_tgtPath\_of\_triangles}, resting on \texttt{subsingleton\_triangles} and
-\texttt{biclosed\_iff\_of\_triangle}; and one from $2$-regularity of $\mathrm{Hasse}(\RunOver(e))$,
-as \texttt{eq\_srcPath\_or\_tgtPath}. The two are independent, meeting only in the polygon lemma
-they both feed.}
-
 \begin{proof}
-  Biclosedness constrains a set only on triples of events sharing a block (\Cref{def:squares}), and
-  $\deg e = 2$ forces the block dimensions above $1$ to be $\{3\}$ or $\{2,2\}$, so $e$ has at most
-  one such triple; \Cref{def:squares} counts $\binom32 = 3$ squares in the first case and
-  $2\binom22 = 2$ in the second.
+  $\deg e = 2$ forces the block dimensions above $1$ to be $\{3\}$ or $\{2,2\}$, and
+  \Cref{def:squares} counts $\binom32 = 3$ squares in the first case and $2\binom22 = 2$ in the
+  second. A run over $e$ is a linear order on each block (\Cref{lem:firing-blocks}) and each cover
+  swaps a consecutive pair (\Cref{lem:cover}).
 
-  With no triple, every subset of $\Sq(e) = \{s_1,s_2\}$ is biclosed, so $\RunOver(e)$ is the
-  Boolean square on $s_1$, $s_2$ (\Cref{thm:structure}). With one, on events $p<q<r$, write
-  $A = (p,q)$, $B = (p,r)$ and $C = (q,r)$; the first clause rejects $\{A,C\}$ and the second
-  $\{B\}$, and the remaining six subsets are biclosed, so $\RunOver(e)$ is the hexagon
+  Two blocks of dimension $2$ therefore give four runs, a Boolean square on the two squares. One
+  block of dimension $3$, on events $p<q<r$, gives six, and the covers are
   \[
-    \emptyset \lessdot \{A\} \lessdot \{A,B\} \lessdot \{A,B,C\}, \qquad
-    \emptyset \lessdot \{C\} \lessdot \{B,C\} \lessdot \{A,B,C\}
+    pqr \lessdot qpr \lessdot qrp \lessdot rqp, \qquad pqr \lessdot prq \lessdot rpq \lessdot rqp ,
   \]
-  (\Cref{lem:cover}). Either way the two displayed chains are the only maximal ones and leave
-  $\bot_e$ by different covers.
+  a hexagon. Either way the two displayed chains are the only maximal ones and leave $\bot_e$ by
+  different covers.
 \end{proof}
 
 The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
@@ -703,8 +679,8 @@ runs are a skeleton of $\Br(K)$.}
 \begin{proof}
   A run over a chain $e$ is determined by its map of wedges
   (\Cref{def:runover}), and $\Ch(f) e$ has the same shape and the same maps of wedges into it,
-  so $\RunOver(e) = \RunOver(\Ch(f) e)$ as ordered sets. Everything in \Cref{def:crossings},
-  \Cref{lem:steps} and \Cref{cor:covercell} is defined from the map of wedges alone, so $\Ch(f)$
+  so $\RunOver(e) = \RunOver(\Ch(f) e)$ as ordered sets. Crossings, steps, flips and $\gamma$
+  (\Cref{def:crossings}, \Cref{cor:covercell}) are read off the map of wedges alone, so $\Ch(f)$
   preserves $\bot$, $\top$, cells, steps, covers and $\gamma$; and it carries the lexicographic
   order on $\Sq(e)$ to the lexicographic order on $\Sq(\Ch(f) e) = \Sq(e)$, so it preserves
   $\src$ and $\tgt$ letter by letter. Hence $\Art(f)$ is a morphism of polygraphs, functorially in
@@ -767,7 +743,7 @@ events of $s$; so $x$ passes $s$ between positions $\pos_x(s)$ and $\pos_x(s)+1$
   (i) The fibres of $\blk$ for $<_x$ are consecutive intervals of lengths
   $a_1,\dots,a_r$ (\Cref{lem:firing-blocks}), independent of $x$, so the set of positions $t$
   with $t$ and $t+1$ in one block is $\cut(d)$ for every $x$. A step is a cover of $<_x$ inside a
-  block (\Cref{lem:steps}), so $\pos_x$ lands in $\cut(d)$, and it is injective because distinct
+  block, so $\pos_x$ lands in $\cut(d)$, and it is injective because distinct
   covers of a chain have distinct lower ends; both sides have $\deg d$ elements (\Cref{lem:steps},
   \Cref{lem:cuts}). (ii) Flipping $s$ exchanges its two times and changes no other. (iii) $\bot_d$
   fires the events in their own order.
@@ -794,13 +770,8 @@ events of $s$; so $x$ passes $s$ between positions $\pos_x(s)$ and $\pos_x(s)+1$
   alone (\Cref{lem:pos}(ii)), so the two chains read $\sigma_i\sigma_k$ and $\sigma_k\sigma_i$.
 
   If $k = i+1$ then $e$ has one block of dimension $3$, on the events at positions $i$, $i+1$,
-  $i+2$. With $A$, $B$, $C$ as in \Cref{prop:polygon}, the six runs order $p$, $q$, $r$ as
-  \[
-    \emptyset : pqr, \quad \{A\} : qpr, \quad \{A,B\} : qrp, \quad
-    \{C\} : prq, \quad \{B,C\} : rpq, \quad \{A,B,C\} : rqp ,
-  \]
-  so $A$, $B$, $C$ are passed at $i$, $i+1$, $i$ along the first chain, and $C$, $B$, $A$ at
-  $i+1$, $i$, $i+1$ along the second.
+  $i+2$. Along the two chains of \Cref{prop:polygon} the swapped pair sits at positions $i$, $i+1$,
+  $i$ and at $i+1$, $i$, $i+1$.
 
   The lengths are $|\Sq(e)| = \cox(i,k)$ (\Cref{lem:cuts}).
 \end{proof}
