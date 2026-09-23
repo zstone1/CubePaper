@@ -152,8 +152,9 @@ We assume the reader knows \cite{PZ,Z2} and use its notation: $\BPSet$ is the ca
 precubical sets, with $Z$ final and $\cube n$ the $n$-cube. Put
 $[n] := \{1,\dots,n\}$.
 
-\gap{Explain the $\op$: refinements run from finer to coarser \cite{PZ,Z2}, so the arrows that add
-crossings run the other way and $\Br(K)$ localizes $\Ch(K)\op$.}
+\gap{Say plainly what the $\op$ is for: we build the polygraph we want, whose $1$-cells add
+crossings, and what it presents is not $\Ch(K)[W\inv]$ but the opposite category
+(\Cref{prop:brop}
 
 \section{Background}\label{sec:background}
 
@@ -234,9 +235,8 @@ functor $q$.
   $C[W\inv]$ that agree after $Q$ are equal.
 \end{proposition}
 
-\gap{One sentence: the only arrows of $\Br(K)$ written down below are composites
-$Q(g)Q(m)\inv$ coming from a cospan whose first leg is order preserving, and every identity
-used about them is an instance of $Q$ being a functor.}
+\gap{One sentence: every arrow of $\Br(K)$ written down below is a composite $Q(g)Q(m)\inv$, and
+every identity used about them is an instance of $Q$ being a functor.}
 
 \paragraph{Newman's lemma.}
 Write $\mathrm{Hasse}(P)$ for the quiver of covers of a poset $P$. A map of quivers
@@ -326,6 +326,15 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
 Write $Q : \Ch(K)\op \to \Br(K)$ for the localization functor of \Cref{prop:loc}. We leave the
 $\op$ on morphisms implicit: for a refinement $u : c \to d$ we write $Q(u) : Q(d) \to Q(c)$, so $Q$
 reverses composition.
+
+\begin{proposition}\label{prop:brop}
+  $\Br(K) \simeq \bigl(\Ch(K)[W\inv]\bigr)\op$.
+\end{proposition}
+\begin{proof}
+  A functor $\Ch(K)\op \to D$ inverting $W\op$ is a functor $\Ch(K) \to D\op$ inverting $W$, and
+  conversely. So $\bigl(\Ch(K)[W\inv]\bigr)\op$ has the universal property \Cref{prop:loc} gives
+  $\Br(K)$.
+\end{proof}
 
 \begin{proposition}\label{prop:W}
   A refinement $f$ is order preserving if and only if $f_* = \id_{[N]}$. Hence $W$ contains the
