@@ -186,17 +186,14 @@ preserves it \cite[Prop.~2.7]{PZ}; and $\Ch(P) \times \Ch(Q) \to \Ch(P \vee Q)$,
 an isomorphism when $P \vee Q$ is non-self-linked and admits altitude \cite[Lem.~2.11]{PZ}.
 
 \paragraph{The events of a shape.}
-Let $\Coord : \Cube \to \Set$ send $\cube n$ to $[n]$ and a face embedding $g$ to the monotone
-injection $g_*$ naming the directions $g$ leaves free, and let $E(\Coord)$ be its left Kan
-extension along Yoneda. That functor is cocontinuous and $\Coord(\cube 0) = \emptyset$, so the
-pushout defining a wedge becomes a coproduct:
-\[
-  \Ev(a) \;:=\; E(\Coord)\Bigl(\bigvee a\Bigr) \;\cong\; \coprod_i [a_i] .
-\]
-Write $f_* := E(\Coord)(f)$.
+Send $\cube n$ to its set of directions $[n]$, and a face embedding to the monotone injection
+naming the directions it leaves free. The left Kan extension of that functor along Yoneda is
+cocontinuous and vanishes at $\cube 0$, so the pushout defining a wedge becomes a coproduct: the
+\textbf{events} of $\bigvee a$ are $\coprod_i [a_i]$. Write $f_*$ for the map on events induced by
+a map $f$ of serial wedges.
 
 \begin{convention}\label{conv:events}
-  We identify $\Ev(a)$ with $[N]$, $N = |a|$, by listing $\coprod_i [a_i]$ block by block, and
+  We identify the events of $a$ with $[N]$, $N = |a|$, by listing $\coprod_i [a_i]$ block by block, and
   write $\blk_a : [N] \to [r]$ for the resulting block map. A shape on $N$ events is thus a
   partition of $[N]$ into consecutive intervals, and it enters everything below only through
   $\blk_a$. We drop the subscript when the shape is clear.
@@ -632,19 +629,22 @@ $\pres{\Art(K)}$ is a reading of the degree-one chains identifying the two words
 degree-two chain (\Cref{prop:present-univ}), and a functor out of $\Br(K)$ is a functor on
 $\Ch(K)\op$ inverting $W$ (\Cref{prop:loc}). Each is built from the other.}
 
+Fix $K$ throughout this section, and write $E$, $\Theta$, $\Phi$ for the functors called $E_K$,
+$\Theta_K$, $\Phi_K$ elsewhere.
+
 A cell $\alpha \in \Cell_n(X,Y)$ comes with the two refinements $\bot_\alpha : X \to \alpha$ and
 $\top_\alpha : Y \to \alpha$, of which the first is order preserving; since $Q$ inverts
 $\bot_\alpha\op$, we may set
 \[
-  E_K(X) := [X], \qquad
-  E_K(\alpha) \;:=\; Q(\top_\alpha\op) \circ Q(\bot_\alpha\op)\inv \;:\; [X] \to [Y] .
+  E(X) := [X], \qquad
+  E(\alpha) \;:=\; Q(\top_\alpha\op) \circ Q(\bot_\alpha\op)\inv \;:\; [X] \to [Y] .
 \]
 
 \begin{lemma}\label{lem:telescope}
   Let $d$ be a chain and $z \in \RunOver(d)$. Every path from $\bot_d$ to $z$ in
-  $\mathrm{Hasse}(\RunOver(d))$ reads, under $E_K \circ \gamma$, as
+  $\mathrm{Hasse}(\RunOver(d))$ reads, under $E \circ \gamma$, as
   $Q(z\op) \circ Q(\bot_d\op)\inv$. In particular the two words of a $2$-cell $e$ are paths from
-  $\bot_e$ to $\top_e$ (\Cref{prop:polygon}), so they have the same image and $E_K$ extends to a
+  $\bot_e$ to $\top_e$ (\Cref{prop:polygon}), so they have the same image and $E$ extends to a
   functor $\pres{\Art(K)} \to \Br(K)$ by \Cref{prop:present-univ}(i).
 \end{lemma}
 \begin{proof}
@@ -653,7 +653,7 @@ $\bot_\alpha\op$, we may set
   $x = q\bot_\beta$ and $y = q\top_\beta$ (\Cref{cor:covercell}) and $x\op = \bot_\beta\op q\op$.
   The middle two factors of
   \[
-    E_K(\beta) \circ Q(x\op) \circ Q(\bot_d\op)\inv
+    E(\beta) \circ Q(x\op) \circ Q(\bot_d\op)\inv
       \;=\; Q(\top_\beta\op) \circ Q(\bot_\beta\op)\inv \circ Q(\bot_\beta\op) \circ Q(q\op)
             \circ Q(\bot_d\op)\inv
   \]
@@ -662,51 +662,51 @@ $\bot_\alpha\op$, we may set
 
 
 \begin{definition}\label{def:theta}
-  Let $\Theta_K : \Ch(K)\op \to \pres{\Art(K)}$ be given by $\Theta_K(d) := \dom\bot_d$ and, for a
+  Let $\Theta : \Ch(K)\op \to \pres{\Art(K)}$ be given by $\Theta(d) := \dom\bot_d$ and, for a
   refinement $u : c \to d$,
   \[
-    \Theta_K(u\op) \;:=\; \Gamma_d\bigl(\bot_d \le u\bot_c\bigr)
+    \Theta(u\op) \;:=\; \Gamma_d\bigl(\bot_d \le u\bot_c\bigr)
       \;:\; \dom\bot_d \to \dom\bot_c ,
   \]
   which typechecks because $u\bot_c \in \RunOver(d)$ has source $\dom\bot_c$.
 \end{definition}
 
 \begin{lemma}\label{lem:theta}
-  $\Theta_K$ is a functor, and $\Theta_K(u\op)$ is an identity whenever $u$ is order preserving; so
-  $\Theta_K$ descends uniquely to $\Phi_K : \Br(K) \to \pres{\Art(K)}$ with $\Phi_K Q = \Theta_K$.
+  $\Theta$ is a functor, and $\Theta(u\op)$ is an identity whenever $u$ is order preserving; so
+  $\Theta$ descends uniquely to $\Phi : \Br(K) \to \pres{\Art(K)}$ with $\Phi Q = \Theta$.
 \end{lemma}
 \begin{proof}
   Let $v : b \to c$ and $u : c \to d$. Composition with $u$ is monotone (\Cref{prop:push}), so
   $\bot_d \le u\bot_c \le uv\bot_b$, and $\Gamma_d$ being a functor,
-  $\Theta_K((uv)\op) = \Gamma_d(u\bot_c \le uv\bot_b) \circ \Theta_K(u\op)$; the left factor is
-  $\Gamma_c(\bot_c \le v\bot_b) = \Theta_K(v\op)$ by the last clause of \Cref{prop:closes}. If $u$
+  $\Theta((uv)\op) = \Gamma_d(u\bot_c \le uv\bot_b) \circ \Theta(u\op)$; the left factor is
+  $\Gamma_c(\bot_c \le v\bot_b) = \Theta(v\op)$ by the last clause of \Cref{prop:closes}. If $u$
   is order preserving then $u\bot_c = \bot_d$ (\Cref{prop:push}), so the comparison is an identity.
   The descent is \Cref{prop:loc}.
 \end{proof}
 
 \begin{theorem}\label{thm:A}
-  For every bipointed precubical set $K$, the functor $E_K$ is an equivalence
-  $\pres{\Art(K)} \to \Br(K)$, with $\Phi_K$ inverse to it.
+  For every bipointed precubical set $K$, the functor $E$ is an equivalence
+  $\pres{\Art(K)} \to \Br(K)$, with $\Phi$ inverse to it.
 \end{theorem}
 \begin{proof}
-  On a $0$-cell, $\Phi_K(E_K(X)) = \Theta_K(X) = \dom\bot_X = X$ (\Cref{prop:push}). On a $1$-cell
-  $\alpha$, applying $\Phi_K$ to the defining composite gives
-  $\Phi_K(E_K(\alpha)) = \Theta_K(\top_\alpha\op) \circ \Theta_K(\bot_\alpha\op)\inv$, whose second
+  On a $0$-cell, $\Phi(E(X)) = \Theta(X) = \dom\bot_X = X$ (\Cref{prop:push}). On a $1$-cell
+  $\alpha$, applying $\Phi$ to the defining composite gives
+  $\Phi(E(\alpha)) = \Theta(\top_\alpha\op) \circ \Theta(\bot_\alpha\op)\inv$, whose second
   factor is an identity because $\bot_\alpha$ is order preserving (\Cref{lem:theta}). Since
   $\top_\alpha\bot_Y = \top_\alpha$ and $\RunOver(\alpha)$ is the two-element poset
   $\bot_\alpha \lessdot \top_\alpha$,
   \[
-    \Theta_K(\top_\alpha\op) \;=\; \Gamma_\alpha(\bot_\alpha \le \top_\alpha)
+    \Theta(\top_\alpha\op) \;=\; \Gamma_\alpha(\bot_\alpha \le \top_\alpha)
       \;=\; q\bigl(\gamma(\bot_\alpha \lessdot \top_\alpha)\bigr) \;=\; q(\alpha)
   \]
-  by \Cref{cor:covercell}. So $\Phi_K E_K$ agrees with the identity on $0$- and $1$-cells, hence is
+  by \Cref{cor:covercell}. So $\Phi E$ agrees with the identity on $0$- and $1$-cells, hence is
   the identity (\Cref{prop:present-univ}(ii)).
 
   For the other composite, \Cref{lem:telescope} gives
-  $E_K(\Theta_K(u\op)) = Q((u\bot_c)\op)Q(\bot_d\op)\inv
+  $E(\Theta(u\op)) = Q((u\bot_c)\op)Q(\bot_d\op)\inv
    = Q(\bot_c\op) \circ Q(u\op) \circ Q(\bot_d\op)\inv$, which is $Q(u\op)$ conjugated by the
   isomorphisms $[c] \cong [\dom\bot_c]$ that $Q$ makes of the order-preserving refinements
-  $\bot_c$. So $E_K\Theta_K \cong Q$, and $E_K\Phi_K \cong \id$ by uniqueness of descent
+  $\bot_c$. So $E\Theta \cong Q$, and $E\Phi \cong \id$ by uniqueness of descent
   (\Cref{prop:loc}).
 \end{proof}
 
