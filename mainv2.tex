@@ -288,8 +288,7 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
 
 \begin{lemma}\label{lem:sq-range}
   The map $f_*\inv$ preserves the order of any two events lying in distinct blocks of $b$. Hence
-  $\Cross(f) \subseteq \Sq(b)$, the two events of a crossing lying in one block of $b$. A square $(p,q)$ of $b$ lies in the image of $f_*$ if and
-  only if $f_*\inv p$ and $f_*\inv q$ lie in one block of $a$.
+  $\Cross(f) \subseteq \Sq(b)$. A square $(p,q)$ of $b$ lies in the image of $f_*$ if and only if $f_*\inv p$ and $f_*\inv q$ lie in one block of $a$.
 \end{lemma}
 \begin{proof}
   Let $u < v$ lie in distinct blocks of $b$, so $\blk_b(u) < \blk_b(v)$, and put $w = f_*\inv u$,
@@ -306,7 +305,7 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
   \[
     \Cross(gf) \;=\; g_*\bigl(\Cross f\bigr) \;\sqcup\; \Cross(g),
   \]
-  a disjoint union, and $\Cross(\id) = \emptyset$.
+  and $\Cross(\id) = \emptyset$.
 \end{lemma}
 \begin{proof}
   Let $s$ be a square of $c$. If $s = g_*(t)$ then $s \notin \Cross(g)$, the two events of $t$
@@ -363,9 +362,7 @@ so $x_*$ enumerates the events of $d$; write $p <_x q$ when $x_*$ reaches $p$ be
 $\Cross(x)$ is the inversion set of $<_x$.
 
 \begin{lemma}\label{lem:firing-blocks}
-  The order $<_x$ takes the blocks of $d$ in turn: if $\blk(p) < \blk(q)$ then $p <_x q$. Hence $x$
-  amounts to a choice of linear order on each block, and $\blk$ is monotone for $<_x$ with interval
-  fibres.
+  If $\blk(p) < \blk(q)$ then $p <_x q$; hence $\blk$ is monotone for $<_x$, with interval fibres.
 \end{lemma}
 \begin{proof}
   The blocks of the source are singletons, so $\blk \circ x_* = \blk(x)$, monotone by
@@ -546,8 +543,7 @@ spans, and a $0$-cell is a run.}
   reverse. Then $\RunOver(e)$ is a polygon on $2|\Sq(e)|$ elements whose only two maximal
   chains from $\bot_e$ to $\top_e$ are those of \Cref{lem:orderpath}; so $\src(e)$ and $\tgt(e)$
   have length $|\Sq(e)|$ and differ in their first letter. Moreover either $e$ has one block of
-  dimension $3$, $|\Sq(e)| = 3$ and $\RunOver(e)$ is a hexagon, or $e$ has two blocks of dimension
-  $2$, $|\Sq(e)| = 2$ and $\RunOver(e)$ is a square.
+  dimension $3$ and $|\Sq(e)| = 3$, or $e$ has two blocks of dimension $2$ and $|\Sq(e)| = 2$.
 \end{proposition}
 \begin{proof}
   Every $x \in \RunOver(e)$ has exactly two steps (\Cref{lem:steps}), and the two flips are its two
@@ -617,9 +613,8 @@ $\bot_\alpha\op$, we may set
 \begin{lemma}\label{lem:telescope}
   Let $d$ be a chain and $z \in \RunOver(d)$. Every path from $\bot_d$ to $z$ in
   $\mathrm{Hasse}(\RunOver(d))$ reads, under $E \circ \gamma$, as
-  $Q(z\op) \circ Q(\bot_d\op)\inv$. The two words of a $2$-cell $e$ are both paths from $\bot_e$ to
-  $\top_e$ (\Cref{prop:polygon}); they therefore have equal image, and $E$ extends to a functor
-  $\pres{\Art(K)} \to \Br(K)$ by \Cref{prop:present-univ}(i).
+  $Q(z\op) \circ Q(\bot_d\op)\inv$. Consequently $E$ extends to a functor
+  $\pres{\Art(K)} \to \Br(K)$.
 \end{lemma}
 \begin{proof}
   Induct on the length of the path, the empty path reading as the identity. For a cover
@@ -632,6 +627,9 @@ $\bot_\alpha\op$, we may set
             \circ Q(\bot_d\op)\inv
   \]
   cancel, leaving $Q(\top_\beta\op)Q(q\op)Q(\bot_d\op)\inv = Q(y\op)Q(\bot_d\op)\inv$.
+
+  The two words of a $2$-cell $e$ are both paths from $\bot_e$ to $\top_e$ (\Cref{prop:polygon}),
+  hence have equal image, so \Cref{prop:present-univ}(i) gives the extension.
 \end{proof}
 
 
@@ -639,14 +637,14 @@ $\bot_\alpha\op$, we may set
   Setting $\Theta(d) := \dom\bot_d$ and, for a refinement $u : c \to d$,
   \[
     \Theta(u\op) \;:=\; \Gamma_d\bigl(\bot_d \le u\bot_c\bigr)
-      \;:\; \dom\bot_d \to \dom\bot_c
+      \;:\; \dom\bot_d \to \dom\bot_c ,
   \]
-  --- which typechecks because $u\bot_c \in \RunOver(d)$ has source $\dom\bot_c$ --- defines a
-  functor $\Theta : \Ch(K)\op \to \pres{\Art(K)}$; it sends $u\op$ to an identity whenever $u$ is
+  defines a functor $\Theta : \Ch(K)\op \to \pres{\Art(K)}$; it sends $u\op$ to an identity whenever $u$ is
   order preserving, so it descends uniquely to $\Phi : \Br(K) \to \pres{\Art(K)}$ with
   $\Phi Q = \Theta$.
 \end{lemma}
 \begin{proof}
+  The stated target is the right one: $u\bot_c$ lies in $\RunOver(d)$ with source $\dom\bot_c$.
   Let $v : b \to c$ and $u : c \to d$. Composition with $u$ is monotone (\Cref{prop:push}), so
   $\bot_d \le u\bot_c \le uv\bot_b$, and $\Gamma_d$ being a functor,
   $\Theta((uv)\op) = \Gamma_d(u\bot_c \le uv\bot_b) \circ \Theta(u\op)$; the left factor is
@@ -733,8 +731,8 @@ $\cox(i,k) := 3$ when $|i-k| = 1$ and $\cox(i,k) := 2$ otherwise.
 \begin{lemma}\label{lem:cuts}
   $a \mapsto \cut(a)$ is a bijection from the shapes on $N$ events onto the subsets of $[N-1]$,
   with $|\cut(a)| = \deg a$. Hence the $n$-cells at $Z_N$ are the $n$-element subsets of
-  $[N-1]$; write $\sigma_k$ for the $1$-cell with $\cut = \{k\}$. Moreover a chain $e$ of $Z$ with
-  $\deg e = 2$ and $\cut(e) = \{i<k\}$ has $|\Sq(e)| = \cox(i,k)$.
+  $[N-1]$. A chain $e$ of $Z$ with $\deg e = 2$ and $\cut(e) = \{i<k\}$ has
+  $|\Sq(e)| = \cox(i,k)$.
 \end{lemma}
 \begin{proof}
   A shape on $N$ events is a composition of $N$ and $\cut(a)$ is the complement of its set of block
@@ -744,7 +742,8 @@ $\cox(i,k) := 3$ when $|i-k| = 1$ and $\cox(i,k) := 2$ otherwise.
   otherwise $|\Sq(e)| = 2$, by \Cref{prop:polygon}.
 \end{proof}
 
-For a step $s$ of $x$, write $\pos_x(s)$ for the earlier of the two positions $<_x$ gives the
+Write $\sigma_k$ for the $1$-cell at $Z_N$ with $\cut = \{k\}$. For a step $s$ of $x$, write
+$\pos_x(s)$ for the earlier of the two positions $<_x$ gives the
 events of $s$; so $x$ passes $s$ between positions $\pos_x(s)$ and $\pos_x(s)+1$.
 
 \begin{lemma}\label{lem:pos}
