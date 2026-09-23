@@ -567,14 +567,10 @@ spans, and a $0$-cell is a run.}
   \Cref{lem:cover} applies.
 \end{proof}
 
-\begin{definition}\label{def:words}
-  For a chain $e$ with $\deg e = 2$, let $\src(e)$ and $\tgt(e)$ be the words of $1$-cells read off
-  under $\gamma$ from the two chains of \Cref{lem:orderpath}, for the lexicographic order and for
-  its reverse.
-\end{definition}
-
 \begin{proposition}\label{prop:polygon}
-  Let $\deg e = 2$. Then $\RunOver(e)$ is a polygon on $2|\Sq(e)|$ elements whose only two maximal
+  Let $\deg e = 2$, and write $\src(e)$ and $\tgt(e)$ for the words of $1$-cells that $\gamma$
+  reads off the two chains of \Cref{lem:orderpath}, for the lexicographic order and for its
+  reverse. Then $\RunOver(e)$ is a polygon on $2|\Sq(e)|$ elements whose only two maximal
   chains from $\bot_e$ to $\top_e$ are those of \Cref{lem:orderpath}; so $\src(e)$ and $\tgt(e)$
   have length $|\Sq(e)|$ and differ in their first letter. Moreover either $e$ has one block of
   dimension $3$, $|\Sq(e)| = 3$ and $\RunOver(e)$ is a hexagon, or $e$ has two blocks of dimension
@@ -593,7 +589,7 @@ The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
 \begin{definition}\label{def:poly}
   The \textbf{Artin polygraph} $\Art(K)$ has $0$-cells the runs of $K$, $1$-cells
   the $1$-cells and $2$-cells of \Cref{def:cell} --- the chains of degree $1$ and $2$ spanning a
-  given pair of runs --- and the words $\src$, $\tgt$ of \Cref{def:words}.
+  given pair of runs --- and the words $\src$, $\tgt$ of \Cref{prop:polygon}.
 \end{definition}
 
 \gap{One paragraph on the name: $\Art(K)$ is built from $K$ alone, with no braid theory in it, and
@@ -661,19 +657,16 @@ $\bot_\alpha\op$, we may set
 \end{proof}
 
 
-\begin{definition}\label{def:theta}
-  Let $\Theta : \Ch(K)\op \to \pres{\Art(K)}$ be given by $\Theta(d) := \dom\bot_d$ and, for a
-  refinement $u : c \to d$,
+\begin{lemma}\label{lem:theta}
+  Setting $\Theta(d) := \dom\bot_d$ and, for a refinement $u : c \to d$,
   \[
     \Theta(u\op) \;:=\; \Gamma_d\bigl(\bot_d \le u\bot_c\bigr)
-      \;:\; \dom\bot_d \to \dom\bot_c ,
+      \;:\; \dom\bot_d \to \dom\bot_c
   \]
-  which typechecks because $u\bot_c \in \RunOver(d)$ has source $\dom\bot_c$.
-\end{definition}
-
-\begin{lemma}\label{lem:theta}
-  $\Theta$ is a functor, and $\Theta(u\op)$ is an identity whenever $u$ is order preserving; so
-  $\Theta$ descends uniquely to $\Phi : \Br(K) \to \pres{\Art(K)}$ with $\Phi Q = \Theta$.
+  --- which typechecks because $u\bot_c \in \RunOver(d)$ has source $\dom\bot_c$ --- defines a
+  functor $\Theta : \Ch(K)\op \to \pres{\Art(K)}$; it sends $u\op$ to an identity whenever $u$ is
+  order preserving, so it descends uniquely to $\Phi : \Br(K) \to \pres{\Art(K)}$ with
+  $\Phi Q = \Theta$.
 \end{lemma}
 \begin{proof}
   Let $v : b \to c$ and $u : c \to d$. Composition with $u$ is monotone (\Cref{prop:push}), so
@@ -755,11 +748,9 @@ wedges commutes over it, so $\Ch(Z)$ is the category of shapes and maps of wedge
 the run of $Z$ on $N$ events. Both $\bot_e$ and $\top_e$ have source a run on $|e|$ events, so
 every cell of $Z$ is a loop at $Z_{|e|}$.
 
-\begin{definition}\label{def:cuts}
-  For a shape $a$ on $N$ events put $\cut(a) := \{\, k \in [N-1] : \blk_a(k) = \blk_a(k+1) \,\}$,
-  and write $\cut(d)$ for the cuts of a chain's shape. For $i \neq k$ in $[N-1]$ let
-  $\cox(i,k) := 3$ if $|i-k| = 1$ and $\cox(i,k) := 2$ otherwise.
-\end{definition}
+For a shape $a$ on $N$ events put $\cut(a) := \{\, k \in [N-1] : \blk_a(k) = \blk_a(k+1) \,\}$,
+and write $\cut(d)$ for the cuts of a chain's shape; for $i \neq k$ in $[N-1]$ let
+$\cox(i,k) := 3$ when $|i-k| = 1$ and $\cox(i,k) := 2$ otherwise.
 
 \begin{lemma}\label{lem:cuts}
   $a \mapsto \cut(a)$ is a bijection from the shapes on $N$ events onto the subsets of $[N-1]$,
