@@ -240,13 +240,13 @@ $Q(g\op)Q(m\op)\inv$ coming from a cospan whose first leg is order preserving, a
 used about them is an instance of $Q$ being a functor.}
 
 \paragraph{Newman's lemma.}
-Write $\mathrm{Hasse}(P)$ for the Hasse quiver of a poset $P$. A \textbf{reading} of $P$ in a
-category $C$ assigns an object to each element and an arrow to each covering relation; it extends
-to paths by composition.
+Write $\mathrm{Hasse}(P)$ for the quiver of covers of a poset $P$. A map of quivers
+$\mathrm{Hasse}(P) \to C$ into a category extends to paths by composition, and we read it on paths
+without further comment.
 
 \begin{theorem}[coherent Newman's lemma; \cite{Huet}, {\cite[Ch.~4]{Polygraphs}}]\label{thm:newman}
-  Let $P$ be a finite poset and $\varphi$ a reading of $P$ in $C$. Suppose that for every pair of
-  distinct covers $x \lessdot y_1$, $x \lessdot y_2$ and every common upper bound $z$ of $y_1$ and
+  Let $P$ be a finite poset and $\varphi : \mathrm{Hasse}(P) \to C$ a map of quivers. Suppose that
+  for every pair of distinct covers $x \lessdot y_1$, $x \lessdot y_2$ and every common upper bound $z$ of $y_1$ and
   $y_2$ there are $j \le z$ and paths $p_i$ from $y_i$ to $j$ with
   $\varphi(x \lessdot y_1)\,\varphi(p_1) = \varphi(x \lessdot y_2)\,\varphi(p_2)$. Then $\varphi$
   sends parallel paths to equal arrows, so it extends uniquely to a functor $P \to C$; and a
@@ -551,8 +551,8 @@ spans, and a $0$-cell is a run.}
 \end{proposition}
 \begin{proof}
   Every $x \in \RunOver(e)$ has exactly two steps (\Cref{lem:steps}), and the two flips are its two
-  Hasse neighbours, upward or downward according to whether the step is already reversed
-  (\Cref{lem:cover}). So the Hasse graph of $\RunOver(e)$ is $2$-regular and therefore a disjoint
+  neighbours in $\mathrm{Hasse}(\RunOver(e))$, upward or downward according to whether the step is
+  already reversed (\Cref{lem:cover}). So $\mathrm{Hasse}(\RunOver(e))$ is $2$-regular and therefore a disjoint
   union of cycles; $|\Cross|$ rises along a directed path, so such a path leaves each vertex by the
   edge it did not arrive on, while both edges at $\bot_e$ point up and both at $\top_e$ point down.
   The cycle through $\bot_e$ thus meets $\top_e$ and splits into two directed arcs of equal length,
@@ -575,7 +575,7 @@ The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
 \Cref{thm:C} is what makes the name literal.}
 
 \begin{proposition}\label{prop:closes}
-  Read in $\pres{\Art(K)}$, the quiver map $\gamma$ satisfies the hypothesis of \Cref{thm:newman}
+  Read in $\pres{\Art(K)}$, the map of quivers $\gamma$ satisfies the hypothesis of \Cref{thm:newman}
   on $\RunOver(d)$. So it extends uniquely to a functor
   $\Gamma_d : \RunOver(d) \to \pres{\Art(K)}$, and $\Gamma_d(qx) = \Gamma_o(x)$ for every
   refinement $q : o \to d$ and every $x \in \RunOver(o)$.
@@ -599,7 +599,7 @@ The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
 \section{The presentation}\label{sec:thmA}
 
 \gap{Frame the proof as a comparison of two universal properties: a functor out of
-$\pres{\Art(K)}$ is a reading of the degree-one chains identifying the two words of every
+$\pres{\Art(K)}$ is an arrow for each degree-one chain identifying the two words of every
 degree-two chain (\Cref{prop:present-univ}), and a functor out of $\Br(K)$ is a functor on
 $\Ch(K)\op$ inverting $W$ (\Cref{prop:loc}). Each is built from the other.}
 
