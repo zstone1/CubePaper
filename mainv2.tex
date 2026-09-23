@@ -533,41 +533,33 @@ spans, and a $0$-cell is a run.}
 
 \subsection{The attachment of a 2-cell}
 
-\begin{lemma}\label{lem:orderpath}
-  Order $\Sq(d)$ lexicographically, by the smaller event and then the larger. Every lower set of
-  that order is biclosed, and so is every upper set. Consequently, for $\prec$ either that order or
-  its reverse, the runs $x_t$ with $\Cross(x_t)$ the first $t$ squares form a maximal chain
-  $\bot_d = x_0 \lessdot \cdots \lessdot x_{|\Sq(d)|} = \top_d$, in which the $(t+1)$-st square is
-  a step of $x_t$.
-\end{lemma}
-\begin{proof}
-  On a triple $p<q<r$ of one block the three squares come in the order
-  $(p,q) \prec (p,r) \prec (q,r)$. For a lower set $R$, membership of $(q,r)$ forces that of
-  $(p,r)$, and membership of $(p,r)$ forces that of $(p,q)$, which are the two clauses; for an
-  upper set, $(p,q) \in R$ forces $(p,r) \in R$ and $(p,r) \in R$ forces $(q,r) \in R$. The chain
-  then exists by \Cref{thm:structure}, consecutive terms differ by one element, and
-  \Cref{lem:cover} applies.
-\end{proof}
-
 \begin{proposition}\label{prop:polygon}
-  Let $\deg e = 2$, and write $\src(e)$ and $\tgt(e)$ for the words of $1$-cells that $\gamma$
-  reads off the two chains of \Cref{lem:orderpath}, for the lexicographic order and for its
-  reverse. Then $\RunOver(e)$ is a polygon on $2|\Sq(e)|$ elements whose only two maximal
-  chains from $\bot_e$ to $\top_e$ are those of \Cref{lem:orderpath}; so $\src(e)$ and $\tgt(e)$
-  have length $|\Sq(e)|$ and differ in their first letter. Moreover either $e$ has one block of
-  dimension $3$ and $|\Sq(e)| = 3$, or $e$ has two blocks of dimension $2$ and $|\Sq(e)| = 2$.
+  Let $\deg e = 2$. Then either $e$ has one block of dimension $3$ and $|\Sq(e)| = 3$, or $e$ has
+  two blocks of dimension $2$ and $|\Sq(e)| = 2$. In both cases $\RunOver(e)$ has exactly two
+  maximal chains from $\bot_e$ to $\top_e$, each of length $|\Sq(e)|$, and they leave $\bot_e$ by
+  different covers. Write $\src(e)$ and $\tgt(e)$ for the words of $1$-cells that $\gamma$ reads off
+  them, labelled so that $\src(e)$ begins with the least square for the lexicographic order on
+  $\Sq(e)$, by the smaller event and then the larger.
 \end{proposition}
+In both cases $\src(e)$ reverses the squares of $e$ in lexicographic order and $\tgt(e)$ in the
+reverse order.
+
 \begin{proof}
-  Every $x \in \RunOver(e)$ has exactly two steps (\Cref{lem:steps}), and the two flips are its two
-  neighbours in $\mathrm{Hasse}(\RunOver(e))$, upward or downward according to whether the step is
-  already reversed (\Cref{lem:cover}). So $\mathrm{Hasse}(\RunOver(e))$ is $2$-regular and therefore a disjoint
-  union of cycles; $|\Cross|$ rises along a directed path, so such a path leaves each vertex by the
-  edge it did not arrive on, while both edges at $\bot_e$ point up and both at $\top_e$ point down.
-  The cycle through $\bot_e$ thus meets $\top_e$ and splits into two directed arcs of equal length,
-  and it exhausts $\RunOver(e)$ because every run lies between $\bot_e$ and $\top_e$. Those arcs
-  are the two chains of \Cref{lem:orderpath}, which leave $\bot_e$ by different covers since the
-  least and the greatest square differ. Finally $\deg e = 2$ forces the block dimensions above $1$ to be $\{3\}$ or
-  $\{2,2\}$, and \Cref{def:squares} counts $\binom32 = 3$ and $2\binom22 = 2$.
+  Biclosedness constrains a set only on triples of events sharing a block (\Cref{def:squares}), and
+  $\deg e = 2$ forces the block dimensions above $1$ to be $\{3\}$ or $\{2,2\}$, so $e$ has at most
+  one such triple; \Cref{def:squares} counts $\binom32 = 3$ squares in the first case and
+  $2\binom22 = 2$ in the second.
+
+  With no triple, every subset of $\Sq(e) = \{s_1,s_2\}$ is biclosed, so $\RunOver(e)$ is the
+  Boolean square on $s_1$, $s_2$ (\Cref{thm:structure}). With one, on events $p<q<r$, write
+  $A = (p,q)$, $B = (p,r)$ and $C = (q,r)$; the first clause rejects $\{A,C\}$ and the second
+  $\{B\}$, and the remaining six subsets are biclosed, so $\RunOver(e)$ is the hexagon
+  \[
+    \emptyset \lessdot \{A\} \lessdot \{A,B\} \lessdot \{A,B,C\}, \qquad
+    \emptyset \lessdot \{C\} \lessdot \{B,C\} \lessdot \{A,B,C\}
+  \]
+  (\Cref{lem:cover}). Either way the two displayed chains are the only maximal ones and leave
+  $\bot_e$ by different covers.
 \end{proof}
 
 The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
@@ -784,31 +776,30 @@ events of $s$; so $x$ passes $s$ between positions $\pos_x(s)$ and $\pos_x(s)+1$
 \end{proof}
 
 \begin{proposition}\label{prop:alternate}
-  Let $e$ be a chain of $Z$ with $\deg e = 2$ and $\cut(e) = \{i<k\}$, and let
-  $\bot_e = x_0 \lessdot \cdots \lessdot x_{|\Sq(e)|} = \top_e$ be the chain of
-  \Cref{lem:orderpath} for the lexicographic order, with $s_t$ the $(t+1)$-st square. Then
-  $\pos_{x_t}(s_t) = i$ for $t$ even and $k$ for $t$ odd, so
+  Let $e$ be a chain of $Z$ with $\deg e = 2$ and $\cut(e) = \{i<k\}$. Then
   \[
     \src(e) = \sigma_i\sigma_k\sigma_i\cdots, \qquad \tgt(e) = \sigma_k\sigma_i\sigma_k\cdots,
   \]
-  both of length $\cox(i,k)$.
+  both of length $\cox(i,k) = |\Sq(e)|$.
 \end{proposition}
 \begin{proof}
-  Every $x_t$ has exactly two steps, passed at $i$ and at $k$ (\Cref{lem:pos}(i)).
+  A cover with step $s$ reads as $\sigma_{\pos_x(s)}$ (\Cref{lem:pos}), so it is enough to read the
+  two chains of \Cref{prop:polygon}, and $\bot_e$ passes $(p,q)$ at $p$ (\Cref{lem:pos}(iii)).
 
-  For $t = 0$: $\bot_e$ passes $(p,q)$ at $p$ (\Cref{lem:pos}(iii)), and the lexicographic order
-  sorts $\Sq(e)$ by the smaller event first. If $e$ is one block of dimension $3$ on events
-  $i, i+1, i+2$, its squares in order are $(i,i{+}1)$, $(i,i{+}2)$, $(i{+}1,i{+}2)$, with smaller
-  events $i$, $i$, $i+1 = k$; if $e$ is two blocks of dimension $2$ on $\{i,i{+}1\}$ and
-  $\{k,k{+}1\}$, they are $(i,i{+}1)$ and $(k,k{+}1)$, with smaller events $i$ and $k$. Either way
-  the least square is passed at $i$ and the greatest at $k$.
+  If $k > i+1$ then $e$ has blocks of dimension $2$ at positions $\{i,i+1\}$ and $\{k,k+1\}$
+  (\Cref{lem:cuts}), with squares $s_1$ and $s_2$. Flipping one leaves the positions of the other
+  alone (\Cref{lem:pos}(ii)), so the two chains read $\sigma_i\sigma_k$ and $\sigma_k\sigma_i$.
 
-  For the step, $s_t$ and $s_{t+1}$ are both steps of $x_{t+1}$: the first because a flip of a step
-  is a step, the second by \Cref{lem:orderpath}. Now $\pos_{x_{t+1}}(s_t) = \pos_{x_t}(s_t)$
-  (\Cref{lem:pos}(ii)), so $\pos_{x_{t+1}}(s_{t+1})$ is whichever of $i$ and $k$ that is not. The
-  words follow by the last clause of \Cref{lem:pos}, and their length is $|\Sq(e)| = \cox(i,k)$
-  (\Cref{lem:cuts}). The reverse order has the lexicographic order's greatest square first, passed
-  at $k$, and the same induction applies.
+  If $k = i+1$ then $e$ has one block of dimension $3$, on the events at positions $i$, $i+1$,
+  $i+2$. With $A$, $B$, $C$ as in \Cref{prop:polygon}, the six runs order $p$, $q$, $r$ as
+  \[
+    \emptyset : pqr, \quad \{A\} : qpr, \quad \{A,B\} : qrp, \quad
+    \{C\} : prq, \quad \{B,C\} : rpq, \quad \{A,B,C\} : rqp ,
+  \]
+  so $A$, $B$, $C$ are passed at $i$, $i+1$, $i$ along the first chain, and $C$, $B$, $A$ at
+  $i+1$, $i$, $i+1$ along the second.
+
+  The lengths are $|\Sq(e)| = \cox(i,k)$ (\Cref{lem:cuts}).
 \end{proof}
 
 \begin{definition}\label{def:artin-poly}
