@@ -43,17 +43,15 @@ The proof is one line: the invariant factors through $|\Ch(\cube n)|$, which is 
 This paper explains that the braid structure is present in $\Ch(K)$ without passing through 
 any homotopy equivalences. We will construct a set of morphisms, $W$, in $\Ch(K)$. 
 And define the localization $\Br(K) \;:=\; \Ch(K)\op\bigl[(W\op)\inv\bigr]$. Then we will build a 
-2-polygraph giving an artin-like presentation for $\Br(K)$ in terms of chains of $K$. 
-We do not pass via a homotopy equivalence to the path space, as it gives us several advantages. 
-Firstly, we preserve a lot of the directed structure of in $K$, so $\Br(\cube n)$ it does not collapse.
+2-polygraph, $\Art(K)$, giving an artin-like presentation for $\Br(K)$ in geometric terms. This approach gives 
+us several advantages. Firstly, we preserve more structure of $\Ch(K)$, so $\Br(\cube n)$ does not collapse.
 Secondly, it permits us to stay with positive braids which yields a simpler theory.
 
 The the cells of our polygraph are straightforward. A chain of $K$ has a list of positive integers
 for the dimension of the cubes. Let the degree of a chain be the sum of the list minus the length.
 Then the polygraph's $n$-cells are the degree $n$ chains, for $n \in \{0,1,2\}$. The attachements
 of the 2 cells to the 1 cells will take some work to formalize, but the following pictures gives 
-a clear intuition about the attachements. The key point is that every degree 2 chain has one 
-of these forms.
+a clear intuition about the attachements. 
 
 \begin{figure}[p]
 \centering
@@ -109,36 +107,23 @@ So we get the attachement $\sigma_1\sigma_2\sigma_1 \to \sigma_2 \sigma_1\sigma_
 \label{fig:species-cube}
 \end{figure}
 
-
-\gap{Read \Cref{fig:species-sq} and \Cref{fig:species-cube} for the reader: a run is a way of
-traversing the blocks of a chain; a degree-one chain has a single square, hence exactly two runs,
-and it is the generator that flips that square; a degree-two chain offers two flips, so its runs
-form a polygon with two routes, and the $2$-cell says those routes agree. Say that these two
-pictures are the only shapes this can take, which is why the relations come out Artin's.}
-
-
+The main results of this paper will be
 \begin{theorem}[\Cref{thm:A}, \Cref{thm:B}, \Cref{thm:C}]\label{thm:ABC}
-  Let $K$ be a bipointed precubical set, $\Br(K)$ the localization above (\Cref{def:W}) and
-  $\Art(K)$ the $2$-polygraph just described (\Cref{def:poly}), presenting $\pres{\Art(K)}$.
+  Let $K$ be a bipointed precubical set
   \begin{enumerate}
-    \item There is an equivalence $E_K : \pres{\Art(K)} \to \Br(K)$.
+    \item $\Art(K)$ presents $\Br(K)$, in the sense that there is an equivalence $E_K : \pres{\Art(K)} \to \Br(K)$.
     \item Both constructions are functorial in $K$, and $E$ is natural: for every $f : K \to L$,
       \[
         E_L \circ \pres{\Art(f)} \;=\; \Br(f) \circ E_K .
       \]
-    \item $\Art(Z)$ is isomorphic to Artin's braid polygraph (\Cref{def:artin-poly}).
+    \item $\Art(Z)$ is isomorphic to positve Artin's polygraph for the braid category.
       Consequently $\Br(Z)$ is equivalent to the positive braid category.
   \end{enumerate}
-  None of the three assumes anything about $K$.
 \end{theorem}
 
-\gap{Say why $\Art(K)$ deserves the name ``Artin polygraph'' before (iii) is proved: its $2$-cells
-already split into the two species of \Cref{prop:polygon}, a hexagon at a block of dimension $3$
-and a square at two blocks of dimension $2$, which are Artin's braid and commutation relations.
-Then note that (iii) makes this literal.}
-
-\gap{Relation to Gaussent--Guiraud--Malbos \cite{GGM}: the same $2$-cells, there from Garside
-theory and here from the geometry of $K$, with the Artin case the value at a point.}
+We are begging the question by naming our polygraph $\Art$, but it is well justified in the spirit of \cite{GGM}. 
+At $K = Z$, we see above that we will prove it is indeed the literal artin presentation of the positive braids.
+So in general, we get a subset of the artin relations in this presentation depending the precense of 3-cells of $K$.
 
 \paragraph{Formalisation.}
 All of the below is formalised in Lean~4 on mathlib \cite{Cubical}, sorry-free. The objects
@@ -148,13 +133,10 @@ $\Br(K)$, $W$ and $\Art(K)$ are \texttt{ChainCat.Br}, \texttt{ChainCat.W} and
 \texttt{CubeChains/Paper.lean} as an \texttt{example} discharged by one citation.
 
 \paragraph{Conventions.}
-We assume the reader knows \cite{PZ,Z2} and use its notation: $\BPSet$ is the category of bipointed
-precubical sets, with $Z$ final and $\cube n$ the $n$-cube. Put
-$[n] := \{1,\dots,n\}$.
-
-\gap{Say plainly what the $\op$ is for: we build the polygraph we want, whose $1$-cells add
-crossings, and what it presents is not $\Ch(K)[W\inv]$ but the opposite category
-(\Cref{prop:brop}
+We assume the reader is familiar with \cite{PZ,Z2} and use its notation: $\BPSet$ is the category of bipointed
+precubical sets, with $Z$ final and $\cube n$ the $n$-cube. Put $[n] := \{1,\dots,n\}$.
+Also, note that the ops are there because we have chosen to use the convention for $\Ch(K)$ as in \cite{Z2}.
+But that won't translate across to braids convienently. So we will need the op in the definition of $\Br$.
 
 \section{Background}\label{sec:background}
 
@@ -513,16 +495,6 @@ spans, and a $0$-cell is a run.}
   two blocks of dimension $2$ and $|\Sq(e)| = 2$. In both cases $\RunOver(e)$ has exactly two
   maximal chains from $\bot_e$ to $\top_e$, each of length $|\Sq(e)|$, and they leave $\bot_e$ by
   different covers. Write $\src(e)$ and $\tgt(e)$ for the words of $1$-cells that $\gamma$ reads off
-In both cases $\src(e)$ reverses the squares of $e$ in lexicographic order and $\tgt(e)$ in the
-reverse order.\footnote{The formalisation \cite{Cubical} works with the sets $\Cross(x)$ in place of
-the orders $<_x$: \texttt{reversedIso} identifies $\RunOver(d)$ with the subsets of $\Sq(d)$ that
-are \emph{biclosed}, meaning that no block's induced tournament has a directed $3$-cycle, and it
-takes the last sentence above as the definition of the two words. The four and the six runs are
-\texttt{card\_biclosed\_of\_isEmpty\_triangles} and \texttt{card\_biclosed\_of\_triangle}, and this
-proposition is derived twice there: as \texttt{eq\_srcPath\_or\_tgtPath\_of\_triangles}, from
-\texttt{subsingleton\_triangles} and \texttt{biclosed\_iff\_of\_triangle}, and as
-\texttt{eq\_srcPath\_or\_tgtPath}, from $2$-regularity of $\mathrm{Hasse}(\RunOver(e))$.}
-
   them, labelled so that $\src(e)$ begins with the least square for the lexicographic order on
   $\Sq(e)$, by the smaller event and then the larger.
 \end{proposition}
@@ -540,6 +512,16 @@ proposition is derived twice there: as \texttt{eq\_srcPath\_or\_tgtPath\_of\_tri
   a hexagon. Either way the two displayed chains are the only maximal ones and leave $\bot_e$ by
   different covers.
 \end{proof}
+
+In both cases $\src(e)$ reverses the squares of $e$ in lexicographic order and $\tgt(e)$ in the
+reverse order.\footnote{The formalisation \cite{Cubical} works with the sets $\Cross(x)$ in place of
+the orders $<_x$: \texttt{reversedIso} identifies $\RunOver(d)$ with the subsets of $\Sq(d)$ that
+are \emph{biclosed}, meaning that no block's induced tournament has a directed $3$-cycle, and it
+takes the last sentence above as the definition of the two words. The four and the six runs are
+\texttt{card\_biclosed\_of\_isEmpty\_triangles} and \texttt{card\_biclosed\_of\_triangle}, and this
+proposition is derived twice there: as \texttt{eq\_srcPath\_or\_tgtPath\_of\_triangles}, from
+\texttt{subsingleton\_triangles} and \texttt{biclosed\_iff\_of\_triangle}, and as
+\texttt{eq\_srcPath\_or\_tgtPath}, from $2$-regularity of $\mathrm{Hasse}(\RunOver(e))$.}
 
 The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
 \begin{definition}\label{def:poly}
