@@ -443,8 +443,7 @@ biclosed; the run reversing that set is the \textbf{flip} of $x$ at $s$, written
 \begin{lemma}\label{lem:cover}
   If $x < z$ in $\RunOver(d)$ then $\Cross(z)$ contains a step of $x$ that $\Cross(x)$ does not.
   Consequently $x \lessdot y$ exactly when $\Cross(y) = \Cross(x) \cup \{s\}$ for such a step $s$,
-  and then $y = x^s$. So $|\Cross|$ grades $\RunOver(d)$, from $0$ at $\bot_d$ to $|\Sq(d)|$ at
-  $\top_d$.
+  and then $y = x^s$.
 \end{lemma}
 \begin{proof}
   If $z$ agreed with $x$ on every pair covering for $<_x$, then $<_x$ would be contained in $<_z$
@@ -507,9 +506,8 @@ spans, and a $0$-cell is a run.}
   $\Cross(\pi_S) = \Cross(x)$.
 
   For the second claim list a part as $p_1 < \cdots < p_k$; as in the previous proof this is also
-  the restriction of $<_z$ to it, so each $(p_i,p_{i+1})$ lies in $S$ and is reversed by $z$. Since $\Cross(z)$
-  is biclosed, the first clause applied to the triples $(p_i, p_{i+1}, p_j)$ gives, by induction on
-  $j-i$, that $z$ reverses every pair of the part.
+  the restriction of $<_z$ to it, so each $(p_i,p_{i+1})$ lies in $S$ and is reversed by $z$. Then
+  $p_k <_z \cdots <_z p_1$, so $z$ reverses every pair of the part.
 \end{proof}
 
 \begin{corollary}\label{cor:covercell}
