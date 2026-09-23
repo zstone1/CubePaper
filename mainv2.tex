@@ -177,7 +177,7 @@ $\bigvee a \to K$ and a morphism, a \textbf{refinement}, is a map of wedges comm
 write $\deg d$ and $|d|$ for the degree and event count of a chain's shape and
 $\Ch(u) : \Ch(K) \to \Ch(L)$ for the pushforward along $u : K \to L$, which postcomposes the
 classifying map and leaves the shape alone. A chain of degree $0$ is a \textbf{run}; the full
-subcategory $\Run(K)$ of runs is discrete, a refinement losing no block being an identity.
+subcategory of runs is discrete, a refinement losing no block being an identity.
 
 We use three facts from \cite[\S2]{PZ}: serial wedges are non-self-linked and admit an altitude
 function $\alt : K_0 \to \Z$ with $\alt(\fin e) = \alt(\init e) + 1$ on edges, the final vertex of
@@ -442,9 +442,9 @@ biclosed.
 
 \begin{lemma}\label{lem:steps}
   Call a square $s$ a \textbf{step} of $x \in \RunOver(d)$ when $\Cross(x) \symdiff \{s\}$ is
-  biclosed, write $\Steps(x)$ for the set of steps and $x^s$ for the run with
-  $\Cross(x^s) = \Cross(x) \symdiff \{s\}$. Then $s$ is a step of $x$ if and only if its two events
-  are consecutive in the firing order of $x$, and $|\Steps(x)| = \deg d$.
+  biclosed, and write $x^s$ for the run with $\Cross(x^s) = \Cross(x) \symdiff \{s\}$, the
+  \textbf{flip} of $x$ at $s$. Then $s$ is a step of $x$ if and only if its two events are
+  consecutive in the firing order of $x$, and $x$ has exactly $\deg d$ steps.
 \end{lemma}
 \begin{proof}
   A block's events are consecutive in the firing order (\Cref{lem:firing-blocks}), so ``consecutive
@@ -460,7 +460,7 @@ biclosed.
 \end{proof}
 
 \begin{lemma}\label{lem:cover}
-  If $x < z$ in $\RunOver(d)$ then some $s \in \Steps(x) \setminus \Cross(x)$ lies in $\Cross(z)$.
+  If $x < z$ in $\RunOver(d)$ then some step $s$ of $x$ outside $\Cross(x)$ lies in $\Cross(z)$.
   Hence $x \lessdot y$ if and only if $\Cross(y) = \Cross(x) \cup \{s\}$ for such an $s$, in which
   case $y = x^s$; and $\RunOver(d)$ is graded by $|\Cross|$, from $0$ at $\bot_d$ to $|\Sq(d)|$ at
   $\top_d$.
@@ -479,7 +479,7 @@ biclosed.
 
 \begin{proposition}\label{prop:factorisations}
   Let $x \in \RunOver(d)$. Sending a factorisation $X \to m \to d$ of $x$ to the set of steps of
-  $x$ whose two events share a block of $m$ is a bijection onto the subsets of $\Steps(x)$; write
+  $x$ whose two events share a block of $m$ is a bijection onto the sets of steps of $x$; write
   $m_S$ for the middle at $S$ and $\iota_S : X \to m_S$, $\pi_S : m_S \to d$ for its legs. Then
   $\deg m_S = |S|$, and if $S \cap \Cross(x) = \emptyset$ --- we then say $S$ \textbf{rises} from
   $x$ --- then $\iota_S$ is order preserving.
@@ -503,8 +503,8 @@ biclosed.
 \end{proof}
 
 \begin{definition}\label{def:cell}
-  For runs $X, Y \in \Run(K)$, an \textbf{$n$-cell} from $X$ to $Y$ is a chain $e$ with
-  $\deg e = n$, $\dom\bot_e = X$ and $\dom\top_e = Y$; write $\Cell_n(X,Y)$ for the set of them.
+  For runs $X, Y$ of $K$, an \textbf{$n$-cell} from $X$ to $Y$ is a chain $e$ with
+  $\deg e = n$, $\dom\bot_e = X$ and $\dom\top_e = Y$.
 \end{definition}
 
 \gap{One sentence: so the $n$-cells are the chains of degree $n$, sorted by the two runs each
@@ -592,8 +592,8 @@ spans, and a $0$-cell is a run.}
 The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
 \begin{definition}\label{def:poly}
   The \textbf{Artin polygraph} $\Art(K)$ has $0$-cells the runs of $K$, $1$-cells
-  $\Art(K)_1(X,Y) := \Cell_1(X,Y)$, $2$-cells $\Art(K)_2(X,Y) := \Cell_2(X,Y)$, and the words
-  $\src$, $\tgt$ of \Cref{def:words}.
+  the $1$-cells and $2$-cells of \Cref{def:cell} --- the chains of degree $1$ and $2$ spanning a
+  given pair of runs --- and the words $\src$, $\tgt$ of \Cref{def:words}.
 \end{definition}
 
 \gap{One paragraph on the name: $\Art(K)$ is built from $K$ alone, with no braid theory in it, and
@@ -632,7 +632,7 @@ $\Ch(K)\op$ inverting $W$ (\Cref{prop:loc}). Each is built from the other.}
 Fix $K$ throughout this section, and write $E$, $\Theta$, $\Phi$ for the functors called $E_K$,
 $\Theta_K$, $\Phi_K$ elsewhere.
 
-A cell $\alpha \in \Cell_n(X,Y)$ comes with the two refinements $\bot_\alpha : X \to \alpha$ and
+An $n$-cell $\alpha$ from $X$ to $Y$ comes with the two refinements $\bot_\alpha : X \to \alpha$ and
 $\top_\alpha : Y \to \alpha$, of which the first is order preserving; since $Q$ inverts
 $\bot_\alpha\op$, we may set
 \[
@@ -763,7 +763,7 @@ every cell of $Z$ is a loop at $Z_{|e|}$.
 
 \begin{lemma}\label{lem:cuts}
   $a \mapsto \cut(a)$ is a bijection from the shapes on $N$ events onto the subsets of $[N-1]$,
-  with $|\cut(a)| = \deg a$. Hence $\Cell_n(Z_N,Z_N)$ is the set of $n$-element subsets of
+  with $|\cut(a)| = \deg a$. Hence the $n$-cells at $Z_N$ are the $n$-element subsets of
   $[N-1]$; write $\sigma_k$ for the $1$-cell with $\cut = \{k\}$. Moreover a chain $e$ of $Z$ with
   $\deg e = 2$ and $\cut(e) = \{i<k\}$ has $|\Sq(e)| = \cox(i,k)$.
 \end{lemma}
@@ -780,7 +780,7 @@ every cell of $Z$ is a loop at $Z_{|e|}$.
   the earlier of the two times at which $x$ fires the events of $s$, so $x$ passes $s$ between
   times $\pos_x(s)$ and $\pos_x(s)+1$. Then:
   \begin{enumerate}
-    \item $\pos_x$ is a bijection $\Steps(x) \to \cut(d)$;
+    \item $\pos_x$ is a bijection from the steps of $x$ onto $\cut(d)$;
     \item $\pos_{x^s}(s) = \pos_x(s)$;
     \item $\pos_{\bot_d}(s) = p$, where $s = (p,q)$.
   \end{enumerate}
