@@ -189,15 +189,12 @@ an isomorphism when $P \vee Q$ is non-self-linked and admits altitude \cite[Lem.
 Send $\cube n$ to its set of directions $[n]$, and a face embedding to the monotone injection
 naming the directions it leaves free. The left Kan extension of that functor along Yoneda is
 cocontinuous and vanishes at $\cube 0$, so the pushout defining a wedge becomes a coproduct: the
-\textbf{events} of $\bigvee a$ are $\coprod_i [a_i]$. Write $f_*$ for the map on events induced by
-a map $f$ of serial wedges.
-
-\begin{convention}\label{conv:events}
-  We identify the events of $a$ with $[N]$, $N = |a|$, by listing $\coprod_i [a_i]$ block by block, and
-  write $\blk_a : [N] \to [r]$ for the resulting block map. A shape on $N$ events is thus a
-  partition of $[N]$ into consecutive intervals, and it enters everything below only through
-  $\blk_a$. We drop the subscript when the shape is clear.
-\end{convention}
+\textbf{events} of $\bigvee a$ are the pairs $(i,c)$ with $i \in [r]$ and $c \in [a_i]$, one for
+each direction of each block. Order them lexicographically and put $\blk_a(i,c) := i$, so the
+blocks of $a$ are the fibres of $\blk_a$ and are intervals for that order; we drop the subscript
+when the shape is clear. Numbering the events $1, \dots, N$ in order identifies them with $[N]$,
+$N = |a|$, and we use whichever description is convenient. Write $f_*$ for the map on events
+induced by a map $f$ of serial wedges.
 
 \begin{proposition}\label{prop:coords}
   Let $f : \bigvee a \to \bigvee b$ in $\BPSet$, with $a$ and $b$ shapes on $N$ and $M$ events.
@@ -212,13 +209,11 @@ a map $f$ of serial wedges.
   By the pushout, $f$ is determined by its restrictions to the blocks of $a$, each of which lands
   in a single block of $b$ because $a_i > 0$; that gives $\blk(f)$, equation \eqref{eq:blk-coord}
   and the last clause, and a face embedding is determined by the directions it leaves free, so
-  $f_*$ determines $f$. Injectivity of $f_*$ and monotonicity of $\blk(f)$ follow by induction on
-  the length of $b$: by \cite[Lem.~2.11]{PZ} a map $\bigvee a \to \cube m \vee \bigvee b'$ splits as
-  $f_1 \vee f_2$ over a splitting of $a$, so $f_*$ is a disjoint union and $\blk(f)$ is
-  $\blk(f_1) \sqcup (1 + \blk(f_2))$ with $\blk(f_1)$ constant at $1$; injectivity of the left half
-  is a second induction, the two images at each glued vertex being separated by the coordinates
-  already equal to $1$ there. Finally $f$ preserves altitude \cite[Prop.~2.7]{PZ}, so $N = M$ and
-  the injection $f_*$ is a permutation.
+  $f_*$ determines $f$. That $f_*$ is injective and $\blk(f)$ monotone is an induction on the
+  length of $b$: by \cite[Lem.~2.11]{PZ} a map into $\cube m \vee \bigvee b'$ splits over a
+  splitting of $a$, and at each glued vertex the two halves have disjoint images, since the
+  coordinates a face embedding leaves free before the vertex are already $1$ there. Finally $f$
+  preserves altitude \cite[Prop.~2.7]{PZ}, so $N = M$ and the injection $f_*$ is a permutation.
 \end{proof}
 
 \paragraph{Presented categories.}
@@ -266,27 +261,13 @@ to paths by composition.
   functor out of $P$ is determined by its values on covers.
 \end{theorem}
 
-\begin{lemma}\label{lem:polygon}
-  Let $P$ be a finite poset, graded by $r$ with $r(y) = r(x) + 1$ on covers, in which every element
-  has exactly two Hasse neighbours. Then a directed path is determined by its first edge; and if
-  $P$ has a least and a greatest element, it has exactly two maximal chains, of a common length
-  $\ell$, and $|P| = 2\ell$.
-\end{lemma}
-\begin{proof}
-  Undirected, the Hasse graph is $2$-regular, hence a disjoint union of cycles, and $r$ increases
-  along a directed path, so a path leaves each vertex by the edge it did not arrive on. Both edges
-  at a least element point up and both at a greatest point down, so the cycle through the least
-  element meets the greatest one and splits into two directed arcs, of equal length by the grading;
-  that cycle is all of $P$, since every element lies on a path from the least to the greatest.
-\end{proof}
 
 \section{Squares, crossings, and the braiding}\label{sec:squares}
 
 \gap{One paragraph: a square is a pair of events of one block, and the whole construction runs on
 the question of which squares a map reverses.}
 
-Throughout, $a$ and $b$ are shapes on $N$ events, read as partitions of $[N]$ into consecutive
-intervals (\Cref{conv:events}).
+Throughout, $a$ and $b$ are shapes on $N$ events.
 
 \begin{definition}\label{def:squares}
   A \textbf{square} of $a$ is a pair $s = (p,q)$ of events with $p < q$ and $\blk(p) = \blk(q)$;
@@ -579,9 +560,13 @@ spans, and a $0$-cell is a run.}
 \begin{proof}
   Every $x \in \RunOver(e)$ has exactly two steps (\Cref{lem:steps}), and the two flips are its two
   Hasse neighbours, upward or downward according to whether the step is already reversed
-  (\Cref{lem:cover}). The two chains of \Cref{lem:orderpath} leave $\bot_e$ by different covers,
-  the least and greatest squares being distinct, so \Cref{lem:polygon} applies with the grading
-  $|\Cross|$. Finally $\deg e = 2$ forces the block dimensions above $1$ to be $\{3\}$ or
+  (\Cref{lem:cover}). So the Hasse graph of $\RunOver(e)$ is $2$-regular and therefore a disjoint
+  union of cycles; $|\Cross|$ rises along a directed path, so such a path leaves each vertex by the
+  edge it did not arrive on, while both edges at $\bot_e$ point up and both at $\top_e$ point down.
+  The cycle through $\bot_e$ thus meets $\top_e$ and splits into two directed arcs of equal length,
+  and it exhausts $\RunOver(e)$ because every run lies between $\bot_e$ and $\top_e$. Those arcs
+  are the two chains of \Cref{lem:orderpath}, which leave $\bot_e$ by different covers since the
+  least and the greatest square differ. Finally $\deg e = 2$ forces the block dimensions above $1$ to be $\{3\}$ or
   $\{2,2\}$, and \Cref{def:squares} counts $\binom32 = 3$ and $2\binom22 = 2$.
 \end{proof}
 
