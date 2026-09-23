@@ -540,7 +540,12 @@ spans, and a $0$-cell is a run.}
   $\Sq(e)$, by the smaller event and then the larger.
 \end{proposition}
 In both cases $\src(e)$ reverses the squares of $e$ in lexicographic order and $\tgt(e)$ in the
-reverse order.
+reverse order.\footnote{The formalisation \cite{Cubical} takes that last sentence as the definition
+of the two words, and carries both derivations of this proposition: the one above, as
+\texttt{eq\_srcPath\_or\_tgtPath\_of\_triangles}, resting on \texttt{subsingleton\_triangles} and
+\texttt{biclosed\_iff\_of\_triangle}; and one from $2$-regularity of $\mathrm{Hasse}(\RunOver(e))$,
+as \texttt{eq\_srcPath\_or\_tgtPath}. The two are independent, meeting only in the polygon lemma
+they both feed.}
 
 \begin{proof}
   Biclosedness constrains a set only on triples of events sharing a block (\Cref{def:squares}), and
