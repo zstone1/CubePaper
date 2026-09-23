@@ -118,20 +118,16 @@ pictures are the only shapes this can take, which is why the relations come out 
 
 
 \begin{theorem}[\Cref{thm:A}, \Cref{thm:B}, \Cref{thm:C}]\label{thm:ABC}
-  Let $K$ be a bipointed precubical set, $\Br(K)$ the localization of $\Ch(K)\op$ at the
-  order-preserving refinements (\Cref{def:W}), and $\Art(K)$ the $2$-polygraph of
-  \Cref{def:poly}.
-........................
+  Let $K$ be a bipointed precubical set, $\Br(K)$ the localization above (\Cref{def:W}) and
+  $\Art(K)$ the $2$-polygraph just described (\Cref{def:poly}), presenting $\pres{\Art(K)}$.
   \begin{enumerate}
-    \item There is a functor $E_K : \pres{\Art(K)} \to \Br(K)$, sending a $1$-cell $\alpha$ to
-      $Q(\top_\alpha\op) \circ Q(\bot_\alpha\op)\inv$, and it is an equivalence.
-    \item $K \mapsto \Art(K)$ extends to a functor $\BPSet \to \Polygraph$, and for every
-      $f : K \to L$,
+    \item There is an equivalence $E_K : \pres{\Art(K)} \to \Br(K)$.
+    \item Both constructions are functorial in $K$, and $E$ is natural: for every $f : K \to L$,
       \[
         E_L \circ \pres{\Art(f)} \;=\; \Br(f) \circ E_K .
       \]
-    \item $\Art(Z) \cong \ArtBraid$ in $\Polygraph$, where $\ArtBraid$ is Artin's braid polygraph
-      (\Cref{def:artin-poly}). Consequently $\Br(Z) \simeq \BraidPosOp$.
+    \item $\Art(Z)$ is isomorphic to Artin's braid polygraph (\Cref{def:artin-poly}).
+      Consequently $\Br(Z)$ is equivalent to the opposite of the positive braid category.
   \end{enumerate}
   None of the three assumes anything about $K$.
 \end{theorem}
@@ -152,8 +148,8 @@ $\Br(K)$, $W$ and $\Art(K)$ are \texttt{ChainCat.Br}, \texttt{ChainCat.W} and
 \texttt{CubeChains/Paper.lean} as an \texttt{example} discharged by one citation.
 
 \paragraph{Conventions.}
-We assume the reader knows \cite{PZ,Z2} and use its notation: $\pSet$ is the category of precubical
-sets, $\BPSet$ the bipointed ones with $Z$ final, and $\cube n$ the $n$-cube. Put
+We assume the reader knows \cite{PZ,Z2} and use its notation: $\BPSet$ is the category of bipointed
+precubical sets, with $Z$ final and $\cube n$ the $n$-cube. Put
 $[n] := \{1,\dots,n\}$. Composition is classical: $gf$ means ``first $f$, then $g$''. A word in a
 polygraph is a path read left to right, so $\sigma_i\sigma_k$ is the arrow $\sigma_k \circ \sigma_i$.
 
@@ -763,16 +759,16 @@ events of $s$; so $x$ passes $s$ between positions $\pos_x(s)$ and $\pos_x(s)+1$
 \end{lemma}
 \begin{proof}
   (i) The fibres of $\blk$ for $<_x$ are consecutive intervals of lengths
-  $a_1,\dots,a_r$ (\Cref{lem:firing-blocks}), independent of $x$, so the set of times $t$ with $t$
-  and $t+1$ in one block is $\cut(d)$ for every $x$. A step is a cover of $<_x$ inside a
+  $a_1,\dots,a_r$ (\Cref{lem:firing-blocks}), independent of $x$, so the set of positions $t$
+  with $t$ and $t+1$ in one block is $\cut(d)$ for every $x$. A step is a cover of $<_x$ inside a
   block (\Cref{lem:steps}), so $\pos_x$ lands in $\cut(d)$, and it is injective because distinct
   covers of a chain have distinct lower ends; both sides have $\deg d$ elements (\Cref{lem:steps},
   \Cref{lem:cuts}). (ii) Flipping $s$ exchanges its two times and changes no other. (iii) $\bot_d$
   fires the events in their own order.
 
-  For the last claim, $\gamma(x \lessdot y) = m_{\{s\}}$, whose blocks are the parts of the firing
-  order cut at every cover but $s$ (\Cref{prop:factorisations}); so $m_{\{s\}}$ has one block of
-  dimension $2$, at times $\pos_x(s)$ and $\pos_x(s)+1$, and edges elsewhere, so its cut set is
+  For the last claim, $\gamma(x \lessdot y) = m_{\{s\}}$, whose blocks are the parts of $<_x$
+  cut at every cover but $s$ (\Cref{prop:factorisations}); so $m_{\{s\}}$ has one block of
+  dimension $2$, at positions $\pos_x(s)$ and $\pos_x(s)+1$, and edges elsewhere, so its cut set is
   $\{\pos_x(s)\}$.
 \end{proof}
 
