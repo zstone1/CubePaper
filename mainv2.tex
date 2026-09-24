@@ -217,9 +217,6 @@ functor $q$.
   $C[W\inv]$ that agree after $Q$ are equal.
 \end{proposition}
 
-\gap{One sentence: every arrow of $\Br(K)$ written down below is a composite $Q(g)Q(m)\inv$, and
-every identity used about them is an instance of $Q$ being a functor.}
-
 \paragraph{Newman's lemma.}
 Write $\mathrm{Hasse}(P)$ for the quiver of covers of a poset $P$. A map of quivers
 $\mathrm{Hasse}(P) \to C$ into a category extends to paths by composition, and we read it on paths
@@ -227,8 +224,8 @@ without further comment.
 
 \begin{theorem}[coherent Newman's lemma; \cite{Huet}, {\cite[Ch.~4]{Polygraphs}}]\label{thm:newman}
   Let $P$ be a finite poset and $\varphi : \mathrm{Hasse}(P) \to C$ a map of quivers. Suppose that
-  for every pair of distinct covers $x \lessdot y_1$, $x \lessdot y_2$ and every common upper bound $z$ of $y_1$ and
-  $y_2$ there are $j \le z$ and paths $p_i$ from $y_i$ to $j$ with
+  for every pair of distinct covers $x \lessdot y_1$, $x \lessdot y_2$ and every common upper bound
+  $z$ of $y_1$ and $y_2$ there are $j \le z$ and paths $p_i$ from $y_i$ to $j$ with
   $\varphi(x \lessdot y_1)\,\varphi(p_1) = \varphi(x \lessdot y_2)\,\varphi(p_2)$. Then $\varphi$
   sends parallel paths to equal arrows, so it extends uniquely to a functor $P \to C$; and a
   functor out of $P$ is determined by its values on covers.
@@ -244,7 +241,8 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
 
 \begin{definition}\label{def:squares}
   A \textbf{square} of $a$ is a pair $s = (p,q)$ of events with $p < q$ and $\blk(p) = \blk(q)$;
-  write $\Sq(a)$ for the set of them, so $|\Sq(a)| = \sum_i \binom{a_i}{2}$. We write $\Sq(d)$ for the squares of a chain's shape, and $f_*$ also for the induced injection
+  write $\Sq(a)$ for the set of them, so $|\Sq(a)| = \sum_i \binom{a_i}{2}$. We write $\Sq(d)$ for
+  the squares of a chain's shape, and $f_*$ also for the induced injection
   $\Sq(a) \to \Sq(b)$, $(p,q) \mapsto (f_*p, f_*q)$, well defined because $f_*$ is increasing on
   blocks (\Cref{prop:coords}).
 \end{definition}
@@ -259,7 +257,8 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
 
 \begin{lemma}\label{lem:sq-range}
   The map $f_*\inv$ preserves the order of any two events lying in distinct blocks of $b$. Hence
-  $\Cross(f) \subseteq \Sq(b)$. A square $(p,q)$ of $b$ lies in the image of $f_*$ if and only if $f_*\inv p$ and $f_*\inv q$ lie in one block of $a$.
+  $\Cross(f) \subseteq \Sq(b)$. A square $(p,q)$ of $b$ lies in the image of $f_*$ if and only if
+  $f_*\inv p$ and $f_*\inv q$ lie in one block of $a$.
 \end{lemma}
 \begin{proof}
   Let $u < v$ lie in distinct blocks of $b$, so $\blk_b(u) < \blk_b(v)$, and put $w = f_*\inv u$,
@@ -420,7 +419,8 @@ Say that a set $S$ of steps of $x$ \textbf{rises} from $x$ when $S \cap \Cross(x
 
 \begin{proposition}\label{prop:factorisations}
   Let $x \in \RunOver(d)$. Sending a factorisation $X \to m \to d$ of $x$ to the set of steps of
-  $x$ whose two events share a block of $m$ is a bijection onto the sets of steps of $x$. Write
+  $x$ whose two events share a block of $m$ is a bijection onto the subsets of its set of steps.
+  Write
   $m_S$ for the middle it sends to $S$, and $\iota_S : X \to m_S$, $\pi_S : m_S \to d$ for the two
   legs. Then $\deg m_S = |S|$, and $\iota_S$ is order preserving whenever $S$ rises from $x$.
 \end{proposition}
@@ -469,8 +469,10 @@ spans, and a $0$-cell is a run.}
   $p_k <_z \cdots <_z p_1$, so $z$ reverses every pair of the part.
 \end{proof}
 
+For a cover $x \lessdot y$ of $\RunOver(d)$ with step $s$, put $\gamma(x \lessdot y) := m_{\{s\}}$.
+
 \begin{corollary}\label{cor:covercell}
-  Let $x \lessdot y$ in $\RunOver(d)$, with step $s$. Then $\gamma(x \lessdot y) := m_{\{s\}}$ is a
+  Let $x \lessdot y$ in $\RunOver(d)$, with step $s$. Then $\gamma(x \lessdot y)$ is a
   $1$-cell from $\dom x$ to $\dom y$, with $\pi_{\{s\}}\bot_{m_{\{s\}}} = x$ and
   $\pi_{\{s\}}\top_{m_{\{s\}}} = y$; and every $1$-cell $\alpha$ is $\gamma$ of the unique cover
   $\bot_\alpha \lessdot \top_\alpha$ of $\RunOver(\alpha)$. So $\gamma$, together with
@@ -505,12 +507,14 @@ spans, and a $0$-cell is a run.}
   swaps a consecutive pair (\Cref{lem:cover}).
 
   Two blocks of dimension $2$ therefore give four runs, a Boolean square on the two squares. One
-  block of dimension $3$, on events $p<q<r$, gives six, and the covers are
+  block of dimension $3$, on events $p<q<r$, gives six, with covers
   \[
     pqr \lessdot qpr \lessdot qrp \lessdot rqp, \qquad pqr \lessdot prq \lessdot rpq \lessdot rqp ,
   \]
-  a hexagon. Either way the two displayed chains are the only maximal ones and leave $\bot_e$ by
-  different covers.
+  a hexagon. These are all of them: every run has exactly two steps (\Cref{lem:steps}) and each step
+  gives a neighbour, up or down according to whether it is already reversed (\Cref{lem:cover}), and
+  every vertex displayed already has two. So the two displayed chains are the only maximal ones, and
+  they leave $\bot_e$ by different covers.
 \end{proof}
 
 In both cases $\src(e)$ reverses the squares of $e$ in lexicographic order and $\tgt(e)$ in the
@@ -536,8 +540,8 @@ The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
 \Cref{thm:C} is what makes the name literal.}
 
 \begin{proposition}\label{prop:closes}
-  Read in $\pres{\Art(K)}$, the map of quivers $\gamma$ satisfies the hypothesis of \Cref{thm:newman}
-  on $\RunOver(d)$. So it extends uniquely to a functor
+  Read in $\pres{\Art(K)}$, the map of quivers $\gamma$ satisfies the hypothesis of
+  \Cref{thm:newman} on $\RunOver(d)$. So it extends uniquely to a functor
   $\Gamma_d : \RunOver(d) \to \pres{\Art(K)}$, and $\Gamma_d(qx) = \Gamma_o(x)$ for every
   refinement $q : o \to d$ and every $x \in \RunOver(o)$.
 \end{proposition}
@@ -566,6 +570,9 @@ $\Ch(K)\op$ inverting $W$ (\Cref{prop:loc}). Each is built from the other.}
 
 Fix $K$ throughout this section, and write $E$, $\Theta$, $\Phi$ for the functors called $E_K$,
 $\Theta_K$, $\Phi_K$ elsewhere.
+
+\gap{One sentence: every arrow of $\Br(K)$ written down below is a composite $Q(g)Q(m)\inv$, and
+every identity used about them is an instance of $Q$ being a functor.}
 
 An $n$-cell $\alpha$ from $X$ to $Y$ comes with the two refinements $\bot_\alpha : X \to \alpha$ and
 $\top_\alpha : Y \to \alpha$, of which the first is order preserving; since $Q$ inverts
@@ -604,8 +611,8 @@ $\bot_\alpha$, we may set
     \Theta(u) \;:=\; \Gamma_d\bigl(\bot_d \le u\bot_c\bigr)
       \;:\; \dom\bot_d \to \dom\bot_c ,
   \]
-  defines a functor $\Theta : \Ch(K)\op \to \pres{\Art(K)}$; it sends $u$ to an identity whenever $u$ is
-  order preserving, so it descends uniquely to $\Phi : \Br(K) \to \pres{\Art(K)}$ with
+  defines a functor $\Theta : \Ch(K)\op \to \pres{\Art(K)}$; it sends $u$ to an identity whenever
+  $u$ is order preserving, so it descends uniquely to $\Phi : \Br(K) \to \pres{\Art(K)}$ with
   $\Phi Q = \Theta$.
 \end{lemma}
 \begin{proof}
