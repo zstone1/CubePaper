@@ -12,15 +12,16 @@
 \begin{abstract}
 Ziemiański's cube chain category $\Ch(K)$ is a combinatorial model for the space of directed paths
 on a precubical set $K$. Paliga and Ziemiański built a braid invariant for precubical sets
-by observing a relation between $\pi_1|\Ch(Z)|$ and braids, where $Z$ is the terminal precubical set.
+by constructing an isomorphism between $\pi_1|\Ch(Z)|$ and the braid category, 
+where $Z$ is the terminal precubical set.
 However, that invariant trivializes for Euclidean $K$ because $|\Ch(\cube n)|$ is
 contractible \cite[Prop.~6.1]{PZ}.
 This paper constructs a localization of $\Ch(K)$ at morphisms that preserve the order
-of coordinates, called $\Br(K)$. And we will show that this structure is the source of the braid
-structure of $\pi_1|\Ch(Z)|$. But, there is no nerve or geometric realization in this technique.
+of coordinates, called $\Br(K)$. This structure is the source of the braiding
+structure of $\pi_1|\Ch(Z)|$. But, there is no geometric realization or homotopy equivalence in this technique.
 Instead we build a 2-polygraph giving an artin braid-like presentation of
 $\Br(K)$. The $\{0,1,2\}$-cells of the polygraph are the dimension $\{0,1,2\}$ chains of $K$.
-Intuitively, $3$-cells of K contribute braid relations, and pairs of non-intersecting $2$-cells of
+Intuitively, $3$-cells of $K$ contribute braid relations, and pairs of non-intersecting $2$-cells of
 $K$ contribute commuting relations. This is not just a metaphor: at $K = Z$,
 we get the artin relations and generators exactly. So $\Br(Z)$ is equivalent to the
 positive braid category. The presentation is natural in $K$, providing a generalization of the
@@ -46,6 +47,7 @@ And define the localization $\Br(K) \;:=\; \Ch(K)\op\bigl[(W\op)\inv\bigr]$. The
 2-polygraph, $\Art(K)$, giving an artin-like presentation for $\Br(K)$ in geometric terms. This approach gives 
 us several advantages. Firstly, we preserve more structure of $\Ch(K)$, so $\Br(\cube n)$ does not collapse.
 Secondly, it permits us to stay with positive braids which yields a simpler theory.
+The full braid group can be easily recovered via the lift to the free groupoid on $\Ch(K)$.
 
 The the cells of our polygraph are straightforward. A chain of $K$ has a list of positive integers
 for the dimension of the cubes. Let the degree of a chain be the sum of the list minus the length.
@@ -116,7 +118,7 @@ The main results of this paper will be
       \[
         E_L \circ \pres{\Art(f)} \;=\; \Br(f) \circ E_K .
       \]
-    \item $\Art(Z)$ is isomorphic to positve Artin's polygraph for the braid category.
+    \item $\Art(Z)$ is isomorphic to the positve Artin polygraph for the braid category.
       Consequently $\Br(Z)$ is equivalent to the positive braid category.
   \end{enumerate}
 \end{theorem}
@@ -140,9 +142,6 @@ But that won't translate across to braids convienently. So we will need the op i
 
 \section{Background}\label{sec:background}
 
-\gap{One paragraph placing \Cref{prop:coords}: everything downstream is bookkeeping about the
-events of a wedge, and this is the only place the precubical structure is touched.}
-
 \paragraph{Cube chains.}
 A \textbf{shape} is a list $a = [a_1,\dots,a_r]$ of positive integers; it names the serial wedge
 $\bigvee a := \cube{a_1} \vee \cdots \vee \cube{a_r}$, whose \textbf{blocks} are the $\cube{a_i}$,
@@ -160,15 +159,19 @@ $\Ch(P) \times \Ch(Q) \to \Ch(P \vee Q)$ is an isomorphism when $P \vee Q$ is no
 admits altitude \cite[Lem.~2.11]{PZ}.
 
 \paragraph{The events of a shape.}
-Send $\cube n$ to its set of directions $[n]$, and a face embedding to the monotone injection
-naming the directions it leaves free. The left Kan extension of that functor along Yoneda is
-cocontinuous and vanishes at $\cube 0$, so the pushout defining a wedge becomes a coproduct: the
-\textbf{events} of $\bigvee a$ are the pairs $(i,c)$ with $i \in [r]$ and $c \in [a_i]$, one for
-each direction of each block. Order them lexicographically and put $\blk_a(i,c) := i$, so the
-blocks of $a$ are the fibres of $\blk_a$ and are intervals for that order; we drop the subscript
-when the shape is clear. Numbering the events $1, \dots, N$ in order identifies them with $[N]$,
-$N = |a|$, and we use whichever description is convenient. Write $f_*$ for the map on events
-induced by a map $f$ of serial wedges.
+Let $\Ev$ be the left Kan extension along Yoneda of the functor sending $\cube n$ to its set of
+directions $[n]$, and a face embedding to the monotone injection naming the directions it leaves
+free. Then $\Ev$ is cocontinuous and $\Ev(\cube 0) = \emptyset$, so the pushout defining a wedge
+becomes a coproduct:
+\[
+  \Ev\bigl(\textstyle\bigvee a\bigr) \;=\; \coprod_{i \in [r]} [a_i] .
+\]
+Its elements are the \textbf{events} of $\bigvee a$, the pairs $(i,c)$ with $i \in [r]$ and
+$c \in [a_i]$, one for each direction of each block. Order them lexicographically and put
+$\blk_a(i,c) := i$, so the blocks of $a$ are the fibres of $\blk_a$ and are intervals for that
+order; we drop the subscript when the shape is clear. Numbering the events $1, \dots, N$ in order
+identifies them with $[N]$, $N = |a|$, and we use whichever description is convenient. For a map
+$f$ of serial wedges we write $f_*$ for $\Ev(f)$.
 
 \begin{proposition}\label{prop:coords}
   Let $f : \bigvee a \to \bigvee b$ in $\BPSet$, with $a$ and $b$ shapes on $N$ and $M$ events.
