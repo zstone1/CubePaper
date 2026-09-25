@@ -232,7 +232,7 @@ without further comment.
 \end{theorem}
 
 
-\section{Squares, crossings, and the braiding}\label{sec:squares}
+\section{Squares, crossings, and \texorpdfstring{$\Br(K)$}{Br(K)}}\label{sec:squares}
 
 \gap{One paragraph: a square is a pair of events of one block, and the whole construction runs on
 the question of which squares a map reverses.}
@@ -256,7 +256,7 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
 \end{definition}
 
 \begin{lemma}\label{lem:sq-range}
-  The map $f_*\inv$ preserves the order of any two events lying in distinct blocks of $b$. Hence
+  The map $f_*\inv$ preserves the order of two events in distinct blocks of $b$. Hence
   $\Cross(f) \subseteq \Sq(b)$. A square $(p,q)$ of $b$ lies in the image of $f_*$ if and only if
   $f_*\inv p$ and $f_*\inv q$ lie in one block of $a$.
 \end{lemma}
@@ -340,9 +340,8 @@ Fix $K$, and let $d$ be a chain of $K$ on $N$ events.
 \end{definition}
 
 Such a refinement is determined by its map of wedges, the classifying map of its source being
-forced, so $\RunOver(d)$ is the set of runs of $\bigvee a$. That source has shape $[1,\dots,1]$,
-so $x_*$ enumerates the events of $d$; write $p <_x q$ when $x_*$ reaches $p$ before $q$. Then
-$\Cross(x)$ is the inversion set of $<_x$.
+forced; that source has shape $[1,\dots,1]$, so $x_*$ enumerates the events of $d$. Write
+$p <_x q$ when $x_*$ reaches $p$ first; then $\Cross(x)$ is the inversion set of $<_x$.
 
 \begin{lemma}\label{lem:firing-blocks}
   If $\blk(p) < \blk(q)$ then $p <_x q$; hence $\blk$ is monotone for $<_x$, with interval fibres,
@@ -429,8 +428,8 @@ Say that a set $S$ of steps of $x$ \textbf{rises} from $x$ when $S \cap \Cross(x
   $\iota$ are intervals of $<_x$, and $\pi$ requires each such interval to lie
   inside one block of $d$; conversely such an interval partition arises from the chain whose blocks
   are its parts, in order. The factorisation is determined by that shape: a map of wedges is
-  determined by its action on events and injective there (\Cref{prop:coords}), hence a
-  monomorphism, while the first leg is forced by which events fall in which part. An interval
+  determined by its action on events (\Cref{prop:coords}), and the first leg is forced by which
+  events fall in which part. An interval
   partition of a chain is recorded by the set of covers it does not cut; those covers lie
   inside a block, so they are steps; and $\deg m$ is $N$ minus the number of
   parts, which is the number of uncut covers.
@@ -464,9 +463,9 @@ spans, and a $0$-cell is a run.}
   \Cref{lem:cocycle} applied to $\pi_S\iota_S = x$ with $\Cross(\iota_S) = \emptyset$ gives
   $\Cross(\pi_S) = \Cross(x)$.
 
-  For the second claim list a part as $p_1 < \cdots < p_k$; as in the previous proof this is also
-  the restriction of $<_z$ to it, so each $(p_i,p_{i+1})$ lies in $S$ and is reversed by $z$. Then
-  $p_k <_z \cdots <_z p_1$, so $z$ reverses every pair of the part.
+  For the second claim list a part as $p_1 < \cdots < p_k$, which by \Cref{prop:factorisations} is
+  also its $<_x$-order, so each $(p_i,p_{i+1})$ is an uncut cover, lies in $S$ and is reversed by
+  $z$. Then $p_k <_z \cdots <_z p_1$, so $z$ reverses every pair of the part.
 \end{proof}
 
 For a cover $x \lessdot y$ of $\RunOver(d)$ with step $s$, put $\gamma(x \lessdot y) := m_{\{s\}}$.
@@ -506,7 +505,7 @@ For a cover $x \lessdot y$ of $\RunOver(d)$ with step $s$, put $\gamma(x \lessdo
   second. A run over $e$ is a linear order on each block (\Cref{lem:firing-blocks}) and each cover
   swaps a consecutive pair (\Cref{lem:cover}).
 
-  Two blocks of dimension $2$ therefore give four runs, a Boolean square on the two squares. One
+  Two blocks of dimension $2$ therefore give four runs, the Boolean lattice on $s_1$, $s_2$. One
   block of dimension $3$, on events $p<q<r$, gives six, with covers
   \[
     pqr \lessdot qpr \lessdot qrp \lessdot rqp, \qquad pqr \lessdot prq \lessdot rpq \lessdot rqp ,
@@ -645,9 +644,8 @@ $\bot_\alpha$, we may set
 
   For the other composite, \Cref{lem:telescope} gives
   $E(\Theta(u)) = Q(u\bot_c)Q(\bot_d)\inv
-   = Q(\bot_c) \circ Q(u) \circ Q(\bot_d)\inv$, which is $Q(u)$ conjugated by the
-  isomorphisms $Q(c) \cong Q(\dom\bot_c)$ that $Q$ makes of the order-preserving refinements
-  $\bot_c$. So $E\Theta \cong Q$, and $E\Phi \cong \id$ by uniqueness of descent
+   = Q(\bot_c) \circ Q(u) \circ Q(\bot_d)\inv$, which is $Q(u)$ conjugated by the isomorphisms
+  $Q(\bot_c)$ and $Q(\bot_d)$. So $E\Theta \cong Q$, and $E\Phi \cong \id$ by uniqueness of descent
   (\Cref{prop:loc}).
 \end{proof}
 
