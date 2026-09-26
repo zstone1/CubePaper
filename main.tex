@@ -23,6 +23,7 @@ theorem tells us $\pi_1|\Chs(\cube n)|$ is isomorphic to the pure braid group $P
 The construction of $\Chs$ works by attaching one dimensional refinements to each 
 cube chain in $K$. Furthermore, we associate permutations with each morphism, which give us a 
 functor $\Conc : \Chs(K) \to \BraidPos$ into the positive braid monoid.
+This functor builds a braid invariant without passing through the nerve.
 It is natural in $K$, and not constant as long as $K$ contains a 2-cell.
 The construction and the comparison with $\Sal(n)$ are formalized in Lean \cite{Cubical}.
 \end{abstract}
@@ -52,7 +53,7 @@ pairs of faces and minimal faces refining them.
 Despite discovering neither a suitably generic Morse framework, nor a notion of ``complexified precubical sets'',
 the construction of the Salvetti complex generalizes well.
 
-The minimal faces of an arrangement are called chambers or topes.
+The Salvetti complex is built in terms of the minimal faces of an arrangement, called chambers or topes.
 In the precubical setting, these correspond to one dimensional cube chains, we call \emph{runs}. 
 So we push this analogy through, and build $\Chs$ as a set of pairs, whose first component is an element of $\Ch$, 
 and second component is a run refining it. The construction $\Chs(K)$ works for any precubical set, and is indeed natural in $K$. 
@@ -401,6 +402,7 @@ mirroring the order from Salvetti:
 We will define a functor $\rho:\Cube\op \to \Set$ which will give us this shape. 
 First, note that every morphism $f : \cube n \to \cube m$ is a face embedding. 
 So has a corresponding projection on cells $\hat{f} : \cube m \to \cube n$.
+This is just over cells as sets, precubical sets don't have degenerecies.
 Notably, the projection is monotonically decreasing on cell dimension.
 With that, we can define $\rho$ as follows
 

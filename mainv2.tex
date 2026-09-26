@@ -14,13 +14,12 @@ Ziemiański's cube chain category $\Ch(K)$ is a combinatorial model for the spac
 on a precubical set $K$. Paliga and Ziemiański built a braid invariant for precubical sets
 by constructing an isomorphism between $\pi_1|\Ch(Z)|$ and the braid category, 
 where $Z$ is the terminal precubical set.
-However, that invariant trivializes for Euclidean $K$ because $|\Ch(\cube n)|$ is
-contractible \cite[Prop.~6.1]{PZ}.
+However, that invariant is trivial for every $K \subseteq \cube n$ \cite[Prop.~6.1]{PZ}.
 This paper constructs a localization of $\Ch(K)$ at morphisms that preserve the order
 of coordinates, called $\Br(K)$. This structure is the source of the braiding
 structure of $\pi_1|\Ch(Z)|$. But, there is no geometric realization or homotopy equivalence in this technique.
 Instead we build a 2-polygraph giving an artin braid-like presentation of
-$\Br(K)$. The $\{0,1,2\}$-cells of the polygraph are the dimension $\{0,1,2\}$ chains of $K$.
+$\Br(K)$. The $\{0,1,2\}$-generators of the polygraph are the dimension $\{0,1,2\}$ chains of $K$.
 Intuitively, $3$-cells of $K$ contribute braid relations, and pairs of non-intersecting $2$-cells of
 $K$ contribute commuting relations. This is not just a metaphor: at $K = Z$,
 we get the artin relations and generators exactly. So $\Br(Z)$ is equivalent to the
@@ -35,25 +34,26 @@ All this work is formalized in Lean \cite{Cubical}.
 
 Ziemiański's cube chain category $\Ch(K)$ is a combinatorial model for the executions of a
 bipointed precubical set $K$ \cite[Thm.~7.6]{Z2}. Paliga and Ziemiański established a homotopy 
-equivalence between $|\Ch(Z)|$ and configuration spaces of points in the plane, 
-where $Z$ is the terminal precubical set.
+equivalence between the space of directed paths on $Z$ and the configuration spaces of points in
+the plane \cite[Thm.~1.1]{PZ}, where $Z$ is the terminal precubical set.
 It extends, by naturality, to an invariant of any precubical set $K$.
-However, it trivializes on any Euclidean complex, see {\cite[Prop.~6.1]{PZ}}. 
-The proof is one line: the invariant factors through $|\Ch(\cube n)|$, which is contractible.
+However, it is trivial for every $K \subseteq \cube n$ \cite[Prop.~6.1]{PZ}.
+The proof is one line: the invariant factors through the space of directed paths on $\cube n$,
+which is contractible.
 
 This paper explains that the braid structure is present in $\Ch(K)$ without passing through 
 any homotopy equivalences. We will construct a set of morphisms, $W$, in $\Ch(K)$. 
 And define the localization $\Br(K) \;:=\; \Ch(K)\op\bigl[(W\op)\inv\bigr]$. Then we will build a 
-2-polygraph, $\Art(K)$, giving an artin-like presentation for $\Br(K)$ in geometric terms. This approach gives 
+2-polygraph, $\Art(K)$, giving an Artin-like presentation for $\Br(K)$ in geometric terms. This approach gives 
 us several advantages. Firstly, we preserve more structure of $\Ch(K)$, so $\Br(\cube n)$ does not collapse.
 Secondly, it permits us to stay with positive braids which yields a simpler theory.
 The full braid group can be easily recovered via the lift to the free groupoid on $\Ch(K)$.
 
-The the cells of our polygraph are straightforward. A chain of $K$ has a list of positive integers
+The generators of our polygraph are straightforward. A chain of $K$ has a list of positive integers
 for the dimension of the cubes. Let the degree of a chain be the sum of the list minus the length.
-Then the polygraph's $n$-cells are the degree $n$ chains, for $n \in \{0,1,2\}$. The attachements
-of the 2 cells to the 1 cells will take some work to formalize, but the following pictures gives 
-a clear intuition about the attachements. 
+Then the polygraph's $n$-generators are the degree $n$ chains, for $n \in \{0,1,2\}$. The attachments
+of the 2-generators to paths of 1-generators will take some work to formalize, but the following pictures give 
+a clear intuition about the attachments. 
 
 \begin{figure}[p]
 \centering
@@ -105,7 +105,7 @@ So the 2 cell attaches $\sigma_1\sigma_3 \to \sigma_3 \sigma_1$.
 \caption{The six runs over the degree-two chain $e = \bigvee[3]$. 
 Again each arrow is decorated with the square that witnesses the reordering. 
 And each node is decorated with the degree 0 refinement's permutation.
-So we get the attachement $\sigma_1\sigma_2\sigma_1 \to \sigma_2 \sigma_1\sigma_2$.}
+So we get the attachment $\sigma_1\sigma_2\sigma_1 \to \sigma_2 \sigma_1\sigma_2$.}
 \label{fig:species-cube}
 \end{figure}
 
@@ -118,27 +118,29 @@ The main results of this paper will be
       \[
         E_L \circ \pres{\Art(f)} \;=\; \Br(f) \circ E_K .
       \]
-    \item $\Art(Z)$ is isomorphic to the positve Artin polygraph for the braid category.
+    \item $\Art(Z)$ is isomorphic to the positive Artin polygraph for the braid category.
       Consequently $\Br(Z)$ is equivalent to the positive braid category.
   \end{enumerate}
 \end{theorem}
 
 We are begging the question by naming our polygraph $\Art$, but it is well justified in the spirit of \cite{GGM}. 
-At $K = Z$, we see above that we will prove it is indeed the literal artin presentation of the positive braids.
-So in general, we get a subset of the artin relations in this presentation depending the precense of 3-cells of $K$.
+At $K = Z$, we see above that we will prove it is indeed the literal Artin presentation of the positive braids.
+So in general, we get a subset of the Artin relations in this presentation, depending on the presence of 3-cells of $K$.
 
 \paragraph{Formalisation.}
-All of the below is formalised in Lean~4 on mathlib \cite{Cubical}, sorry-free. The objects
+The main results are formalised in Lean~4 on mathlib \cite{Cubical}, sorry-free. The objects
 $\Br(K)$, $W$ and $\Art(K)$ are \texttt{ChainCat.Br}, \texttt{ChainCat.W} and
-\texttt{Paper.poly}; the three parts of \Cref{thm:ABC} are \texttt{Paper.paperPresents},
-\texttt{Paper.paperSquare} and \texttt{Paper.paperArtinIso}. Each statement below appears in
-\texttt{CubeChains/Paper.lean} as an \texttt{example} discharged by one citation.
+\texttt{ChainCat.Paper.poly}. The three parts of \Cref{thm:ABC} are \texttt{Paper.paperPresents},
+\texttt{Paper.paperSquare} and \texttt{Paper.paperArtinIso}.
+
+\gap{TODO: \texttt{CubeChains/Paper.lean} follows an earlier draft. Resync it with this one, one
+\texttt{example} per statement, and then say so here.}
 
 \paragraph{Conventions.}
 We assume the reader is familiar with \cite{PZ,Z2} and use its notation: $\BPSet$ is the category of bipointed
 precubical sets, with $Z$ final and $\cube n$ the $n$-cube. Put $[n] := \{1,\dots,n\}$.
 Also, note that the ops are there because we have chosen to use the convention for $\Ch(K)$ as in \cite{Z2}.
-But that won't translate across to braids convienently. So we will need the op in the definition of $\Br$.
+But that won't translate across to braids conveniently. So we will need the op in the definition of $\Br$.
 
 \section{Background}\label{sec:background}
 
@@ -149,90 +151,159 @@ and we put $|a| := \sum_i a_i$ and $\deg a := |a| - r$. Objects of $\Ch(K)$ are 
 $\bigvee a \to K$ and its morphisms, the refinements, the maps of wedges over $K$. We write $|d|$
 and $\deg d$ for the event count and degree of a chain's shape, and $\Ch(u)$ for the pushforward
 along $u : K \to L$, which postcomposes the classifying map and leaves the shape alone. A chain of
-degree $0$ is a \textbf{run}, and the subcategory of runs is discrete, a refinement losing no block
-being an identity.
+degree $0$ is a \textbf{run}. The subcategory of runs is discrete; we leave the check to the
+reader.
 
-We import three facts from \cite[\S2]{PZ}: serial wedges are non-self-linked and admit an altitude,
-for which the final vertex of $\bigvee a$ has altitude $|a|$; a bipointed map between connected
-objects admitting altitude preserves it \cite[Prop.~2.7]{PZ}; and concatenation
-$\Ch(P) \times \Ch(Q) \to \Ch(P \vee Q)$ is an isomorphism when $P \vee Q$ is non-self-linked and
-admits altitude \cite[Lem.~2.11]{PZ}.
+We use two facts from \cite{PZ}, and a third for which we have no reference yet.
+
+\begin{lemma}[{\cite[Ex.~2.6(c)]{PZ}}]\label{lem:wedge-altitude}
+  If $a = [a_1,\dots,a_r]$ is a shape, then the unique altitude function on $\bigvee a$ is given
+  by $\mathrm{alt}(c) = a_1 + \cdots + a_{i-1} + |c\inv(1)|$ for $c \in \cube{a_i}$.
+\end{lemma}
+
+In particular the final vertex of $\bigvee a$ has altitude $|a|$. Moreover $\bigvee a$ is
+non-self-linked, by \cite[Prop.~2.10]{PZ} applied to its blocks; we leave the details to the
+reader.
+
+\begin{lemma}[{\cite[Prop.~2.7]{PZ}}]\label{lem:altitude-preserved}
+  Let $P$, $Q$ be connected bipointed precubical sets with altitude functions $\mathrm{alt}_P$ and
+  $\mathrm{alt}_Q$. Then every bipointed map $f : P \to Q$ has
+  $\mathrm{alt}_Q(f(c)) = \mathrm{alt}_P(c)$ for every cell $c$ of $P$.
+\end{lemma}
+
+\begin{lemma}\label{lem:concat}
+  Let $P, Q \in \BPSet$ with $P \vee Q$ non-self-linked and admitting an altitude. Then
+  concatenation $\Ch(P) \times \Ch(Q) \to \Ch(P \vee Q)$ is an isomorphism.
+\end{lemma}
+\begin{proof}
+  TODO: prove, or find a reference.
+\end{proof}
 
 \paragraph{The events of a shape.}
-Let $\Ev$ be the left Kan extension along Yoneda of the functor sending $\cube n$ to its set of
-directions $[n]$, and a face embedding to the monotone injection naming the directions it leaves
-free. Then $\Ev$ is cocontinuous and $\Ev(\cube 0) = \emptyset$, so the pushout defining a wedge
-becomes a coproduct:
+The constructions presented in this paper are mostly bookkeeping of coordinates. 
+To assist, we're going to define some helpers. First, let $\Ev' : \Cube \to \Set$ be the functor
+\begin{enumerate}
+  \item sending objects $\cube n$ to its set of directions $[n]$
+  \item sending a face embedding $f:\cube n \to \cube m$ to the monotone injection $[n] \to [m]$
+    onto the directions that $f$ leaves free.
+\end{enumerate}
+Let $\Ev$ be the left Kan extension along Yoneda of the $\Ev'$.
+Then $\Ev$ is cocontinuous and $\Ev(\cube 0) = \emptyset$, 
+so the pushout defining a wedge lifts to a coproduct:
 \[
   \Ev\bigl(\textstyle\bigvee a\bigr) \;=\; \coprod_{i \in [r]} [a_i] .
 \]
 Its elements are the \textbf{events} of $\bigvee a$, the pairs $(i,c)$ with $i \in [r]$ and
-$c \in [a_i]$, one for each direction of each block. Order them lexicographically and put
-$\blk_a(i,c) := i$, so the blocks of $a$ are the fibres of $\blk_a$ and are intervals for that
-order; we drop the subscript when the shape is clear. Numbering the events $1, \dots, N$ in order
-identifies them with $[N]$, $N = |a|$, and we use whichever description is convenient. For a map
-$f$ of serial wedges we write $f_*$ for $\Ev(f)$.
+$c \in [a_i]$, one for each direction of each block. 
+We order the events lexicographically. Numbering them $1, \dots, N$ in this order, where
+$N = |a|$, identifies them with $[N]$, and we use whichever description is convenient.
+Let $\blk_a(i,c) := i$. 
+For a map $f$ of serial wedges we write $f_*$ for $\Ev(f)$.
 
 \begin{proposition}\label{prop:coords}
-  Let $f : \bigvee a \to \bigvee b$ in $\BPSet$, with $a$ and $b$ shapes on $N$ and $M$ events.
-  Then $N = M$; the map $f_*$ is a permutation of $[N]$, and $f \mapsto f_*$ is injective; and
-  there is a monotone $\blk(f)$ with
-  \begin{equation}\label{eq:blk-coord}
-    \blk_b \circ f_* \;=\; \blk(f) \circ \blk_a ,
-  \end{equation}
-  the restriction of $f_*$ to each block of $a$ being increasing.
+  Let $f : \bigvee a \to \bigvee b$ in $\BPSet$.
+  \begin{enumerate}[label=(\roman*)]
+    \item If $g : \bigvee a \to \bigvee b$ in $\BPSet$ has $g_* = f_*$, then $g = f$.
+    \item $f_*$ is increasing on each block of $a$.
+    \item There is a monotone map $\blk(f)$ from the blocks of $a$ to the blocks of $b$ with
+      \begin{equation}\label{eq:blk-coord}
+        \blk_b \circ f_* \;=\; \blk(f) \circ \blk_a .
+      \end{equation}
+    \item $|a| = |b|$, and $f_*$ is a permutation of $[|a|]$.
+  \end{enumerate}
 \end{proposition}
 \begin{proof}
-  By the pushout, $f$ is determined by its restrictions to the blocks of $a$, each of which lands
-  in a single block of $b$ because $a_i > 0$; that gives $\blk(f)$, equation \eqref{eq:blk-coord}
-  and the last clause, and a face embedding is determined by the directions it leaves free, so
-  $f_*$ determines $f$. That $f_*$ is injective and $\blk(f)$ monotone is an induction on the
-  length of $b$: by \cite[Lem.~2.11]{PZ} a map into $\cube m \vee \bigvee b'$ splits over a
-  splitting of $a$, and at each glued vertex the two halves have disjoint images, since the
-  coordinates a face embedding leaves free before the vertex are already $1$ there. Finally $f$
-  preserves altitude \cite[Prop.~2.7]{PZ}, so $N = M$ and the injection $f_*$ is a permutation.
+  TODO: By the pushout definition of the wedge, and \Cref{lem:wedge-altitude,lem:concat}
 \end{proof}
 
 \paragraph{Presented categories.}
-A \textbf{2-polygraph} $\Pg$ consists of a set $V$ of $0$-cells, families $\Pg_1(x,y)$ and
-$\Pg_2(x,y)$ for $x,y \in V$, and two maps
-$\src, \tgt : \Pg_2(x,y) \to \{\text{paths } x \to y\}$ into the free category on the $1$-cells;
-$\src(\alpha)$ and $\tgt(\alpha)$ are the \textbf{words} of $\alpha$. A morphism of polygraphs is a
-map in each dimension commuting with $\src$ and $\tgt$ on the nose, and $\Polygraph$ is the
-resulting category. The category $\pres{\Pg}$ \textbf{presented by} $\Pg$ is the free category on
-the $1$-cells modulo the congruence generated by $\src(\alpha) = \tgt(\alpha)$, with quotient
-functor $q$.
+There are several equivalent definitions of 2-polygraph, also known as computads.
+But the following is a convenient choice for us.
+A \textbf{2-polygraph} $\Pg$ consists of a set $\Pg_0$ of \textbf{$0$-generators}, sets
+$\Pg_1(x,y)$ of \textbf{$1$-generators} and $\Pg_2(x,y)$ of \textbf{$2$-generators} for
+$x, y \in \Pg_0$, and maps
+\[
+  \src, \tgt : \Pg_2(x,y) \to \Pg_1^*(x,y) ,
+\]
+where $\Pg_1^*$ is the free category on the $1$-generators, whose morphisms are the
+\textbf{paths}. See \cite[Def.~2.2.2]{Polygraphs} for the standard definition; ours is equivalent to it, with
+the endpoints of the generators built into the indexing.
+The $2$-polygraphs form a category $\Polygraph$ \cite[\S2.2.3]{Polygraphs}. The category
+$\pres{\Pg}$ \textbf{presented by} $\Pg$ is the quotient of $\Pg_1^*$ by the smallest congruence
+identifying $\src(\alpha)$ with $\tgt(\alpha)$ for every $2$-generator $\alpha$
+\cite[\S2.3.3]{Polygraphs}. We write $q:\Pg_1^* \to \pres{\Pg}$ for the quotient functor.
 
-\begin{proposition}[{\cite[Ch.~2]{Polygraphs}}]\label{prop:present-univ}
+\begin{proposition}\label{prop:present-univ}
   Let $\Pg$ be a $2$-polygraph and $C$ a category.
-  \begin{enumerate}
-    \item To give a functor $\pres{\Pg} \to C$ is to give an object of $C$ for each $0$-cell and
-      an arrow of $C$ for each $1$-cell, subject to the two words of every $2$-cell being sent to
-      the same arrow.
-    \item Two functors out of $\pres{\Pg}$ that agree on $0$-cells and $1$-cells are equal.
-    \item A morphism of polygraphs bijective in every dimension is an isomorphism.
+  \begin{enumerate}[label=(\roman*)]
+    \item \cite[Lem.~2.1.3]{Polygraphs} Given an object of $C$ for each $0$-generator and an arrow
+      of $C$ for each $1$-generator, with matching endpoints, there is a unique functor
+      $\Pg_1^* \to C$ extending them.
+    \item \cite[Lem.~2.3.4]{Polygraphs} If $F : \Pg_1^* \to C$ is a functor with
+      $F(\src\alpha) = F(\tgt\alpha)$ for every $2$-generator $\alpha$, then there is a unique
+      functor $\bar F : \pres{\Pg} \to C$ with $\bar F \circ q = F$.
+    \item A morphism of $2$-polygraphs bijective on generators in every dimension is an
+      isomorphism in $\Polygraph$.
   \end{enumerate}
 \end{proposition}
 
+\begin{lemma}\label{lem:pres-functor}
+  $\pres{-}$ extends to a functor $\Polygraph \to \Cat$ with $\pres{f} \circ q = q \circ f^*$.
+\end{lemma}
+
+\Cref{prop:present-univ}(iii) and \Cref{lem:pres-functor} are routine, and we leave the details to
+the reader.
+
 \begin{proposition}[{\cite[Ch.~I]{GZ}}]\label{prop:loc}
   Let $W$ be a class of morphisms of a category $C$. There is a functor $Q : C \to C[W\inv]$
-  inverting $W$ through which every functor inverting $W$ factors uniquely, and two functors out of
-  $C[W\inv]$ that agree after $Q$ are equal.
+  inverting $W$ such that, for every category $D$, precomposition with $Q$ is an isomorphism from
+  the category of functors $C[W\inv] \to D$ onto the full subcategory of functors $C \to D$ that
+  invert $W$.
 \end{proposition}
 
+\gap{TODO: check \Cref{prop:loc} word for word against \cite{GZ} (we believe \S I.1.1 and
+Lemma I.1.2) and give those locators.}
+
 \paragraph{Newman's lemma.}
-Write $\mathrm{Hasse}(P)$ for the quiver of covers of a poset $P$. A map of quivers
+For a poset $P$, write $x \lessdot y$ when $y$ covers $x$, that is $x < y$ with nothing strictly
+between them. The \textbf{Hasse diagram} $\mathrm{Hasse}(P)$ is the quiver with vertex set $P$ and
+one arrow $x \to y$ for each cover $x \lessdot y$. A map of quivers
 $\mathrm{Hasse}(P) \to C$ into a category extends to paths by composition, and we read it on paths
 without further comment.
 
-\begin{theorem}[coherent Newman's lemma; \cite{Huet}, {\cite[Ch.~4]{Polygraphs}}]\label{thm:newman}
+The following is a variant of Newman's lemma \cite[Lem.~1.3.21]{Polygraphs}, and its proof is
+the same well-founded induction.
+
+\begin{lemma}[Newman's lemma for posets]\label{thm:newman}
   Let $P$ be a finite poset and $\varphi : \mathrm{Hasse}(P) \to C$ a map of quivers. Suppose that
   for every pair of distinct covers $x \lessdot y_1$, $x \lessdot y_2$ and every common upper bound
   $z$ of $y_1$ and $y_2$ there are $j \le z$ and paths $p_i$ from $y_i$ to $j$ with
-  $\varphi(x \lessdot y_1)\,\varphi(p_1) = \varphi(x \lessdot y_2)\,\varphi(p_2)$. Then $\varphi$
-  sends parallel paths to equal arrows, so it extends uniquely to a functor $P \to C$; and a
-  functor out of $P$ is determined by its values on covers.
-\end{theorem}
+  $\varphi(p_1) \circ \varphi(x \lessdot y_1) = \varphi(p_2) \circ \varphi(x \lessdot y_2)$. Then
+  $\varphi$ sends parallel paths to equal arrows, so it extends uniquely to a functor $P \to C$; and
+  a functor out of $P$ is determined by its values on covers.
+\end{lemma}
+\begin{proof}
+  Since $P$ is finite, $x \le y$ holds exactly when there is a path from $x$ to $y$. Fix $z \in P$.
+  We show that any two paths $u$, $v$ from $x$ to $z$ have $\varphi(u) = \varphi(v)$, by
+  induction on $x$ downward: assume the claim for every $x' > x$.
+
+  If $x = z$ then $u$ and $v$ are both empty, since every cover goes strictly up. Otherwise write
+  $u = u' \circ (x \lessdot y_1)$ and $v = v' \circ (x \lessdot y_2)$. If $y_1 = y_2$, then
+  $\varphi(u') = \varphi(v')$ by induction at $y_1$. Otherwise $z$ is a common upper bound of
+  $y_1$ and $y_2$, so the hypothesis gives $j \le z$ and paths $p_1$, $p_2$. Choose a path $r$
+  from $j$ to $z$. Then $u'$ and $r \circ p_1$ are paths from $y_1$ to $z$, so
+  $\varphi(u') = \varphi(r)\varphi(p_1)$ by induction at $y_1$, and likewise
+  $\varphi(v') = \varphi(r)\varphi(p_2)$. Hence
+  \[
+    \varphi(u) = \varphi(r)\,\varphi(p_1)\,\varphi(x \lessdot y_1)
+               = \varphi(r)\,\varphi(p_2)\,\varphi(x \lessdot y_2) = \varphi(v) .
+  \]
+
+  Now send $x \le y$ to $\varphi$ of any path from $x$ to $y$. This is well defined by the above,
+  sends identities to identities because the empty path is one such path, and preserves
+  composition because paths concatenate. Every relation $x \le y$ is a composite of covers, which
+  gives uniqueness and the last clause.
+\end{proof}
 
 
 \section{Squares, crossings, and \texorpdfstring{$\Br(K)$}{Br(K)}}\label{sec:squares}
@@ -247,7 +318,7 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
   write $\Sq(a)$ for the set of them, so $|\Sq(a)| = \sum_i \binom{a_i}{2}$. We write $\Sq(d)$ for
   the squares of a chain's shape, and $f_*$ also for the induced injection
   $\Sq(a) \to \Sq(b)$, $(p,q) \mapsto (f_*p, f_*q)$, well defined because $f_*$ is increasing on
-  blocks (\Cref{prop:coords}).
+  blocks (\Cref{prop:coords}(ii)).
 \end{definition}
 
 \begin{definition}\label{def:crossings}
@@ -282,10 +353,10 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
 \end{lemma}
 \begin{proof}
   Let $s$ be a square of $c$. If $s = g_*(t)$ then $s \notin \Cross(g)$, the two events of $t$
-  sharing a block (\Cref{lem:sq-range}) --- which also gives disjointness --- and $(gf)_*\inv$
-  agrees with $f_*\inv$ on the events of $t$, so $s \in \Cross(gf)$ if and only if
-  $t \in \Cross(f)$. If $s$ is not in the image of $g_*$ then it is not in $g_*(\Cross f)$, and its
-  two events pull back along $g_*$ into distinct blocks of $b$, so the second part of
+  sharing a block (\Cref{lem:sq-range}) --- which also gives disjointness --- and
+  $(gf)_*\inv(g_*u) = f_*\inv(u)$ for the two events $u$ of $t$, so $s \in \Cross(gf)$ if and
+  only if $t \in \Cross(f)$. If $s$ is not in the image of $g_*$ then it is not in $g_*(\Cross f)$, and its
+  two events pull back along $g_*$ into distinct blocks of $b$, so the first claim of
   \Cref{lem:sq-range} applied to $f$ gives $s \in \Cross(gf)$ if and only if $s \in \Cross(g)$.
 \end{proof}
 
@@ -320,7 +391,8 @@ reverses composition.
   A permutation with no inversions is the identity, and $\Cross(f)$ is the inversion set of
   $f_*\inv$, so $\Cross(f) = \emptyset$ if and only if $f_*\inv = \id$, that is $f_* = \id$.
   The consequences follow: the second from \Cref{lem:cocycle} with $g_*$ injective, the third
-  because $f_*$ determines $f$ (\Cref{prop:coords}), and the last because $\Ch(u)$ changes neither
+  because two such refinements $f$ and $f'$ have $f_* = \id = f'_*$, so $f = f'$ by
+  \Cref{prop:coords}(i), and the last because $\Ch(u)$ changes neither
   shape nor wedge map, with the descent given by \Cref{prop:loc}.
 \end{proof}
 
@@ -343,7 +415,8 @@ Fix $K$, and let $d$ be a chain of $K$ on $N$ events.
 \end{definition}
 
 Such a refinement is determined by its map of wedges, the classifying map of its source being
-forced; that source has shape $[1,\dots,1]$, so $x_*$ enumerates the events of $d$. Write
+forced; that source has shape $[1,\dots,1]$, so $x_*$ enumerates the events of $d$
+(\Cref{prop:coords}(iv)). Write
 $p <_x q$ when $x_*$ reaches $p$ first; then $\Cross(x)$ is the inversion set of $<_x$.
 
 \begin{lemma}\label{lem:firing-blocks}
@@ -352,14 +425,21 @@ $p <_x q$ when $x_*$ reaches $p$ first; then $\Cross(x)$ is the inversion set of
   $\RunOver(d)$.
 \end{lemma}
 \begin{proof}
-  The blocks of the source are singletons, so $\blk \circ x_* = \blk(x)$, monotone by
-  \Cref{prop:coords}. A monotone surjection out of a chain has interval fibres, here the blocks of
-  $d$; the only freedom left is the order inside each. A linear order is determined by its inversion
-  set, and $\Cross(x)$ restricts on each block to the inversion set there.
+  The blocks of the source are singletons, so $\blk \circ x_* = \blk(x)$, which is monotone by
+  \Cref{prop:coords}(iii). This is the first claim. A monotone surjection out of a chain has
+  interval fibres, here the blocks of $d$. So $<_x$ is determined by its restriction to each block,
+  and $x$ is determined by $<_x$, since $x_*$ is (\Cref{prop:coords}(i)). Conversely, every choice
+  of a linear order on each block arises: the edge path of $\cube n$ that raises the coordinates in
+  a given order is a bipointed map $\bigvee[1,\dots,1] \to \cube n$, and concatenating these over
+  the blocks of $d$ gives a run over $d$ with the chosen orders. Finally, a linear order is
+  determined by its inversion set, and $\Cross(x)$ restricts on each block to the inversion set
+  there.
 \end{proof}
 
-\gap{Note that for a single block $\Cross$ is the classical inversion set and inclusion of them is
-the right weak order \cite[\S3.1]{BB}; the order theory below is that statement, block by block.}
+\gap{Note that for a single block, $\Cross(x)$ is the set of inversions by value of the permutation
+sending each time to the event fired then, and inclusion of these sets is the weak order on the
+symmetric group \cite[\S3.1]{BB}; the order theory below is that statement, block by block. TODO:
+check which side (left or right) this is in the conventions of \cite{BB}.}
 
 We order $\RunOver(d)$ by $x \le y :\!\iff \Cross(x) \subseteq \Cross(y)$, and write $\bot_d$ and
 $\top_d$ for the runs taking each block in event order and in reverse, its least and greatest
@@ -427,15 +507,26 @@ Say that a set $S$ of steps of $x$ \textbf{rises} from $x$ when $S \cap \Cross(x
   legs. Then $\deg m_S = |S|$, and $\iota_S$ is order preserving whenever $S$ rises from $x$.
 \end{proposition}
 \begin{proof}
-  A middle $m$ makes the $N$ events into its blocks, which by \Cref{lem:firing-blocks} applied to
-  $\iota$ are intervals of $<_x$, and $\pi$ requires each such interval to lie
-  inside one block of $d$; conversely such an interval partition arises from the chain whose blocks
-  are its parts, in order. The factorisation is determined by that shape: a map of wedges is
-  determined by its action on events (\Cref{prop:coords}), and the first leg is forced by which
-  events fall in which part. An interval
-  partition of a chain is recorded by the set of covers it does not cut; those covers lie
-  inside a block, so they are steps; and $\deg m$ is $N$ minus the number of
-  parts, which is the number of uncut covers.
+  Let $x = \pi\iota$ with $\iota : X \to m$ and $\pi : m \to d$. The blocks of $m$, carried along
+  $\pi_*$, partition the events of $d$ into parts. Each part lies in one block of $d$, by
+  \eqref{eq:blk-coord} for $\pi$. Since $x_* = \pi_*\iota_*$, the order $<_x$ is carried from the
+  firing order of $\iota$, so by \Cref{lem:firing-blocks} applied to $\iota$ the parts are
+  intervals of $<_x$, in the order of the blocks of $m$.
+
+  The partition determines the factorisation. The shape of $m$ lists the sizes of the parts in
+  $<_x$-order. By \Cref{prop:coords}(ii), $\pi_*$ sends each block of $m$ increasingly onto its
+  part, so $\pi_*$ is determined, hence so are $\pi$ (\Cref{prop:coords}(i)) and the classifying
+  map $d\pi$ of $m$. Then $\iota_* = \pi_*\inv x_*$ is determined, hence so is $\iota$.
+  Conversely, every partition of the events into $<_x$-intervals, each inside one block of $d$,
+  arises from a factorisation. TODO: construct $\pi$ blockwise from faces of the blocks of $d$, and
+  $\iota$ from it.
+
+  A partition of a chain into intervals is determined by the set of covers lying inside a part, and
+  every set of covers arises. When each part lies in one block of $d$, those covers are steps.
+  Conversely, cutting at every cover outside a given set of steps cuts at every change of block
+  (\Cref{lem:firing-blocks}), so every part lies in one block. The covers inside a part are exactly
+  the steps whose events share a block of $m$, which gives the bijection. Finally $\deg m$ is $N$
+  minus the number of parts, which is the number of covers inside parts, so $\deg m_S = |S|$.
 
   Let $S$ rise from $x$. Since $\iota_S$ is a run over $m_S$, its crossings are the squares of
   $m_S$ that $x$ reverses, that is the pairs inside one part that $x$ reverses. The covers of $<_x$
@@ -466,8 +557,9 @@ spans, and a $0$-cell is a run.}
   \Cref{lem:cocycle} applied to $\pi_S\iota_S = x$ with $\Cross(\iota_S) = \emptyset$ gives
   $\Cross(\pi_S) = \Cross(x)$.
 
-  For the second claim list a part as $p_1 < \cdots < p_k$, which by \Cref{prop:factorisations} is
-  also its $<_x$-order, so each $(p_i,p_{i+1})$ is an uncut cover, lies in $S$ and is reversed by
+  For the second claim list a part as $p_1 < \cdots < p_k$. This is also its $<_x$-order:
+  $\Cross(\iota_S) = \emptyset$, so $\iota_S$ fires each block of $m_S$ in event order, and
+  $\pi_{S*}$ is increasing on blocks. So each $(p_i,p_{i+1})$ is an uncut cover, lies in $S$ and is reversed by
   $z$. Then $p_k <_z \cdots <_z p_1$, so $z$ reverses every pair of the part.
 \end{proof}
 
@@ -479,17 +571,27 @@ For a cover $x \lessdot y$ of $\RunOver(d)$ with step $s$, put $\gamma(x \lessdo
   $\pi_{\{s\}}\top_{m_{\{s\}}} = y$; and every $1$-cell $\alpha$ is $\gamma$ of the unique cover
   $\bot_\alpha \lessdot \top_\alpha$ of $\RunOver(\alpha)$. So $\gamma$, together with
   $x \mapsto \dom x$ on vertices, is a map of quivers from $\mathrm{Hasse}(\RunOver(d))$ to the
-  quiver of $1$-cells, and $\gamma(qe) = \gamma(e)$ for every refinement $q : o \to d$ and every
-  cover $e$ of $\RunOver(o)$.
+  quiver of $1$-cells. Finally, for every refinement $q : o \to d$ and every cover $e$ of
+  $\RunOver(o)$, $qe$ is a cover of $\RunOver(d)$ and $\gamma(qe) = \gamma(e)$.
 \end{corollary}
 \begin{proof}
-  $m_{\{s\}}$ has degree $1$ and $\dom\bot_{m_{\{s\}}} = \dom x$ by \Cref{prop:factorisations}; by
-  \Cref{lem:closure} the image of its top is the least element above $x$ that reverses $s$, which is
-  $x^s = y$. Conversely a chain $\alpha$ of degree $1$ has one square, so $\RunOver(\alpha)$ is the
-  two-element poset $\bot_\alpha \lessdot \top_\alpha$, and the factorisation through its one step
-  is $\alpha$. For the last claim the step of $qe$ is $q_*$ of the step of $e$ (\Cref{prop:push}),
-  and $q_*$ carries $<_x$ to $<_{qx}$, so the two factorisations cut the same
-  partition and have the same middle.
+  Write $m = m_{\{s\}}$. By \Cref{lem:cover}, $s \notin \Cross(x)$, so $\{s\}$ rises from $x$ and
+  $\iota_{\{s\}}$ is order preserving (\Cref{prop:factorisations}), hence equals $\bot_m$
+  (\Cref{prop:push}). So $\pi_{\{s\}}\bot_m = x$ and $\dom\bot_m = \dom x$, and $\deg m = 1$. By
+  \Cref{lem:closure}, $\pi_{\{s\}}\top_m$ is the least element above $x$ that reverses $s$, which
+  is $x^s = y$ (\Cref{lem:cover}); so $\dom\top_m = \dom y$.
+
+  Conversely a chain $\alpha$ of degree $1$ has one square, so $\RunOver(\alpha)$ is the
+  two-element poset $\bot_\alpha \lessdot \top_\alpha$ (\Cref{lem:firing-blocks}). The factorisation
+  $\bot_\alpha = \id_\alpha \circ \bot_\alpha$ has middle $\alpha$, whose one block of dimension $2$
+  contains the one step, so $\gamma(\bot_\alpha \lessdot \top_\alpha) = \alpha$ by
+  \Cref{prop:factorisations}.
+
+  For the last claim let $e = (x \lessdot y)$ with step $s$. By \Cref{prop:push},
+  $\Cross(qy) = \Cross(qx) \sqcup \{q_*s\}$, so $qx \lessdot qy$ with step $q_*s$
+  (\Cref{lem:cover}). The factorisation $qx = (q\pi_{\{s\}})\,\iota_{\{s\}}$ has middle $m$, and
+  since $(qx)_* = q_*x_*$ the only step of $qx$ whose events share a block of $m$ is $q_*s$. By the
+  bijection of \Cref{prop:factorisations}, $\gamma(qe) = m = \gamma(e)$.
 \end{proof}
 
 \subsection{The attachment of a 2-cell}
@@ -498,7 +600,7 @@ For a cover $x \lessdot y$ of $\RunOver(d)$ with step $s$, put $\gamma(x \lessdo
   Let $\deg e = 2$. Then either $e$ has one block of dimension $3$ and $|\Sq(e)| = 3$, or $e$ has
   two blocks of dimension $2$ and $|\Sq(e)| = 2$. In both cases $\RunOver(e)$ has exactly two
   maximal chains from $\bot_e$ to $\top_e$, each of length $|\Sq(e)|$, and they leave $\bot_e$ by
-  different covers. Write $\src(e)$ and $\tgt(e)$ for the words of $1$-cells that $\gamma$ reads off
+  different covers. Write $\src(e)$ and $\tgt(e)$ for the paths of $1$-cells that $\gamma$ reads off
   them, labelled so that $\src(e)$ begins with the least square for the lexicographic order on
   $\Sq(e)$, by the smaller event and then the larger.
 \end{proposition}
@@ -520,10 +622,10 @@ For a cover $x \lessdot y$ of $\RunOver(d)$ with step $s$, put $\gamma(x \lessdo
 \end{proof}
 
 In both cases $\src(e)$ reverses the squares of $e$ in lexicographic order and $\tgt(e)$ in the
-reverse order.\footnote{The formalisation \cite{Cubical} works with the sets $\Cross(x)$ in place of
+reverse order, as the chains displayed in the proof show.\footnote{The formalisation \cite{Cubical} works with the sets $\Cross(x)$ in place of
 the orders $<_x$: \texttt{reversedIso} identifies $\RunOver(d)$ with the subsets of $\Sq(d)$ that
 are \emph{biclosed}, meaning that no block's induced tournament has a directed $3$-cycle, and it
-takes the last sentence above as the definition of the two words. The four and the six runs are
+takes the last sentence above as the definition of the two paths. The four and the six runs are
 \texttt{card\_biclosed\_of\_isEmpty\_triangles} and \texttt{card\_biclosed\_of\_triangle}, and this
 proposition is derived twice there: as \texttt{eq\_srcPath\_or\_tgtPath\_of\_triangles}, from
 \texttt{subsingleton\_triangles} and \texttt{biclosed\_iff\_of\_triangle}, and as
@@ -531,14 +633,14 @@ proposition is derived twice there: as \texttt{eq\_srcPath\_or\_tgtPath\_of\_tri
 
 The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
 \begin{definition}\label{def:poly}
-  The \textbf{Artin polygraph} $\Art(K)$ has the runs of $K$ as $0$-cells. Its $1$-cells and
-  $2$-cells from $X$ to $Y$ are the $1$-cells and $2$-cells from $X$ to $Y$ of \Cref{def:cell},
-  that is the chains of degree $1$ and $2$ spanning those two runs, and each $2$-cell $e$ is
-  attached along the pair of words $\src(e)$, $\tgt(e)$ of \Cref{prop:polygon}.
+  The \textbf{Artin polygraph} $\Art(K)$ has the runs of $K$ as $0$-generators. Its
+  $1$-generators and $2$-generators from $X$ to $Y$ are the $1$-cells and $2$-cells from $X$ to $Y$
+  of \Cref{def:cell}, that is the chains of degree $1$ and $2$ spanning those two runs. For a
+  $2$-generator $e$, $\src(e)$ and $\tgt(e)$ are the paths of \Cref{prop:polygon}.
 \end{definition}
 
 \gap{One paragraph on the name: $\Art(K)$ is built from $K$ alone, with no braid theory in it, and
-\Cref{prop:polygon} already exhibits its $2$-cells as braid and commutation relations;
+\Cref{prop:polygon} already exhibits its $2$-generators as braid and commutation relations;
 \Cref{thm:C} is what makes the name literal.}
 
 \begin{proposition}\label{prop:closes}
@@ -553,21 +655,23 @@ The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
   degree $2$, that is a $2$-cell (\Cref{prop:factorisations}), and $j := \pi_S\top_{m_S}$
   satisfies $j \le z$ (\Cref{lem:closure}). By \Cref{prop:polygon} the two maximal chains of
   $\RunOver(m_S)$ are $\src(m_S)$ and $\tgt(m_S)$, and they leave $\bot_{m_S}$ by its two
-  covers. Composition with $\pi_S$ carries $\bot_{m_S}$ to $x$ and $\top_{m_S}$ to $j$, carries
-  covers to covers (\Cref{prop:push}, \Cref{lem:cover}) and keeps the $1$-cell each cover reads as
-  (\Cref{cor:covercell}). So the two chains become two paths from $x$ to $j$, leaving by $y_1$ and
+  covers. Since $S$ rises from $x$, $\iota_S$ is order preserving, hence equals $\bot_{m_S}$
+  (\Cref{prop:factorisations}, \Cref{prop:push}). So composition with $\pi_S$ carries $\bot_{m_S}$
+  to $x$ and $\top_{m_S}$ to $j$, and it carries covers to covers and keeps the $1$-cell each cover
+  reads as (\Cref{cor:covercell}). So the two chains become two paths from $x$ to $j$, leaving by $y_1$ and
   by $y_2$ and reading as $\src(m_S)$ and $\tgt(m_S)$, which are equal in $\pres{\Art(K)}$.
 
   For the last claim, composition with $q$ is monotone, so $x \mapsto \Gamma_d(qx)$ and $\Gamma_o$
-  are functors out of $\RunOver(o)$; they agree on covers by \Cref{cor:covercell}, hence agree, by
-  the last clause of \Cref{thm:newman}.
+  are functors out of $\RunOver(o)$. They agree on covers, because composition with $q$ carries
+  covers to covers and keeps $\gamma$ (\Cref{cor:covercell}). So they agree, by the last clause of
+  \Cref{thm:newman}.
 \end{proof}
 
 \section{The presentation}\label{sec:thmA}
 
 \gap{Frame the proof as a comparison of two universal properties: a functor out of
-$\pres{\Art(K)}$ is an arrow for each degree-one chain identifying the two words of every
-degree-two chain (\Cref{prop:present-univ}), and a functor out of $\Br(K)$ is a functor on
+$\pres{\Art(K)}$ is an arrow for each degree-one chain identifying $\src(e)$ and $\tgt(e)$ for every
+degree-two chain $e$ (\Cref{prop:present-univ}), and a functor out of $\Br(K)$ is a functor on
 $\Ch(K)\op$ inverting $W$ (\Cref{prop:loc}). Each is built from the other.}
 
 Fix $K$ throughout this section, and write $E$, $\Theta$, $\Phi$ for the functors called $E_K$,
@@ -602,8 +706,10 @@ $\bot_\alpha$, we may set
   \]
   cancel, leaving $Q(\top_\beta)Q(q)Q(\bot_d)\inv = Q(y)Q(\bot_d)\inv$.
 
-  The two words of a $2$-cell $e$ are both paths from $\bot_e$ to $\top_e$ (\Cref{prop:polygon}),
-  hence have equal image, so \Cref{prop:present-univ}(i) gives the extension.
+  For the extension, \Cref{prop:present-univ}(i) extends $E$ to a functor
+  $\Art(K)_1^* \to \Br(K)$. For a $2$-generator $e$, $\src(e)$ and $\tgt(e)$ are both paths from
+  $\bot_e$ to $\top_e$ in $\mathrm{Hasse}(\RunOver(e))$ (\Cref{prop:polygon}), so they have equal
+  image, and \Cref{prop:present-univ}(ii) gives the functor on $\pres{\Art(K)}$.
 \end{proof}
 
 
@@ -642,14 +748,14 @@ $\bot_\alpha$, we may set
     \Theta(\top_\alpha) \;=\; \Gamma_\alpha(\bot_\alpha \le \top_\alpha)
       \;=\; q\bigl(\gamma(\bot_\alpha \lessdot \top_\alpha)\bigr) \;=\; q(\alpha)
   \]
-  by \Cref{cor:covercell}. So $\Phi E$ agrees with the identity on $0$- and $1$-cells, hence is
-  the identity (\Cref{prop:present-univ}(ii)).
+  by \Cref{cor:covercell}. So $\Phi E q$ and $q$ agree on generators, and $\Phi E = \id$ by
+  the uniqueness in \Cref{prop:present-univ}(i) and (ii).
 
   For the other composite, \Cref{lem:telescope} gives
   $E(\Theta(u)) = Q(u\bot_c)Q(\bot_d)\inv
    = Q(\bot_c) \circ Q(u) \circ Q(\bot_d)\inv$, which is $Q(u)$ conjugated by the isomorphisms
-  $Q(\bot_c)$ and $Q(\bot_d)$. So $E\Theta \cong Q$, and $E\Phi \cong \id$ by uniqueness of descent
-  (\Cref{prop:loc}).
+  $Q(\bot_c)$ and $Q(\bot_d)$. So the $Q(\bot_d)$ form a natural isomorphism $Q \cong E\Theta = E\Phi Q$,
+  and by \Cref{prop:loc} it is $\eta Q$ for a natural isomorphism $\eta : \id \cong E\Phi$.
 \end{proof}
 
 \gap{One sentence: the comparison is an equivalence and not an isomorphism because $\Br(K)$ is not
@@ -659,7 +765,7 @@ runs are a skeleton of $\Br(K)$.}
 \section{Naturality}\label{sec:thmB}
 
 \begin{theorem}\label{thm:B}
-  Sending $K$ to $\Art(K)$, and $f : K \to L$ to $\Ch(f)$ on cells in every dimension, is a functor
+  Sending $K$ to $\Art(K)$, and $f : K \to L$ to $\Ch(f)$ on generators in every dimension, is a functor
   $\BPSet \to \Polygraph$; and for every $f : K \to L$,
   \[
     E_L \circ \pres{\Art(f)} \;=\; \Br(f) \circ E_K
@@ -673,16 +779,19 @@ runs are a skeleton of $\Br(K)$.}
   (\Cref{def:crossings}, \Cref{cor:covercell}) are read off the map of wedges alone, so $\Ch(f)$
   preserves $\bot$, $\top$, cells, steps, covers and $\gamma$; and it carries the lexicographic
   order on $\Sq(e)$ to the lexicographic order on $\Sq(\Ch(f) e) = \Sq(e)$, so it preserves
-  $\src$ and $\tgt$ letter by letter. Hence $\Art(f)$ is a morphism of polygraphs, functorially in
+  $\src$ and $\tgt$ letter by letter. Hence $\Art(f)$ is a morphism of $2$-polygraphs, functorially in
   $f$ because $\Ch$ is a functor.
 
-  Both composites send a run $X$ to $Q(\Ch(f)X)$. On a $1$-cell $\alpha$, $\Br(f)$ is the
+  Both composites send a run $X$ to $Q(\Ch(f)X)$. Let $\alpha$ be a $1$-generator of $\Art(K)$.
+  By \Cref{lem:pres-functor}, $E_L \circ \pres{\Art(f)}$ sends $q(\alpha)$ to
+  $E_L(\Ch(f)\alpha)$. On the other side, $\Br(f)$ is the
   descent of the functor induced by $\Ch(f)$, so it sends $E_K(\alpha)$ to
   $Q(\Ch(f)\top_\alpha) \circ Q(\Ch(f)\bot_\alpha)\inv$. Here $\Ch(f)\bot_\alpha$
   is an order-preserving refinement into $\Ch(f)\alpha$ out of a run, hence is
-  $\bot_{\Ch(f)\alpha}$ (\Cref{prop:push}), and likewise
-  $\Ch(f)\top_\alpha = \top_{\Ch(f)\alpha}$. So both composites send $\alpha$ to
-  $E_L(\Ch(f)\alpha)$, and \Cref{prop:present-univ}(ii) applies.
+  $\bot_{\Ch(f)\alpha}$ (\Cref{prop:push}), and
+  $\Ch(f)\top_\alpha = \top_{\Ch(f)\alpha}$ because both reverse every square. So $\Br(f) \circ E_K$ also sends $q(\alpha)$ to
+  $E_L(\Ch(f)\alpha)$. Precomposed with $q$, the two composites agree on generators, so they
+  are equal by the uniqueness in \Cref{prop:present-univ}(i) and (ii).
 \end{proof}
 
 \gap{One sentence: the square is an equality, not an isomorphism, because an order-preserving
@@ -721,7 +830,7 @@ events of $s$; so $x$ passes $s$ between positions $\pos_x(s)$ and $\pos_x(s)+1$
 
 \begin{lemma}\label{lem:pos}
   Let $d$ be a chain on $N$ events and $x \in \RunOver(d)$. Then:
-  \begin{enumerate}
+  \begin{enumerate}[label=(\roman*)]
     \item $\pos_x$ is a bijection from the steps of $x$ onto $\cut(d)$;
     \item $\pos_{x^s}(s) = \pos_x(s)$;
     \item $\pos_{\bot_d}(s) = p$, where $s = (p,q)$.
@@ -756,21 +865,23 @@ events of $s$; so $x$ passes $s$ between positions $\pos_x(s)$ and $\pos_x(s)+1$
   two chains of \Cref{prop:polygon}, and $\bot_e$ passes $(p,q)$ at $p$ (\Cref{lem:pos}(iii)).
 
   If $k > i+1$ then $e$ has blocks of dimension $2$ at positions $\{i,i+1\}$ and $\{k,k+1\}$
-  (\Cref{lem:cuts}), with squares $s_1$ and $s_2$. Flipping one leaves the positions of the other
-  alone (\Cref{lem:pos}(ii)), so the two chains read $\sigma_i\sigma_k$ and $\sigma_k\sigma_i$.
+  (\Cref{lem:cuts}), with squares $s_1$ and $s_2$. Flipping $s_1$ moves only the events at
+  positions $i$ and $i+1$, so $s_2$ stays at position $k$, and vice versa. So the two chains read
+  $\sigma_i\sigma_k$ and $\sigma_k\sigma_i$.
 
   If $k = i+1$ then $e$ has one block of dimension $3$, on the events at positions $i$, $i+1$,
-  $i+2$. Along the two chains of \Cref{prop:polygon} the swapped pair sits at positions $i$, $i+1$,
-  $i$ and at $i+1$, $i$, $i+1$.
+  $i+2$. Along the two chains displayed in the proof of \Cref{prop:polygon}, with $p$, $q$, $r$ at
+  positions $i$, $i+1$, $i+2$, the swapped pair sits at positions $i$, $i+1$, $i$ and at $i+1$,
+  $i$, $i+1$.
 
   The lengths are $|\Sq(e)| = \cox(i,k)$ (\Cref{lem:cuts}).
 \end{proof}
 
 \begin{definition}\label{def:artin-poly}
-  \textbf{Artin's braid polygraph} $\ArtBraid$ has one $0$-cell for each $N \in \N$; at $N$, the
-  loops $\sigma_1,\dots,\sigma_{N-1}$; and, for each pair $i<k$ in $[N-1]$, one $2$-cell with words
-  $\sigma_i\sigma_k\sigma_i\cdots$ and $\sigma_k\sigma_i\sigma_k\cdots$, both of length
-  $\cox(i,k)$.
+  \textbf{Artin's braid polygraph} $\ArtBraid$ has one $0$-generator for each $N \in \N$; at $N$,
+  the $1$-generators $\sigma_1,\dots,\sigma_{N-1}$, each a loop; and, for each pair $i<k$ in
+  $[N-1]$, one $2$-generator $e$ with $\src(e) = \sigma_i\sigma_k\sigma_i\cdots$ and
+  $\tgt(e) = \sigma_k\sigma_i\sigma_k\cdots$, both of length $\cox(i,k)$.
 \end{definition}
 
 \gap{One or two sentences: unwind \Cref{def:artin-poly} to Artin's relations \cite{Artin}, so
@@ -784,10 +895,10 @@ $\End(N) = B_N^+$ composed left to right, as we read words.
 \end{theorem}
 \begin{proof}
   The runs of $Z$ are the $Z_N$ and every cell of $Z$ is a loop, so both polygraphs are disjoint
-  unions over $N$ and it suffices to compare at each $N$. There the $1$-cells are indexed by
-  $[N-1]$ and the $2$-cells by the pairs $i<k$ (\Cref{lem:cuts}), and by \Cref{prop:alternate} the
-  words of the $2$-cell at $\{i<k\}$ are those of \Cref{def:artin-poly}. The resulting morphism of
-  polygraphs is bijective in every dimension, hence an isomorphism
+  unions over $N$ and it suffices to compare at each $N$. There the $1$-generators are indexed by
+  $[N-1]$ and the $2$-generators by the pairs $i<k$ (\Cref{lem:cuts}), and by \Cref{prop:alternate}
+  $\src$ and $\tgt$ of the $2$-generator at $\{i<k\}$ are those of \Cref{def:artin-poly}. The
+  resulting morphism of $2$-polygraphs is bijective on generators in every dimension, hence an isomorphism
   (\Cref{prop:present-univ}(iii)).
 \end{proof}
 
@@ -795,7 +906,10 @@ $\End(N) = B_N^+$ composed left to right, as we read words.
   $\Br(Z) \simeq \BraidPos$.
 \end{corollary}
 \begin{proof}
-  \Cref{thm:A} at $K = Z$ and \Cref{thm:C}.
+  By \Cref{thm:A} at $K = Z$, $\Br(Z) \simeq \pres{\Art(Z)}$, and by \Cref{thm:C} and
+  \Cref{lem:pres-functor}, $\pres{\Art(Z)} \cong \pres{\ArtBraid}$. TODO: $\pres{\ArtBraid} \cong
+  \BraidPos$, which is the unwinding promised after \Cref{def:artin-poly}, with the left-to-right
+  composition convention.
 \end{proof}
 
 \gap{Closing paragraph: combining with \Cref{thm:B}, the terminal map gives
