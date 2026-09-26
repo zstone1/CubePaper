@@ -232,23 +232,19 @@ below.\footnote{The formalisation defines the right weak order by lengths adding
 (\texttt{WeakOrder.le\_iff\_inversions\_inv\_subset}); \Cref{lem:weak}(iii) is
 \texttt{WeakOrder.covBy\_iff}.}
 
-These agree with \cite{BB}, although we use only the definitions above. Reading a pair $(p,q)$ as the
-transposition exchanging $p$ and $q$, $T_L(w)$ is the set of left associated reflections of $w$
-\cite[(1.19)]{BB}, as an easy count of inversions shows; so our order is the right weak order of
-\cite[Def.~3.1.1]{BB}, by \cite[Prop.~3.1.3]{BB}. And $t$ is an ascent of $w$ exactly when $s_t$
-is not a right descent of $w$ \cite[Prop.~1.5.3]{BB}.
-
+These definitions are easily seen equivalent with those in \cite{BB}, but this formulation 
+streamlines ours proofs.
 \begin{lemma}\label{lem:weak}
   Let $u, w \in S_N$.
   \begin{enumerate}[label=(\roman*)]
-    \item $T_L(w)$ determines $w$.
+    \item $T_L : S_N \to 2^{[N] \times [N]}$ is injective.
     \item If $t$ is an ascent of $w$, then $T_L(ws_t) = T_L(w) \sqcup \bigl\{(w(t), w(t+1))\bigr\}$.
     \item $w$ covers $u$ if and only if $w = us_t$ for an ascent $t$ of $u$.
   \end{enumerate}
 \end{lemma}
 \begin{proof}
-  (i) $T_L(w)$ says which of any two values $w$ lists first, so it determines the order in which
-  $w$ lists all of them, which is $w$.
+  (i) If $T_L(u) = T_L(w)$, then $u$ and $w$ list every pair of values in the same order, so they
+  list all the values in the same order, and $u = w$.
 
   (ii) The list $ws_t$ is the list $w$ with its entries in places $t$ and $t+1$ exchanged. So the
   two list every pair of values in the same order except $w(t)$ and $w(t+1)$, which $w$ lists in
