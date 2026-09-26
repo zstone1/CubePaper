@@ -222,7 +222,8 @@ are
   \Inv(w) \;:=\; \bigl\{\, (p,q) \;:\; p < q \text{ and } w(p) > w(q) \,\bigr\} ,
   \qquad \ell(w) \;:=\; |\Inv(w)| ,
 \]
-and $t$ is an \textbf{ascent} of $w$ when $w(t) < w(t+1)$. The \textbf{right weak order} on $S_N$
+and $t$ is an \textbf{ascent} of $w$ when $w(t) < w(t+1)$. The \textbf{left inversion set}
+$T_L(w) := \Inv(w\inv)$ is the set of pairs of values that $w$ lists in the other order. The \textbf{right weak order} on $S_N$
 has $u \le w$ when $\ell(u) + \ell(u\inv w) = \ell(w)$. For $i \neq k$ in $[N-1]$, $\cox(i,k)$ is
 the order of $s_is_k$, the entry of the \textbf{Coxeter matrix} of $S_N$; it is $3$ when
 $|i-k| = 1$ and $2$ otherwise.
@@ -230,14 +231,14 @@ $|i-k| = 1$ and $2$ otherwise.
 \begin{proposition}[{\cite[\S3.1]{BB}}]\label{prop:weak}
   Let $u, w \in S_N$.
   \begin{enumerate}[label=(\roman*)]
-    \item $u \le w$ if and only if $\Inv(u\inv) \subseteq \Inv(w\inv)$.
+    \item $u \le w$ if and only if $T_L(u) \subseteq T_L(w)$.
     \item $w$ covers $u$ if and only if $w = us_t$ for an ascent $t$ of $u$.
   \end{enumerate}
 \end{proposition}
 
 \gap{TODO: pin the locators in \cite{BB} and check them word for word. We believe $\ell = |\Inv|$
-is Prop.~1.5.2, that (i) is Prop.~3.1.3 read through the description of $T_L(w)$ for $S_N$ in
-\S1.5, and that (ii) follows from Def.~3.1.1 and Prop.~1.5.3; check also that the definition of
+is Prop.~1.5.2, that (i) is Prop.~3.1.3, where $T_L(w)$ is a set of transpositions, read through
+its description for $S_N$ in \S1.5, a pair $(p,q)$ standing for the transposition $(p\,q)$, and that (ii) follows from Def.~3.1.1 and Prop.~1.5.3; check also that the definition of
 $\le_R$ there is ours. The formalisation proves both clauses for its own definition, which is ours:
 \texttt{WeakOrder.le\_iff\_inversions\_inv\_subset} and \texttt{WeakOrder.covBy\_iff}.}
 
@@ -368,7 +369,7 @@ the same well-founded induction.
 \end{proof}
 
 
-\section{Squares, crossings, and \texorpdfstring{$\Br(K)$}{Br(K)}}\label{sec:squares}
+\section{Squares, inversions, and \texorpdfstring{$\Br(K)$}{Br(K)}}\label{sec:squares}
 
 \gap{One paragraph: a square is a pair of events of one block, and the whole construction runs on
 the question of which squares a map reverses.}
@@ -412,14 +413,9 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
   permutation (\Cref{prop:coords}(iv)).
 \end{proof}
 
-\begin{definition}\label{def:crossings}
-  The \textbf{crossings} of a map of serial wedges $f : \bigvee a \to \bigvee b$ are
-  $\Cross(f) := \Inv(f_*\inv)$.
-\end{definition}
-
 \begin{lemma}\label{lem:sq-range}
-  The map $f_*\inv$ preserves the order of two events in distinct blocks of $b$. Hence
-  $\Cross(f) \subseteq \Sq(b)$. A square $(p,q)$ of $b$ lies in $\im\Sq(f)$ if and only if
+  Let $f : \bigvee a \to \bigvee b$ be a map of serial wedges. Then $f_*\inv$ preserves the order
+  of two events in distinct blocks of $b$. Hence $T_L(f_*) \subseteq \Sq(b)$. A square $(p,q)$ of $b$ lies in $\im\Sq(f)$ if and only if
   $f_*\inv p$ and $f_*\inv q$ lie in one block of $a$.
 \end{lemma}
 \begin{proof}
@@ -435,21 +431,21 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
 \begin{lemma}\label{lem:cocycle}
   For $f : \bigvee a \to \bigvee b$ and $g : \bigvee b \to \bigvee c$,
   \[
-    \Cross(gf) \;=\; \Sq(g)\bigl(\Cross f\bigr) \;\sqcup\; \Cross(g),
+    T_L(g_*f_*) \;=\; \Sq(g)\bigl(T_L(f_*)\bigr) \;\sqcup\; T_L(g_*),
   \]
-  and $\Cross(\id) = \emptyset$.
+  and $T_L(\id) = \emptyset$.
 \end{lemma}
 \begin{proof}
-  Let $s$ be a square of $c$. If $s = \Sq(g)(t)$ then $s \notin \Cross(g)$, the two events of $t$
+  Let $s$ be a square of $c$. If $s = \Sq(g)(t)$ then $s \notin T_L(g_*)$, the two events of $t$
   sharing a block (\Cref{lem:sq-range}) --- which also gives disjointness --- and
-  $(gf)_*\inv(g_*u) = f_*\inv(u)$ for the two events $u$ of $t$, so $s \in \Cross(gf)$ if and
-  only if $t \in \Cross(f)$. If $s \notin \im\Sq(g)$ then $s \notin \Sq(g)(\Cross f)$, and its
+  $(gf)_*\inv(g_*u) = f_*\inv(u)$ for the two events $u$ of $t$, so $s \in T_L(g_*f_*)$ if and
+  only if $t \in T_L(f_*)$. If $s \notin \im\Sq(g)$ then $s \notin \Sq(g)(T_L(f_*))$, and its
   two events pull back along $g_*$ into distinct blocks of $b$, so the first claim of
-  \Cref{lem:sq-range} applied to $f$ gives $s \in \Cross(gf)$ if and only if $s \in \Cross(g)$.
+  \Cref{lem:sq-range} applied to $f$ gives $s \in T_L(g_*f_*)$ if and only if $s \in T_L(g_*)$.
 \end{proof}
 
 \begin{definition}\label{def:W}
-  A refinement $f$ is \textbf{order preserving} when $\Cross(f) = \emptyset$. Write $W = W_K$ for
+  A refinement $f$ is \textbf{order preserving} when $f_* = \id$. Write $W = W_K$ for
   the class of order-preserving refinements of $\Ch(K)$, and
   \[
     \Br(K) \;:=\; \Ch(K)\op\bigl[(W\op)\inv\bigr] .
@@ -470,14 +466,14 @@ reverses composition.
 \end{proof}
 
 \begin{proposition}\label{prop:W}
-  A refinement $f$ is order preserving if and only if $f_* = \id_{[N]}$. Hence $W$ contains the
+  A refinement $f$ is order preserving if and only if $T_L(f_*) = \emptyset$. Hence $W$ contains the
   identities; $gf \in W$ if and only if $f \in W$ and $g \in W$; any two order-preserving
   refinements with the same source and target are equal; and $\Ch(u)$ carries $W_K$ into $W_L$, so
   it descends to $\Br(u) : \Br(K) \to \Br(L)$, strictly functorially in $u$.
 \end{proposition}
 \begin{proof}
-  A permutation with no inversions is the identity, and $\Cross(f) = \Inv(f_*\inv)$, so
-  $\Cross(f) = \emptyset$ if and only if $f_*\inv = \id$, that is $f_* = \id$.
+  A permutation with no inversions is the identity, so $T_L(f_*) = \Inv(f_*\inv)$ is empty if
+  and only if $f_* = \id$.
   The consequences follow: the second from \Cref{lem:cocycle} with $\Sq(g)$ injective (\Cref{lem:sq-coords}), the third
   because two such refinements $f$ and $f'$ have $f_* = \id = f'_*$, so $f = f'$ by
   \Cref{prop:coords}(i), and the last because $\Ch(u)$ changes neither
@@ -518,10 +514,10 @@ $[1,\dots,1]$, so $x_*$ sends each time $t \in [N]$ to the event $x$ fires then.
 \end{proof}
 
 We order $\RunOver(d)$ by the right weak order: $x \le y$ when $x_* \le y_*$. By
-\Cref{prop:weak}(i) and \Cref{def:crossings}, this says $\Cross(x) \subseteq \Cross(y)$. Write
+\Cref{prop:weak}(i), this says $T_L(x_*) \subseteq T_L(y_*)$. Write
 $\bot_d$ for the run with $\bot_{d*} = \id$ and $\top_d$ for the run whose permutation reverses
 each block of $d$, and call $t$ an \textbf{ascent} of $x$ when it is an ascent of
-$x_*$.\footnote{The formalisation \cite{Cubical} orders $\RunOver(d)$ by inclusion of crossings and
+$x_*$.\footnote{The formalisation \cite{Cubical} orders $\RunOver(d)$ by inclusion of the sets $T_L(x_*)$, which it calls the reversed squares, and
 proves that $x \mapsto x_*$ is an order embedding into the right weak order
 (\texttt{RunOver.embed}, \texttt{RunOver.weakOrder\_le\_iff}); \Cref{lem:firing-blocks} and
 \Cref{lem:lower} are \texttt{RunOver.range\_embed} and \texttt{RunOver.isLowerSet\_range}.}
@@ -531,10 +527,10 @@ proves that $x \mapsto x_*$ is an order embedding into the right weak order
   set of the right weak order on $S_N$.
 \end{lemma}
 \begin{proof}
-  By \Cref{lem:sq-range,lem:sq-coords}, every $x$ has $\Cross(x) \subseteq \Sq(d)$, the pairs of
-  events sharing a block, while $\Cross(\bot_d) = \emptyset$ and $\Cross(\top_d) = \Sq(d)$.
+  By \Cref{lem:sq-range,lem:sq-coords}, every $x$ has $T_L(x_*) \subseteq \Sq(d)$, the pairs of
+  events sharing a block, while $T_L(\bot_{d*}) = \emptyset$ and $T_L(\top_{d*}) = \Sq(d)$.
 
-  Let $w \le x_*$. Then $\Inv(w\inv) \subseteq \Cross(x) \subseteq \Sq(d)$ by
+  Let $w \le x_*$. Then $T_L(w) \subseteq T_L(x_*) \subseteq \Sq(d)$ by
   \Cref{prop:weak}(i), so $w\inv(p) < w\inv(q)$ whenever $\blk_a(p) < \blk_a(q)$. Hence
   $\blk_a \circ w$ is monotone, and since $w$ is a bijection its fibres have the sizes of those of
   $\blk_a$. So $\blk_a \circ w = \blk_a$, that is $w \in S_a$.
@@ -544,16 +540,16 @@ proves that $x \mapsto x_*$ is an order embedding into the right weak order
   Let $q : o \to d$ be a refinement. Composition with $q$ is an order embedding
   $\RunOver(o) \to \RunOver(d)$, and
   \[
-    \Cross(qx) \;=\; \Sq(q)\bigl(\Cross x\bigr) \;\sqcup\; \Cross(q) .
+    T_L(q_*x_*) \;=\; \Sq(q)\bigl(T_L(x_*)\bigr) \;\sqcup\; T_L(q_*) .
   \]
   Moreover $q\bot_o = \bot_d$ if and only if $q \in W$; for $x \in \RunOver(d)$ the conditions
-  $x \in W$, $\Cross(x) = \emptyset$ and $x = \bot_d$ agree; $\bot_X = \id_X$ for a run $X$; and
+  $x \in W$, $T_L(x_*) = \emptyset$ and $x = \bot_d$ agree; $\bot_X = \id_X$ for a run $X$; and
   $\dom\bot_d = \dom\bot_c$ whenever $c \to d$ lies in $W$.
 \end{proposition}
 \begin{proof}
-  The formula is \Cref{lem:cocycle}. Since $\Sq(q)$ is injective with image disjoint from $\Cross(q)$
+  The formula is \Cref{lem:cocycle}. Since $\Sq(q)$ is injective with image disjoint from $T_L(q_*)$
   (\Cref{lem:sq-coords,lem:sq-range}), $qx \le qy$ if and only if $x \le y$, and
-  $\Cross(q\bot_o) = \Cross(q)$. The remaining equivalences are \Cref{prop:W} and
+  $T_L((q\bot_o)_*) = T_L(q_*)$. The remaining equivalences are \Cref{def:W,prop:W} and
   \Cref{lem:firing-blocks}, and the last clause is the formula applied to $c \to d$.
 \end{proof}
 
@@ -609,23 +605,23 @@ spans, and a $0$-cell is a run.}
 \begin{lemma}\label{lem:closure}
   Let every element of $K \subseteq \cut(d)$ be an ascent of $x \in \RunOver(d)$. Then
   \[
-    \Cross\bigl(\pi_K \top_{m_K}\bigr) \;=\; \Cross(x) \sqcup \im\Sq(\pi_K),
+    T_L\bigl((\pi_K \top_{m_K})_*\bigr) \;=\; T_L(x_*) \sqcup \im\Sq(\pi_K),
   \]
-  and every $z \ge x$ with $\bigl(x_*(t), x_*(t+1)\bigr) \in \Cross(z)$ for all $t \in K$
-  satisfies $\im\Sq(\pi_K) \subseteq \Cross(z)$. So $\pi_K\top_{m_K}$ is the least such $z$.
+  and every $z \ge x$ with $\bigl(x_*(t), x_*(t+1)\bigr) \in T_L(z_*)$ for all $t \in K$
+  satisfies $\im\Sq(\pi_K) \subseteq T_L(z_*)$. So $\pi_K\top_{m_K}$ is the least such $z$.
 \end{lemma}
 \begin{proof}
-  Since $\Cross(\top_{m_K}) = \Sq(m_K)$ (\Cref{lem:lower}), \Cref{prop:push} gives
-  $\Cross(\pi_K\top_{m_K}) = \im\Sq(\pi_K) \sqcup \Cross(\pi_K)$, and \Cref{lem:cocycle} applied to
+  Since $T_L(\top_{m_K*}) = \Sq(m_K)$ (\Cref{lem:lower}), \Cref{prop:push} gives
+  $T_L((\pi_K\top_{m_K})_*) = \im\Sq(\pi_K) \sqcup T_L(\pi_{K*})$, and \Cref{lem:cocycle} applied to
   $\pi_K\iota_K = x$, with $\iota_K$ order preserving (\Cref{prop:factorisations}), gives
-  $\Cross(\pi_K) = \Cross(x)$.
+  $T_L(\pi_{K*}) = T_L(x_*)$.
 
   For the second claim, $\im\Sq(\pi_K)$ is the set of pairs of events inside one of the sets
   $\pi_{K*}(B)$, for $B$ a block of $m_K$ (\Cref{lem:sq-coords}). Since $\iota_{K*} = \id$ we have
   $\pi_{K*} = x_*$. Write $B = \{u, \dots, u+k\}$ and $p_i := x_*(u+i)$; then
   $p_0 < \cdots < p_k$, as the elements of $B \cap \cut(m_K) \subseteq K$ are ascents of $x$, and
-  each $(p_i, p_{i+1})$ lies in $\Cross(z)$. So $z$ fires $p_k, \dots, p_0$ in this order, and every
-  pair of them lies in $\Cross(z)$. The last sentence follows, since $\pi_K\top_{m_K}$ is itself
+  each $(p_i, p_{i+1})$ lies in $T_L(z_*)$. So $z$ fires $p_k, \dots, p_0$ in this order, and every
+  pair of them lies in $T_L(z_*)$. The last sentence follows, since $\pi_K\top_{m_K}$ is itself
   such a $z$.
 \end{proof}
 
@@ -696,7 +692,7 @@ middle of \Cref{prop:factorisations} for $x$.
 
 In both cases $\src(e)$ reverses the squares of $e$ in lexicographic order and $\tgt(e)$ in the
 reverse order, as a direct check shows.\footnote{The formalisation \cite{Cubical} works with the
-sets $\Cross(x)$ in place of the permutations $x_*$: \texttt{reversedIso} identifies $\RunOver(d)$
+sets $T_L(x_*)$ in place of the permutations $x_*$: \texttt{reversedIso} identifies $\RunOver(d)$
 with the subsets of $\Sq(d)$ that are \emph{biclosed}, meaning that no block's induced tournament
 has a directed $3$-cycle, and it takes the last sentence above as the definition of the two paths.
 The four and the six runs are \texttt{card\_biclosed\_of\_isEmpty\_triangles} and
@@ -728,7 +724,7 @@ The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
   common upper bound. Then $t_1 \neq t_2$ are ascents of $x$ in $\cut(d)$ (\Cref{lem:cover}), so for
   $K = \{t_1, t_2\}$ the middle $m_K$ is a chain of degree $2$, that is a $2$-cell
   (\Cref{prop:factorisations}). Each $y_i$ fires $x_*(t_i+1)$ before $x_*(t_i)$, so
-  $\bigl(x_*(t_i), x_*(t_i+1)\bigr) \in \Cross(y_i) \subseteq \Cross(z)$, and
+  $\bigl(x_*(t_i), x_*(t_i+1)\bigr) \in T_L(y_{i*}) \subseteq T_L(z_*)$, and
   $j := \pi_K\top_{m_K}$ satisfies $j \le z$ (\Cref{lem:closure}).
 
   Since $\iota_K$ is order preserving it equals $\bot_{m_K}$ (\Cref{prop:factorisations},
