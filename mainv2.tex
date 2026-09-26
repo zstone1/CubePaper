@@ -147,14 +147,15 @@ But that won't translate across to braids conveniently. So we will need the op i
 \paragraph{Cube chains.}
 A \textbf{shape} is a list $a = [a_1,\dots,a_r]$ of positive integers; it names the serial wedge
 $\bigvee a := \cube{a_1} \vee \cdots \vee \cube{a_r}$, whose \textbf{blocks} are the $\cube{a_i}$,
-and we put $|a| := \sum_i a_i$ and $\deg a := |a| - r$. Objects of $\Ch(K)$ are the bipointed maps
-$\bigvee a \to K$ and its morphisms, the refinements, the maps of wedges over $K$. We write $|d|$
-and $\deg d$ for the event count and degree of a chain's shape, and $\Ch(u)$ for the pushforward
+and we put $|a| := \sum_i a_i$ and $\deg a := |a| - r$. Objects of $\Ch(K)$, the \textbf{chains},
+are the bipointed maps $d : \bigvee a \to K$, and its morphisms, the refinements, are the maps of
+wedges over $K$. Notation defined for shapes, here and below, applies to a chain through its shape:
+$|d| := |a|$, $\deg d := \deg a$, and so on. We write $\Ch(u)$ for the pushforward
 along $u : K \to L$, which postcomposes the classifying map and leaves the shape alone. A chain of
 degree $0$ is a \textbf{run}. The subcategory of runs is discrete; we leave the check to the
 reader.
 
-We use two facts from \cite{PZ}, and a third for which we have no reference yet.
+We use two facts from \cite{PZ}, and the third is an easy corollary.
 
 \begin{lemma}[{\cite[Ex.~2.6(c)]{PZ}}]\label{lem:wedge-altitude}
   If $a = [a_1,\dots,a_r]$ is a shape, then the unique altitude function on $\bigvee a$ is given
@@ -175,9 +176,6 @@ reader.
   Let $P, Q \in \BPSet$ with $P \vee Q$ non-self-linked and admitting an altitude. Then
   concatenation $\Ch(P) \times \Ch(Q) \to \Ch(P \vee Q)$ is an isomorphism.
 \end{lemma}
-\begin{proof}
-  TODO: prove, or find a reference.
-\end{proof}
 
 \paragraph{The events of a shape.}
 The constructions presented in this paper are mostly bookkeeping of coordinates. 
@@ -254,22 +252,21 @@ identifying $\src(\alpha)$ with $\tgt(\alpha)$ for every $2$-generator $\alpha$
 \Cref{prop:present-univ}(iii) and \Cref{lem:pres-functor} are routine, and we leave the details to
 the reader.
 
-\begin{proposition}[{\cite[Ch.~I]{GZ}}]\label{prop:loc}
+\begin{proposition}[{\cite[\S I.1.1 and Lem.~I.1.2]{GZ}}]\label{prop:loc}
   Let $W$ be a class of morphisms of a category $C$. There is a functor $Q : C \to C[W\inv]$
-  inverting $W$ such that, for every category $D$, precomposition with $Q$ is an isomorphism from
-  the category of functors $C[W\inv] \to D$ onto the full subcategory of functors $C \to D$ that
+  inverting $W$. And for every category $D$, $(\cdot) \circ Q$ is an isomorphism from
+  $C[W\inv] \to D$ onto the full subcategory of functors $C \to D$ that
   invert $W$.
 \end{proposition}
 
-\gap{TODO: check \Cref{prop:loc} word for word against \cite{GZ} (we believe \S I.1.1 and
-Lemma I.1.2) and give those locators.}
-
 \paragraph{Newman's lemma.}
-For a poset $P$, write $x \lessdot y$ when $y$ covers $x$, that is $x < y$ with nothing strictly
-between them. The \textbf{Hasse diagram} $\mathrm{Hasse}(P)$ is the quiver with vertex set $P$ and
+For a poset $P$, write $x \lessdot y$ when $y$ covers $x$, that is $x < y$ with no $z$ such that $x < z < y$. 
+The \textbf{Hasse diagram} $\mathrm{Hasse}(P)$ is the quiver with vertex set $P$ and
 one arrow $x \to y$ for each cover $x \lessdot y$. A map of quivers
 $\mathrm{Hasse}(P) \to C$ into a category extends to paths by composition, and we read it on paths
-without further comment.
+without further comment. A functor $F : P \to C$ \textbf{extends} such a map $\varphi$ when
+$F(x) = \varphi(x)$ for every $x \in P$ and $F(x \le y) = \varphi(x \lessdot y)$ for every cover
+$x \lessdot y$.
 
 The following is a variant of Newman's lemma \cite[Lem.~1.3.21]{Polygraphs}, and its proof is
 the same well-founded induction.
@@ -278,31 +275,41 @@ the same well-founded induction.
   Let $P$ be a finite poset and $\varphi : \mathrm{Hasse}(P) \to C$ a map of quivers. Suppose that
   for every pair of distinct covers $x \lessdot y_1$, $x \lessdot y_2$ and every common upper bound
   $z$ of $y_1$ and $y_2$ there are $j \le z$ and paths $p_i$ from $y_i$ to $j$ with
-  $\varphi(p_1) \circ \varphi(x \lessdot y_1) = \varphi(p_2) \circ \varphi(x \lessdot y_2)$. Then
-  $\varphi$ sends parallel paths to equal arrows, so it extends uniquely to a functor $P \to C$; and
-  a functor out of $P$ is determined by its values on covers.
+  \[
+  \varphi(p_1) \circ \varphi(x \lessdot y_1) = \varphi(p_2) \circ \varphi(x \lessdot y_2) .
+  \]
+  Then $\varphi$ extends uniquely to a functor $P \to C$.
 \end{lemma}
 \begin{proof}
-  Since $P$ is finite, $x \le y$ holds exactly when there is a path from $x$ to $y$. Fix $z \in P$.
-  We show that any two paths $u$, $v$ from $x$ to $z$ have $\varphi(u) = \varphi(v)$, by
-  induction on $x$ downward: assume the claim for every $x' > x$.
+  Since $P$ is finite, $x \le z$ holds exactly when there is a path from $x$ to $z$.
 
-  If $x = z$ then $u$ and $v$ are both empty, since every cover goes strictly up. Otherwise write
-  $u = u' \circ (x \lessdot y_1)$ and $v = v' \circ (x \lessdot y_2)$. If $y_1 = y_2$, then
+  Any two extensions of $\varphi$ agree: if $F$ extends $\varphi$ and $w$ is a path from $x$ to
+  $z$, then $x \le z$ is the composite of the covers along $w$, so $F(x \le z) = \varphi(w)$.
+
+  For existence, it suffices to show that $\varphi$ sends parallel paths to equal arrows. Then
+  $F(x) := \varphi(x)$ and $F(x \le z) := \varphi(w)$, for any path $w$ from $x$ to $z$, is well
+  defined. It is a functor because the empty path gives identities and concatenation gives
+  composites, and it extends $\varphi$ because a cover is a path of length one.
+
+  So fix $z \in P$. We show, for every $x \in P$, that any two paths $u$, $v$ from $x$ to $z$ have
+  $\varphi(u) = \varphi(v)$, by induction on $x$ downward: assume the claim for every $x' > x$.
+
+  If $x = z$ then $u$ and $v$ are both empty, since a nonempty path from $x$ to $z$ gives
+  $x < z$. Otherwise there exist $y_1$ and $y_2$ giving $u = u' \circ (x \lessdot y_1)$ and 
+  $v = v' \circ (x \lessdot y_2)$. If $y_1 = y_2$, then
   $\varphi(u') = \varphi(v')$ by induction at $y_1$. Otherwise $z$ is a common upper bound of
-  $y_1$ and $y_2$, so the hypothesis gives $j \le z$ and paths $p_1$, $p_2$. Choose a path $r$
-  from $j$ to $z$. Then $u'$ and $r \circ p_1$ are paths from $y_1$ to $z$, so
+  $y_1$ and $y_2$, so the hypothesis gives $j \le z$ and paths $p_i$ from $y_i$ to $j$ with
+  \[ 
+    \varphi(p_1)\,\varphi(x \lessdot y_1) = \varphi(p_2)\,\varphi(x \lessdot y_2) .
+  \]
+  Choose a path $r$ from $j$ to $z$, which exists as $j \le z$. 
+  Then $u'$ and $r \circ p_1$ are paths from $y_1$ to $z$, so
   $\varphi(u') = \varphi(r)\varphi(p_1)$ by induction at $y_1$, and likewise
   $\varphi(v') = \varphi(r)\varphi(p_2)$. Hence
   \[
     \varphi(u) = \varphi(r)\,\varphi(p_1)\,\varphi(x \lessdot y_1)
                = \varphi(r)\,\varphi(p_2)\,\varphi(x \lessdot y_2) = \varphi(v) .
   \]
-
-  Now send $x \le y$ to $\varphi$ of any path from $x$ to $y$. This is well defined by the above,
-  sends identities to identities because the empty path is one such path, and preserves
-  composition because paths concatenate. Every relation $x \le y$ is a composite of covers, which
-  gives uniqueness and the last clause.
 \end{proof}
 
 
@@ -314,12 +321,41 @@ the question of which squares a map reverses.}
 Throughout, $a$ and $b$ are shapes on $N$ events.
 
 \begin{definition}\label{def:squares}
-  A \textbf{square} of $a$ is a pair $s = (p,q)$ of events with $p < q$ and $\blk(p) = \blk(q)$;
-  write $\Sq(a)$ for the set of them, so $|\Sq(a)| = \sum_i \binom{a_i}{2}$. We write $\Sq(d)$ for
-  the squares of a chain's shape, and $f_*$ also for the induced injection
-  $\Sq(a) \to \Sq(b)$, $(p,q) \mapsto (f_*p, f_*q)$, well defined because $f_*$ is increasing on
-  blocks (\Cref{prop:coords}(ii)).
+  Let $\Sq' : \Cube \to \Set$ be the functor
+  \begin{enumerate}
+    \item sending $\cube n$ to its set of pairs of directions $\{(c,c') \in [n]^2 : c < c'\}$;
+    \item sending a face embedding $f : \cube n \to \cube m$ to
+      $(c,c') \mapsto (\Ev'(f)c, \Ev'(f)c')$.
+  \end{enumerate}
+  Let $\Sq$ be the left Kan extension along Yoneda of $\Sq'$. The \textbf{squares} of $a$ are the
+  elements of $\Sq(a) := \Sq(\bigvee a)$.
 \end{definition}
+
+\begin{lemma}\label{lem:sq-coords}
+  As a set of pairs of events,
+  \[
+    \Sq(a) \;=\; \bigl\{\, (p,q) \;:\; p < q \text{ and } \blk_a(p) = \blk_a(q) \,\bigr\} ,
+  \]
+  and a map $f : \bigvee a \to \bigvee b$ of serial wedges has $\Sq(f)(p,q) = (f_*p, f_*q)$. In
+  particular $\Sq(f)$ is injective.
+\end{lemma}
+\begin{proof}
+  As for $\Ev$, the functor $\Sq$ is cocontinuous and $\Sq(\cube 0) = \emptyset$, so
+  $\Sq(\bigvee a) = \coprod_{i \in [r]} \Sq'(\cube{a_i})$, whose element $(i,(c,c'))$ is the pair
+  of events $\bigl((i,c),(i,c')\bigr)$.
+
+  The two projections $\Sq' \to \Ev'$, sending $(c,c')$ to $c$ and to $c'$, are natural, so they
+  extend to natural transformations $\epsilon_1, \epsilon_2 : \Sq \to \Ev$ with
+  $\epsilon_1(p,q) = p$ and $\epsilon_2(p,q) = q$. For $k = 1, 2$, naturality at $f$ is the square
+  \[
+    \begin{tikzcd}
+      \Sq(a) \arrow[r, "\Sq(f)"] \arrow[d, "\epsilon_k"'] & \Sq(b) \arrow[d, "\epsilon_k"] \\
+      \Ev(\bigvee a) \arrow[r, "f_*"'] & \Ev(\bigvee b)
+    \end{tikzcd}
+  \]
+  and chasing $(p,q)$ around it gives $\Sq(f)(p,q) = (f_*p, f_*q)$. Injectivity follows, since $f_*$ is a
+  permutation (\Cref{prop:coords}(iv)).
+\end{proof}
 
 \begin{definition}\label{def:crossings}
   The \textbf{crossings} of a map of serial wedges $f : \bigvee a \to \bigvee b$ are the inversions
@@ -331,7 +367,7 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
 
 \begin{lemma}\label{lem:sq-range}
   The map $f_*\inv$ preserves the order of two events in distinct blocks of $b$. Hence
-  $\Cross(f) \subseteq \Sq(b)$. A square $(p,q)$ of $b$ lies in the image of $f_*$ if and only if
+  $\Cross(f) \subseteq \Sq(b)$. A square $(p,q)$ of $b$ lies in $\im\Sq(f)$ if and only if
   $f_*\inv p$ and $f_*\inv q$ lie in one block of $a$.
 \end{lemma}
 \begin{proof}
@@ -347,15 +383,15 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
 \begin{lemma}\label{lem:cocycle}
   For $f : \bigvee a \to \bigvee b$ and $g : \bigvee b \to \bigvee c$,
   \[
-    \Cross(gf) \;=\; g_*\bigl(\Cross f\bigr) \;\sqcup\; \Cross(g),
+    \Cross(gf) \;=\; \Sq(g)\bigl(\Cross f\bigr) \;\sqcup\; \Cross(g),
   \]
   and $\Cross(\id) = \emptyset$.
 \end{lemma}
 \begin{proof}
-  Let $s$ be a square of $c$. If $s = g_*(t)$ then $s \notin \Cross(g)$, the two events of $t$
+  Let $s$ be a square of $c$. If $s = \Sq(g)(t)$ then $s \notin \Cross(g)$, the two events of $t$
   sharing a block (\Cref{lem:sq-range}) --- which also gives disjointness --- and
   $(gf)_*\inv(g_*u) = f_*\inv(u)$ for the two events $u$ of $t$, so $s \in \Cross(gf)$ if and
-  only if $t \in \Cross(f)$. If $s$ is not in the image of $g_*$ then it is not in $g_*(\Cross f)$, and its
+  only if $t \in \Cross(f)$. If $s \notin \im\Sq(g)$ then $s \notin \Sq(g)(\Cross f)$, and its
   two events pull back along $g_*$ into distinct blocks of $b$, so the first claim of
   \Cref{lem:sq-range} applied to $f$ gives $s \in \Cross(gf)$ if and only if $s \in \Cross(g)$.
 \end{proof}
@@ -390,7 +426,7 @@ reverses composition.
 \begin{proof}
   A permutation with no inversions is the identity, and $\Cross(f)$ is the inversion set of
   $f_*\inv$, so $\Cross(f) = \emptyset$ if and only if $f_*\inv = \id$, that is $f_* = \id$.
-  The consequences follow: the second from \Cref{lem:cocycle} with $g_*$ injective, the third
+  The consequences follow: the second from \Cref{lem:cocycle} with $\Sq(g)$ injective (\Cref{lem:sq-coords}), the third
   because two such refinements $f$ and $f'$ have $f_* = \id = f'_*$, so $f = f'$ by
   \Cref{prop:coords}(i), and the last because $\Ch(u)$ changes neither
   shape nor wedge map, with the descent given by \Cref{prop:loc}.
@@ -449,15 +485,15 @@ elements.
   Let $q : o \to d$ be a refinement. Composition with $q$ is an order embedding
   $\RunOver(o) \to \RunOver(d)$, and
   \[
-    \Cross(qx) \;=\; q_*\bigl(\Cross x\bigr) \;\sqcup\; \Cross(q) .
+    \Cross(qx) \;=\; \Sq(q)\bigl(\Cross x\bigr) \;\sqcup\; \Cross(q) .
   \]
   Moreover $q\bot_o = \bot_d$ if and only if $q \in W$; for $x \in \RunOver(d)$ the conditions
   $x \in W$, $\Cross(x) = \emptyset$ and $x = \bot_d$ agree; $\bot_X = \id_X$ for a run $X$; and
   $\dom\bot_d = \dom\bot_c$ whenever $c \to d$ lies in $W$.
 \end{proposition}
 \begin{proof}
-  The formula is \Cref{lem:cocycle}. Since $q_*$ is injective with image disjoint from $\Cross(q)$
-  (\Cref{lem:sq-range}), $qx \le qy$ if and only if $x \le y$, and $\Cross(q\bot_o) = \Cross(q)$.
+  The formula is \Cref{lem:cocycle}. Since $\Sq(q)$ is injective with image disjoint from $\Cross(q)$
+  (\Cref{lem:sq-coords,lem:sq-range}), $qx \le qy$ if and only if $x \le y$, and $\Cross(q\bot_o) = \Cross(q)$.
   The remaining equivalences are \Cref{def:W} and the injectivity of $\Cross$
   (\Cref{lem:firing-blocks}), and the last clause is the formula applied
   to $c \to d$.
@@ -546,14 +582,14 @@ spans, and a $0$-cell is a run.}
 \begin{lemma}\label{lem:closure}
   Let $S$ rise from $x \in \RunOver(d)$. Then
   \[
-    \Cross\bigl(\pi_S \top_{m_S}\bigr) \;=\; \Cross(x) \cup \pi_{S*}\bigl(\Sq(m_S)\bigr),
+    \Cross\bigl(\pi_S \top_{m_S}\bigr) \;=\; \Cross(x) \cup \im\Sq(\pi_S),
   \]
   and every $z \ge x$ with $S \subseteq \Cross(z)$ satisfies
-  $\pi_{S*}(\Sq(m_S)) \subseteq \Cross(z)$. So $\pi_S\top_{m_S}$ is the least element of
+  $\im\Sq(\pi_S) \subseteq \Cross(z)$. So $\pi_S\top_{m_S}$ is the least element of
   $\RunOver(d)$ above $x$ reversing all of $S$.
 \end{lemma}
 \begin{proof}
-  \Cref{prop:push} gives $\Cross(\pi_S\top_{m_S}) = \pi_{S*}\Sq(m_S) \cup \Cross(\pi_S)$, and
+  \Cref{prop:push} gives $\Cross(\pi_S\top_{m_S}) = \im\Sq(\pi_S) \cup \Cross(\pi_S)$, and
   \Cref{lem:cocycle} applied to $\pi_S\iota_S = x$ with $\Cross(\iota_S) = \emptyset$ gives
   $\Cross(\pi_S) = \Cross(x)$.
 
@@ -588,9 +624,9 @@ For a cover $x \lessdot y$ of $\RunOver(d)$ with step $s$, put $\gamma(x \lessdo
   \Cref{prop:factorisations}.
 
   For the last claim let $e = (x \lessdot y)$ with step $s$. By \Cref{prop:push},
-  $\Cross(qy) = \Cross(qx) \sqcup \{q_*s\}$, so $qx \lessdot qy$ with step $q_*s$
+  $\Cross(qy) = \Cross(qx) \sqcup \{\Sq(q)(s)\}$, so $qx \lessdot qy$ with step $\Sq(q)(s)$
   (\Cref{lem:cover}). The factorisation $qx = (q\pi_{\{s\}})\,\iota_{\{s\}}$ has middle $m$, and
-  since $(qx)_* = q_*x_*$ the only step of $qx$ whose events share a block of $m$ is $q_*s$. By the
+  since $(qx)_* = q_*x_*$ the only step of $qx$ whose events share a block of $m$ is $\Sq(q)(s)$. By the
   bijection of \Cref{prop:factorisations}, $\gamma(qe) = m = \gamma(e)$.
 \end{proof}
 
@@ -606,7 +642,7 @@ For a cover $x \lessdot y$ of $\RunOver(d)$ with step $s$, put $\gamma(x \lessdo
 \end{proposition}
 \begin{proof}
   $\deg e = 2$ forces the block dimensions above $1$ to be $\{3\}$ or $\{2,2\}$, and
-  \Cref{def:squares} counts $\binom32 = 3$ squares in the first case and $2\binom22 = 2$ in the
+  \Cref{lem:sq-coords} counts $\binom32 = 3$ squares in the first case and $2\binom22 = 2$ in the
   second. A run over $e$ is a linear order on each block (\Cref{lem:firing-blocks}) and each cover
   swaps a consecutive pair (\Cref{lem:cover}).
 
@@ -662,9 +698,9 @@ The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
   by $y_2$ and reading as $\src(m_S)$ and $\tgt(m_S)$, which are equal in $\pres{\Art(K)}$.
 
   For the last claim, composition with $q$ is monotone, so $x \mapsto \Gamma_d(qx)$ and $\Gamma_o$
-  are functors out of $\RunOver(o)$. They agree on covers, because composition with $q$ carries
-  covers to covers and keeps $\gamma$ (\Cref{cor:covercell}). So they agree, by the last clause of
-  \Cref{thm:newman}.
+  are functors out of $\RunOver(o)$. Both extend $\gamma$ on $\RunOver(o)$, because composition
+  with $q$ keeps domains, carries covers to covers and keeps $\gamma$ (\Cref{cor:covercell}). So
+  they are equal, by the uniqueness in \Cref{thm:newman}.
 \end{proof}
 
 \section{The presentation}\label{sec:thmA}
@@ -755,7 +791,9 @@ $\bot_\alpha$, we may set
   $E(\Theta(u)) = Q(u\bot_c)Q(\bot_d)\inv
    = Q(\bot_c) \circ Q(u) \circ Q(\bot_d)\inv$, which is $Q(u)$ conjugated by the isomorphisms
   $Q(\bot_c)$ and $Q(\bot_d)$. So the $Q(\bot_d)$ form a natural isomorphism $Q \cong E\Theta = E\Phi Q$,
-  and by \Cref{prop:loc} it is $\eta Q$ for a natural isomorphism $\eta : \id \cong E\Phi$.
+  and since precomposition with $Q$ is an isomorphism onto a full subcategory (\Cref{prop:loc}),
+  it is $\eta Q$ for a unique natural transformation $\eta : \id \Rightarrow E\Phi$, which is
+  invertible because $\eta Q$ is.
 \end{proof}
 
 \gap{One sentence: the comparison is an equivalence and not an isomorphism because $\Br(K)$ is not
@@ -807,7 +845,7 @@ the run of $Z$ on $N$ events. Both $\bot_e$ and $\top_e$ have source a run on $|
 every cell of $Z$ is a loop at $Z_{|e|}$.
 
 For a shape $a$ on $N$ events put $\cut(a) := \{\, k \in [N-1] : \blk_a(k) = \blk_a(k+1) \,\}$,
-and write $\cut(d)$ for the cuts of a chain's shape; for $i \neq k$ in $[N-1]$ let
+and for $i \neq k$ in $[N-1]$ let
 $\cox(i,k) := 3$ when $|i-k| = 1$ and $\cox(i,k) := 2$ otherwise.
 
 \begin{lemma}\label{lem:cuts}
