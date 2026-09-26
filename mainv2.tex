@@ -216,14 +216,14 @@ For a map $f$ of serial wedges we write $f_*$ for $\Ev(f)$.
 
 \paragraph{Permutations.}
 Write $S_N$ for the group of permutations of $[N]$ and, for $t \in [N-1]$, $s_t$ for the
-transposition of $t$ and $t+1$. The \textbf{inversion set} and the \textbf{length} of $w \in S_N$
-are
+transposition of $t$ and $t+1$. The \textbf{inversion set}, the \textbf{left inversion set} and the
+\textbf{length} of $w \in S_N$ are
 \[
   \Inv(w) \;:=\; \bigl\{\, (p,q) \;:\; p < q \text{ and } w(p) > w(q) \,\bigr\} ,
+  \qquad T_L(w) \;:=\; \Inv(w\inv) ,
   \qquad \ell(w) \;:=\; |\Inv(w)| ,
 \]
-and $t$ is an \textbf{ascent} of $w$ when $w(t) < w(t+1)$. The \textbf{left inversion set}
-$T_L(w) := \Inv(w\inv)$ is the set of pairs of values that $w$ lists in the other order. The \textbf{right weak order} on $S_N$
+and $t$ is an \textbf{ascent} of $w$ when $w(t) < w(t+1)$. The \textbf{right weak order} on $S_N$
 has $u \le w$ when $\ell(u) + \ell(u\inv w) = \ell(w)$. For $i \neq k$ in $[N-1]$, $\cox(i,k)$ is
 the order of $s_is_k$, the entry of the \textbf{Coxeter matrix} of $S_N$; it is $3$ when
 $|i-k| = 1$ and $2$ otherwise.
