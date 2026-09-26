@@ -215,39 +215,52 @@ For a map $f$ of serial wedges we write $f_*$ for $\Ev(f)$.
 \end{proof}
 
 \paragraph{Permutations.}
-Write $S_N$ for the group of permutations of $[N]$ and, for $t \in [N-1]$, $s_t$ for the
-transposition of $t$ and $t+1$. The \textbf{inversion set}, the \textbf{left inversion set} and the
+We follow \cite{BB}. Write $S_N$ for the group of permutations of $[N]$ and, for $t \in [N-1]$,
+$s_t := (t,\,t+1)$; with these generators $S_N$ is a Coxeter group of type $A_{N-1}$
+\cite[Prop.~1.5.4]{BB}. For $i \neq k$ in $[N-1]$, $\cox(i,k)$ is the order of $s_is_k$, the entry
+of its \textbf{Coxeter matrix} \cite[\S1.1]{BB}; it is $3$ when $|i-k| = 1$ and $2$ otherwise
+\cite[(1.29)]{BB}. The \textbf{inversion set}, the \textbf{left inversion set} and the
 \textbf{length} of $w \in S_N$ are
 \[
   \Inv(w) \;:=\; \bigl\{\, (p,q) \;:\; p < q \text{ and } w(p) > w(q) \,\bigr\} ,
   \qquad T_L(w) \;:=\; \Inv(w\inv) ,
   \qquad \ell(w) \;:=\; |\Inv(w)| ,
 \]
-and $t$ is an \textbf{ascent} of $w$ when $w(t) < w(t+1)$. The \textbf{right weak order} on $S_N$
-has $u \le w$ when $\ell(u) + \ell(u\inv w) = \ell(w)$. For $i \neq k$ in $[N-1]$, $\cox(i,k)$ is
-the order of $s_is_k$, the entry of the \textbf{Coxeter matrix} of $S_N$; it is $3$ when
-$|i-k| = 1$ and $2$ otherwise.
+so $\ell(w)$ is the inversion number of \cite[(1.25)]{BB}, which is the Coxeter length
+\cite[Prop.~1.5.2]{BB}. We call $t$ an \textbf{ascent} of $w$ when $w(t) < w(t+1)$, that is when
+$s_t$ is not a right descent of $w$ \cite[Prop.~1.5.3]{BB}. The \textbf{right weak order} on $S_N$
+has $u \le w$ when $\ell(u) + \ell(u\inv w) = \ell(w)$; this is the order $\le_R$ of
+\cite[Def.~3.1.1]{BB}, by \cite[Prop.~3.1.2(ii)]{BB}.
 
-\begin{proposition}[{\cite[\S3.1]{BB}}]\label{prop:weak}
+\begin{proposition}\label{prop:weak}
   Let $u, w \in S_N$.
   \begin{enumerate}[label=(\roman*)]
     \item $u \le w$ if and only if $T_L(u) \subseteq T_L(w)$.
     \item $w$ covers $u$ if and only if $w = us_t$ for an ascent $t$ of $u$.
   \end{enumerate}
 \end{proposition}
+\begin{proof}
+  Read a pair $(p,q)$ as the transposition $(p\,q)$. Then $T_L(w)$ is the set
+  $\{t : \ell(tw) < \ell(w)\}$ of left associated reflections of \cite[(1.19)]{BB}: with
+  $a = w\inv(p)$ and $b = w\inv(q)$ we have $(p\,q)\,w = w\,(a\,b)$, and a direct count of
+  inversions, as in the proof of \cite[Lem.~2.1.4]{BB}, shows that this is shorter than $w$ exactly
+  when $a > b$. So (i) is \cite[Prop.~3.1.3]{BB}.
 
-\gap{TODO: pin the locators in \cite{BB} and check them word for word. We believe $\ell = |\Inv|$
-is Prop.~1.5.2, that (i) is Prop.~3.1.3, where $T_L(w)$ is a set of transpositions, read through
-its description for $S_N$ in \S1.5, a pair $(p,q)$ standing for the transposition $(p\,q)$, and that (ii) follows from Def.~3.1.1 and Prop.~1.5.3; check also that the definition of
-$\le_R$ there is ours. The formalisation proves both clauses for its own definition, which is ours:
-\texttt{WeakOrder.le\_iff\_inversions\_inv\_subset} and \texttt{WeakOrder.covBy\_iff}.}
+  For (ii), by \cite[Def.~3.1.1]{BB} a cover of $u$ in $\le_R$ is some $us$ with $s$ a generator
+  and $\ell(us) = \ell(u) + 1$, and every such $us$ is a cover, since $\ell$ rises strictly along
+  $\le_R$ \cite[Prop.~3.1.2(ii)]{BB}. By \cite[(1.26)]{BB}, $\ell(us_t) = \ell(u)+1$ exactly when
+  $t$ is an ascent of $u$.\footnote{The formalisation proves both clauses for its own definition,
+  which is ours: \texttt{WeakOrder.le\_iff\_inversions\_inv\_subset} and
+  \texttt{WeakOrder.covBy\_iff}.}
+\end{proof}
 
 For a shape $a$ on $N$ events put
 \[
   \cut(a) \;:=\; \bigl\{\, t \in [N-1] \;:\; \blk_a(t) = \blk_a(t+1) \,\bigr\} , \qquad
   S_a \;:=\; \bigl\{\, w \in S_N \;:\; \blk_a \circ w = \blk_a \,\bigr\} ,
 \]
-the latter the \textbf{Young subgroup} of $a$; it contains $s_t$ exactly when $t \in \cut(a)$.
+the latter the \textbf{Young subgroup} of $a$ \cite[\S2.4]{BB}; it contains $s_t$ exactly when
+$t \in \cut(a)$.
 
 \begin{lemma}\label{lem:cuts}
   $a \mapsto \cut(a)$ is a bijection from the shapes on $N$ events onto the subsets of $[N-1]$,
