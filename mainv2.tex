@@ -215,43 +215,52 @@ For a map $f$ of serial wedges we write $f_*$ for $\Ev(f)$.
 \end{proof}
 
 \paragraph{Permutations.}
-We follow \cite{BB}. Write $S_N$ for the group of permutations of $[N]$ and, for $t \in [N-1]$,
-$s_t := (t,\,t+1)$; with these generators $S_N$ is a Coxeter group of type $A_{N-1}$
-\cite[Prop.~1.5.4]{BB}. For $i \neq k$ in $[N-1]$, $\cox(i,k)$ is the order of $s_is_k$, the entry
-of its \textbf{Coxeter matrix} \cite[\S1.1]{BB}; it is $3$ when $|i-k| = 1$ and $2$ otherwise
-\cite[(1.29)]{BB}. The \textbf{inversion set}, the \textbf{left inversion set} and the
-\textbf{length} of $w \in S_N$ are
+Write $S_N$ for the group of permutations of $[N]$ and, for $t \in [N-1]$, $s_t := (t,\,t+1)$. For
+$i \neq k$ in $[N-1]$, $\cox(i,k)$ is the order of $s_is_k$, which is $3$ when $|i-k| = 1$, $s_is_k$ being a
+$3$-cycle, and $2$ otherwise, $s_is_k$ being a product of two disjoint transpositions: these are the entries of the Coxeter matrix of $S_N$, a Coxeter group of type $A_{N-1}$
+on the generators $s_t$ \cite[\S1.1, Prop.~1.5.4]{BB}. We read $w \in S_N$ as the list
+$w(1), \dots, w(N)$, so that $w$ lists $p$ before $q$ when $w\inv(p) < w\inv(q)$. The
+\textbf{left inversion set} of $w$ is
 \[
-  \Inv(w) \;:=\; \bigl\{\, (p,q) \;:\; p < q \text{ and } w(p) > w(q) \,\bigr\} ,
-  \qquad T_L(w) \;:=\; \Inv(w\inv) ,
-  \qquad \ell(w) \;:=\; |\Inv(w)| ,
+  T_L(w) \;:=\; \bigl\{\, (p,q) \;:\; p < q \text{ and } w\inv(p) > w\inv(q) \,\bigr\} ,
 \]
-so $\ell(w)$ is the inversion number of \cite[(1.25)]{BB}, which is the Coxeter length
-\cite[Prop.~1.5.2]{BB}. We call $t$ an \textbf{ascent} of $w$ when $w(t) < w(t+1)$, that is when
-$s_t$ is not a right descent of $w$ \cite[Prop.~1.5.3]{BB}. The \textbf{right weak order} on $S_N$
-has $u \le w$ when $\ell(u) + \ell(u\inv w) = \ell(w)$; this is the order $\le_R$ of
-\cite[Def.~3.1.1]{BB}, by \cite[Prop.~3.1.2(ii)]{BB}.
+and $t$ is an \textbf{ascent} of $w$ when $w(t) < w(t+1)$. The \textbf{right weak order} on $S_N$
+has $u \le w$ when $T_L(u) \subseteq T_L(w)$; it is a partial order by \Cref{lem:weak}(i)
+below.\footnote{The formalisation defines the right weak order by lengths adding, as in
+\cite[Prop.~3.1.2(ii)]{BB}, and proves that it is this order
+(\texttt{WeakOrder.le\_iff\_inversions\_inv\_subset}); \Cref{lem:weak}(iii) is
+\texttt{WeakOrder.covBy\_iff}.}
 
-\begin{proposition}\label{prop:weak}
+These agree with \cite{BB}, although we use only the definitions above. Reading $(p,q)$ as the
+transposition $(p\,q)$, $T_L(w)$ is the set of left associated reflections of $w$
+\cite[(1.19)]{BB}, as an easy count of inversions shows; so our order is the right weak order of
+\cite[Def.~3.1.1]{BB}, by \cite[Prop.~3.1.3]{BB}. And $t$ is an ascent of $w$ exactly when $s_t$
+is not a right descent of $w$ \cite[Prop.~1.5.3]{BB}.
+
+\begin{lemma}\label{lem:weak}
   Let $u, w \in S_N$.
   \begin{enumerate}[label=(\roman*)]
-    \item $u \le w$ if and only if $T_L(u) \subseteq T_L(w)$.
+    \item $T_L(w)$ determines $w$.
+    \item If $t$ is an ascent of $w$, then $T_L(ws_t) = T_L(w) \sqcup \bigl\{(w(t), w(t+1))\bigr\}$.
     \item $w$ covers $u$ if and only if $w = us_t$ for an ascent $t$ of $u$.
   \end{enumerate}
-\end{proposition}
+\end{lemma}
 \begin{proof}
-  Read a pair $(p,q)$ as the transposition $(p\,q)$. Then $T_L(w)$ is the set
-  $\{t : \ell(tw) < \ell(w)\}$ of left associated reflections of \cite[(1.19)]{BB}: with
-  $a = w\inv(p)$ and $b = w\inv(q)$ we have $(p\,q)\,w = w\,(a\,b)$, and a direct count of
-  inversions, as in the proof of \cite[Lem.~2.1.4]{BB}, shows that this is shorter than $w$ exactly
-  when $a > b$. So (i) is \cite[Prop.~3.1.3]{BB}.
+  (i) $T_L(w)$ says which of any two values $w$ lists first, so it determines the order in which
+  $w$ lists all of them, which is $w$.
 
-  For (ii), by \cite[Def.~3.1.1]{BB} a cover of $u$ in $\le_R$ is some $us$ with $s$ a generator
-  and $\ell(us) = \ell(u) + 1$, and every such $us$ is a cover, since $\ell$ rises strictly along
-  $\le_R$ \cite[Prop.~3.1.2(ii)]{BB}. By \cite[(1.26)]{BB}, $\ell(us_t) = \ell(u)+1$ exactly when
-  $t$ is an ascent of $u$.\footnote{The formalisation proves both clauses for its own definition,
-  which is ours: \texttt{WeakOrder.le\_iff\_inversions\_inv\_subset} and
-  \texttt{WeakOrder.covBy\_iff}.}
+  (ii) The list $ws_t$ is the list $w$ with its entries in places $t$ and $t+1$ exchanged. So the
+  two list every pair of values in the same order except $w(t)$ and $w(t+1)$, which $w$ lists in
+  increasing order and $ws_t$ in decreasing order.
+
+  (iii) If $t$ is an ascent of $u$ then $T_L(us_t)$ is $T_L(u)$ with one pair added, by (ii), so
+  $us_t$ covers $u$. Conversely let $u < w$. If $w$ listed $u(t)$ and $u(t+1)$ in the same order as
+  $u$ for every $t \in [N-1]$, then by transitivity it would list every pair of values in the same
+  order as $u$, and $w = u$. So there is a $t$ for which $w$ lists $u(t)$ and $u(t+1)$ in the other
+  order. This $t$ is an ascent of $u$, since otherwise $(u(t+1), u(t)) \in T_L(u) \subseteq T_L(w)$
+  and $w$ would list the two in the same order as $u$. So $(u(t), u(t+1)) \in T_L(w)$, and (ii)
+  gives $T_L(us_t) \subseteq T_L(w)$, that is $u < us_t \le w$. If $w$ covers $u$, then
+  $w = us_t$.
 \end{proof}
 
 For a shape $a$ on $N$ events put
@@ -435,7 +444,7 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
   Let $u < v$ lie in distinct blocks of $b$, so $\blk_b(u) < \blk_b(v)$, and put $w = f_*\inv u$,
   $w' = f_*\inv v$. Then \eqref{eq:blk-coord} gives $\blk(f)(\blk_a w) < \blk(f)(\blk_a w')$, so
   $\blk_a(w) < \blk_a(w')$ as $\blk(f)$ is monotone, so $w < w'$ as blocks are intervals. An
-  inversion of $f_*\inv$ therefore has both events in one block of $b$. For the last claim, a
+  element of $T_L(f_*)$ therefore has both events in one block of $b$. For the last claim, a
   square in the image pulls back to a square, whose events share a block; conversely if the two
   preimages share a block then, $f_*$ being increasing there, they form a square mapping to
   $(p,q)$.
@@ -485,8 +494,8 @@ reverses composition.
   it descends to $\Br(u) : \Br(K) \to \Br(L)$, strictly functorially in $u$.
 \end{proposition}
 \begin{proof}
-  A permutation with no inversions is the identity, so $T_L(f_*) = \Inv(f_*\inv)$ is empty if
-  and only if $f_* = \id$.
+  Since $T_L(\id) = \emptyset$, \Cref{lem:weak}(i) gives $T_L(f_*) = \emptyset$ if and only if
+  $f_* = \id$.
   The consequences follow: the second from \Cref{lem:cocycle} with $\Sq(g)$ injective (\Cref{lem:sq-coords}), the third
   because two such refinements $f$ and $f'$ have $f_* = \id = f'_*$, so $f = f'$ by
   \Cref{prop:coords}(i), and the last because $\Ch(u)$ changes neither
@@ -526,8 +535,8 @@ $[1,\dots,1]$, so $x_*$ sends each time $t \in [N]$ to the event $x$ fires then.
   over $d$ with $x_* = w$.
 \end{proof}
 
-We order $\RunOver(d)$ by the right weak order: $x \le y$ when $x_* \le y_*$. By
-\Cref{prop:weak}(i), this says $T_L(x_*) \subseteq T_L(y_*)$. Write
+We order $\RunOver(d)$ by the right weak order: $x \le y$ when $x_* \le y_*$, that is when
+$T_L(x_*) \subseteq T_L(y_*)$. Write
 $\bot_d$ for the run with $\bot_{d*} = \id$ and $\top_d$ for the run whose permutation reverses
 each block of $d$, and call $t$ an \textbf{ascent} of $x$ when it is an ascent of
 $x_*$.\footnote{The formalisation \cite{Cubical} orders $\RunOver(d)$ by inclusion of the sets $T_L(x_*)$, which it calls the reversed squares, and
@@ -543,8 +552,7 @@ proves that $x \mapsto x_*$ is an order embedding into the right weak order
   By \Cref{lem:sq-range,lem:sq-coords}, every $x$ has $T_L(x_*) \subseteq \Sq(d)$, the pairs of
   events sharing a block, while $T_L(\bot_{d*}) = \emptyset$ and $T_L(\top_{d*}) = \Sq(d)$.
 
-  Let $w \le x_*$. Then $T_L(w) \subseteq T_L(x_*) \subseteq \Sq(d)$ by
-  \Cref{prop:weak}(i), so $w\inv(p) < w\inv(q)$ whenever $\blk_a(p) < \blk_a(q)$. Hence
+  Let $w \le x_*$. Then $T_L(w) \subseteq T_L(x_*) \subseteq \Sq(d)$, so $w\inv(p) < w\inv(q)$ whenever $\blk_a(p) < \blk_a(q)$. Hence
   $\blk_a \circ w$ is monotone, and since $w$ is a bijection its fibres have the sizes of those of
   $\blk_a$. So $\blk_a \circ w = \blk_a$, that is $w \in S_a$.
 \end{proof}
@@ -578,7 +586,7 @@ $x$ fires at times $t$ and $t+1$ in the other order.
 \end{lemma}
 \begin{proof}
   Since $S_a$ is a lower set (\Cref{lem:lower}), a cover in $\RunOver(d)$ is a cover in $S_N$ with
-  both ends in $S_a$. By \Cref{prop:weak}(ii) the covers of $x_*$ in $S_N$ are the $x_*s_t$ for the
+  both ends in $S_a$. By \Cref{lem:weak}(iii) the covers of $x_*$ in $S_N$ are the $x_*s_t$ for the
   ascents $t$ of $x$, and $x_*s_t \in S_a$ exactly when $s_t \in S_a$, that is $t \in \cut(d)$.
 \end{proof}
 
@@ -696,8 +704,8 @@ middle of \Cref{prop:factorisations} for $x$.
   $u \lessdot us_t$, and otherwise $t$ is an ascent of $us_t$ and $us_t \lessdot u$. The poset is
   finite with a least element, so its Hasse diagram is connected, hence a cycle, on the
   $2\cox(i,k)$ elements of $S_e$ (\Cref{lem:firing-blocks}). Along a cover $u \lessdot us_t$ the
-  length $\ell(u_*)$ rises by one, as swapping two adjacent entries changes the order of that pair
-  only; and $\ell(\bot_{e*}) = 0$ while $\ell(\top_{e*}) = |\Sq(e)| = \cox(i,k)$. So each of the
+  size of $T_L(u_*)$ rises by one (\Cref{lem:weak}(ii)), and $T_L(\bot_{e*}) = \emptyset$ while
+  $|T_L(\top_{e*})| = |\Sq(e)| = \cox(i,k)$ (\Cref{lem:lower}). So each of the
   two paths from $\bot_e$ to $\top_e$ round the cycle rises at every step, and these are the two
   maximal chains. They leave $\bot_e$ through $\bot_es_i$ and $\bot_es_k$, and the letters
   alternate because the two edges at each vertex are labelled $s_i$ and $s_k$.
