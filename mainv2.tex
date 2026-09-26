@@ -232,8 +232,8 @@ below.\footnote{The formalisation defines the right weak order by lengths adding
 (\texttt{WeakOrder.le\_iff\_inversions\_inv\_subset}); \Cref{lem:weak}(iii) is
 \texttt{WeakOrder.covBy\_iff}.}
 
-These definitions are easily seen equivalent with those in \cite{BB}, but this formulation 
-streamlines ours proofs.
+These definitions are easily seen equivalent to those in \cite{BB}, but this formulation
+streamlines our proofs.
 \begin{lemma}\label{lem:weak}
   Let $u, w \in S_N$.
   \begin{enumerate}[label=(\roman*)]
@@ -455,12 +455,13 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
   and $T_L(\id) = \emptyset$.
 \end{lemma}
 \begin{proof}
-  Let $s$ be a square of $c$. If $s = \Sq(g)(t)$ then $s \notin T_L(g_*)$, the two events of $t$
-  sharing a block (\Cref{lem:sq-range}) --- which also gives disjointness --- and
-  $(gf)_*\inv(g_*u) = f_*\inv(u)$ for the two events $u$ of $t$, so $s \in T_L(g_*f_*)$ if and
-  only if $t \in T_L(f_*)$. If $s \notin \im\Sq(g)$ then $s \notin \Sq(g)(T_L(f_*))$, and its
-  two events pull back along $g_*$ into distinct blocks of $b$, so the first claim of
-  \Cref{lem:sq-range} applied to $f$ gives $s \in T_L(g_*f_*)$ if and only if $s \in T_L(g_*)$.
+  Let $\rho$ be a square of $c$. If $\rho = \Sq(g)(\rho')$ then $\rho \notin T_L(g_*)$, the two
+  events of $\rho'$ sharing a block (\Cref{lem:sq-range}) --- which also gives disjointness --- and
+  $(gf)_*\inv(g_*u) = f_*\inv(u)$ for the two events $u$ of $\rho'$, so $\rho \in T_L(g_*f_*)$ if
+  and only if $\rho' \in T_L(f_*)$. If $\rho \notin \im\Sq(g)$ then
+  $\rho \notin \Sq(g)(T_L(f_*))$, and its two events pull back along $g_*$ into distinct blocks of
+  $b$, so the first claim of \Cref{lem:sq-range} applied to $f$ gives $\rho \in T_L(g_*f_*)$ if and
+  only if $\rho \in T_L(g_*)$.
 \end{proof}
 
 \begin{definition}\label{def:W}
@@ -537,7 +538,7 @@ $T_L(x_*) \subseteq T_L(y_*)$. Write
 $\bot_d$ for the run with $\bot_{d*} = \id$ and $\top_d$ for the run whose permutation reverses
 each block of $d$, and call $t$ an \textbf{ascent} of $x$ when it is an ascent of
 $x_*$.\footnote{The formalisation \cite{Cubical} orders $\RunOver(d)$ by inclusion of the sets $T_L(x_*)$, which it calls the reversed squares, and
-proves that $x \mapsto x_*$ is an order embedding into the right weak order
+proves that $x \mapsto x_*$ is an order embedding into its length-additive right weak order
 (\texttt{RunOver.embed}, \texttt{RunOver.weakOrder\_le\_iff}); \Cref{lem:firing-blocks} and
 \Cref{lem:lower} are \texttt{RunOver.range\_embed} and \texttt{RunOver.isLowerSet\_range}.}
 
@@ -606,7 +607,7 @@ $x$ fires at times $t$ and $t+1$ in the other order.
   $\pi$ blockwise from faces of the blocks of $d$, and $\iota$ from it.
 
   By \Cref{lem:cuts}, $\deg m = |\cut(c)|$. Finally $\iota$ is order preserving exactly when
-  $\iota_* = \id$ (\Cref{prop:W}). On each block $B$ of $c$, $x_* = \pi_*\iota_*$ with $\pi_*$
+  $\iota_* = \id$ (\Cref{def:W}). On each block $B$ of $c$, $x_* = \pi_*\iota_*$ with $\pi_*$
   increasing, so $\iota_*$ is the identity on $B$ exactly when $x_*$ is increasing on $B$, and
   $x_*$ is increasing on every block of $c$ exactly when every element of $\cut(c)$ is an ascent
   of $x$.
@@ -882,7 +883,7 @@ runs are a skeleton of $\Br(K)$.}
   $Q(\Ch(f)\top_\alpha) \circ Q(\Ch(f)\bot_\alpha)\inv$. Here $\Ch(f)\bot_\alpha$
   is an order-preserving refinement into $\Ch(f)\alpha$ out of a run, hence is
   $\bot_{\Ch(f)\alpha}$ (\Cref{prop:push}), and
-  $\Ch(f)\top_\alpha = \top_{\Ch(f)\alpha}$ because both reverse every square. So $\Br(f) \circ E_K$ also sends $q(\alpha)$ to
+  $\Ch(f)\top_\alpha = \top_{\Ch(f)\alpha}$ because both have permutation $\top_{\alpha*}$. So $\Br(f) \circ E_K$ also sends $q(\alpha)$ to
   $E_L(\Ch(f)\alpha)$. Precomposed with $q$, the two composites agree on generators, so they
   are equal by the uniqueness in \Cref{prop:present-univ}(i) and (ii).
 \end{proof}
