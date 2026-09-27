@@ -432,27 +432,34 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
   permutation (\Cref{prop:coords}(iv)).
 \end{proof}
 
-\begin{lemma}\label{lem:sq-range}
-  Let $f : \bigvee a \to \bigvee b$ be a map of serial wedges. Then $f_*\inv$ preserves the order
-  of two events in distinct blocks of $b$. Hence $T_L(f_*) \subseteq \Sq(b)$. A square $(p,q)$ of $b$ lies in $\im\Sq(f)$ if and only if
-  $f_*\inv p$ and $f_*\inv q$ lie in one block of $a$.
+\begin{lemma}\label{lem:young-sq}
+  A permutation $w \in S_N$ lies in $S_b$ if and only if $T_L(w) \subseteq \Sq(b)$.
 \end{lemma}
 \begin{proof}
-  Let $u < v$ lie in distinct blocks of $b$, so $\blk_b(u) < \blk_b(v)$, and put $w = f_*\inv u$,
-  $w' = f_*\inv v$. Then \eqref{eq:blk-coord} gives $\blk(f)(\blk_a w) < \blk(f)(\blk_a w')$, so
-  $\blk_a(w) < \blk_a(w')$ as $\blk(f)$ is monotone, so $w < w'$ as blocks are intervals. An
-  element of $T_L(f_*)$ therefore has both events in one block of $b$. For the last claim, a
-  square in the image pulls back to a square, whose events share a block; conversely if the two
-  preimages share a block then, $f_*$ being increasing there, they form a square mapping to
-  $(p,q)$.
+  By \Cref{lem:sq-coords}, $T_L(w) \subseteq \Sq(b)$ says that $w$ lists any two events in
+  distinct blocks of $b$ in increasing order. If $w \in S_b$ then $w\inv$ carries each block of
+  $b$, an interval, onto itself, so it does. Conversely, suppose it does. If $t < t'$ then $w$
+  lists $w(t)$ before $w(t')$, so $\blk_b(w(t)) \le \blk_b(w(t'))$; that is, $\blk_b \circ w$ is
+  monotone. Since $w$ is a bijection its fibres have the sizes of those of $\blk_b$; a monotone
+  map $[N] \to [r]$ is determined by the sizes of its fibres, so $\blk_b \circ w = \blk_b$.
+\end{proof}
+
+\begin{lemma}\label{lem:sq-range}
+  Let $f : \bigvee a \to \bigvee b$ be a map of serial wedges. Then $T_L(f_*) \subseteq \Sq(b)$,
+  and a square $(p,q)$ of $b$ lies in $\im\Sq(f)$ if and only if $f_*\inv p$ and $f_*\inv q$ lie in
+  one block of $a$.
+\end{lemma}
+\begin{proof}
+  The first claim is \Cref{lem:young,lem:young-sq}. For the second, a square in the image pulls
+  back to a square, whose events share a block; conversely if the two preimages share a block
+  then, $f_*$ being increasing there, they form a square mapping to $(p,q)$.
 \end{proof}
 
 \begin{lemma}\label{lem:cocycle}
   For $f : \bigvee a \to \bigvee b$ and $g : \bigvee b \to \bigvee c$,
   \[
-    T_L(g_*f_*) \;=\; \Sq(g)\bigl(T_L(f_*)\bigr) \;\sqcup\; T_L(g_*),
+    T_L(g_*f_*) \;=\; \Sq(g)\bigl(T_L(f_*)\bigr) \;\sqcup\; T_L(g_*) .
   \]
-  and $T_L(\id) = \emptyset$.
 \end{lemma}
 \begin{proof}
   Let $\rho$ be a square of $c$. If $\rho = \Sq(g)(\rho')$ then $\rho \notin T_L(g_*)$, the two
@@ -460,7 +467,7 @@ Throughout, $a$ and $b$ are shapes on $N$ events.
   $(gf)_*\inv(g_*u) = f_*\inv(u)$ for the two events $u$ of $\rho'$, so $\rho \in T_L(g_*f_*)$ if
   and only if $\rho' \in T_L(f_*)$. If $\rho \notin \im\Sq(g)$ then
   $\rho \notin \Sq(g)(T_L(f_*))$, and its two events pull back along $g_*$ into distinct blocks of
-  $b$, so the first claim of \Cref{lem:sq-range} applied to $f$ gives $\rho \in T_L(g_*f_*)$ if and
+  $b$, which $f_*\inv$ keeps in order (\Cref{lem:sq-range}), so $\rho \in T_L(g_*f_*)$ if and
   only if $\rho \in T_L(g_*)$.
 \end{proof}
 
@@ -486,18 +493,14 @@ reverses composition.
 \end{proof}
 
 \begin{proposition}\label{prop:W}
-  A refinement $f$ is order preserving if and only if $T_L(f_*) = \emptyset$. Hence $W$ contains the
-  identities; $gf \in W$ if and only if $f \in W$ and $g \in W$; any two order-preserving
-  refinements with the same source and target are equal; and $\Ch(u)$ carries $W_K$ into $W_L$, so
-  it descends to $\Br(u) : \Br(K) \to \Br(L)$, strictly functorially in $u$.
+  Two order-preserving refinements with the same source and target are equal, and $\Ch(u)$
+  carries $W_K$ into $W_L$, so it descends to $\Br(u) : \Br(K) \to \Br(L)$, strictly functorially
+  in $u$.
 \end{proposition}
 \begin{proof}
-  Since $T_L(\id) = \emptyset$, \Cref{lem:weak}(i) gives $T_L(f_*) = \emptyset$ if and only if
-  $f_* = \id$.
-  The consequences follow: the second from \Cref{lem:cocycle} with $\Sq(g)$ injective (\Cref{lem:sq-coords}), the third
-  because two such refinements $f$ and $f'$ have $f_* = \id = f'_*$, so $f = f'$ by
-  \Cref{prop:coords}(i), and the last because $\Ch(u)$ changes neither
-  shape nor wedge map, with the descent given by \Cref{prop:loc}.
+  Two such refinements $f$ and $f'$ have $f_* = \id = f'_*$, so $f = f'$ by
+  \Cref{prop:coords}(i). $\Ch(u)$ changes neither shape nor wedge map, and the descent is
+  \Cref{prop:loc}.
 \end{proof}
 
 \gap{One or two sentences reading \Cref{prop:W} back: an order-preserving refinement is one that
@@ -547,12 +550,19 @@ proves that $x \mapsto x_*$ is an order embedding into its length-additive right
   set of the right weak order on $S_N$.
 \end{lemma}
 \begin{proof}
-  By \Cref{lem:sq-range,lem:sq-coords}, every $x$ has $T_L(x_*) \subseteq \Sq(d)$, the pairs of
-  events sharing a block, while $T_L(\bot_{d*}) = \emptyset$ and $T_L(\top_{d*}) = \Sq(d)$.
+  Every $x$ has $x_* \in S_a$ (\Cref{lem:firing-blocks}), so $T_L(x_*) \subseteq \Sq(d)$
+  (\Cref{lem:young-sq}), while
+  $T_L(\bot_{d*}) = \emptyset$ and $T_L(\top_{d*}) = \Sq(d)$ (\Cref{lem:sq-coords}). If
+  $w \le x_*$ then $T_L(w) \subseteq T_L(x_*) \subseteq \Sq(d)$, so $w \in S_a$ by
+  \Cref{lem:young-sq}.
+\end{proof}
 
-  Let $w \le x_*$. Then $T_L(w) \subseteq T_L(x_*) \subseteq \Sq(d)$, so $w\inv(p) < w\inv(q)$ whenever $\blk_a(p) < \blk_a(q)$. Hence
-  $\blk_a \circ w$ is monotone, and since $w$ is a bijection its fibres have the sizes of those of
-  $\blk_a$. So $\blk_a \circ w = \blk_a$, that is $w \in S_a$.
+\begin{lemma}\label{lem:bot}
+  A run over $d$ is order preserving if and only if it is $\bot_d$; in particular $\bot_X = \id_X$
+  for a run $X$. A refinement $q : o \to d$ is order preserving if and only if $q\bot_o = \bot_d$.
+\end{lemma}
+\begin{proof}
+  $\bot_{d*} = \id$ and $(q\bot_o)_* = q_*$, so both claims are \Cref{lem:firing-blocks}.
 \end{proof}
 
 \begin{proposition}\label{prop:push}
@@ -561,15 +571,11 @@ proves that $x \mapsto x_*$ is an order embedding into its length-additive right
   \[
     T_L(q_*x_*) \;=\; \Sq(q)\bigl(T_L(x_*)\bigr) \;\sqcup\; T_L(q_*) .
   \]
-  Moreover $q\bot_o = \bot_d$ if and only if $q \in W$; for $x \in \RunOver(d)$ the conditions
-  $x \in W$, $T_L(x_*) = \emptyset$ and $x = \bot_d$ agree; $\bot_X = \id_X$ for a run $X$; and
-  $\dom\bot_d = \dom\bot_c$ whenever $c \to d$ lies in $W$.
 \end{proposition}
 \begin{proof}
   The formula is \Cref{lem:cocycle}. Since $\Sq(q)$ is injective with image disjoint from $T_L(q_*)$
-  (\Cref{lem:sq-coords,lem:sq-range}), $qx \le qy$ if and only if $x \le y$, and
-  $T_L((q\bot_o)_*) = T_L(q_*)$. The remaining equivalences are \Cref{def:W,prop:W} and
-  \Cref{lem:firing-blocks}, and the last clause is the formula applied to $c \to d$.
+  (\Cref{lem:sq-coords,lem:sq-range}), it gives $T_L(q_*x_*) \subseteq T_L(q_*y_*)$ if and only if
+  $T_L(x_*) \subseteq T_L(y_*)$.
 \end{proof}
 
 \subsection{Covers and cells}
@@ -631,13 +637,11 @@ spans, and a $0$-cell is a run.}
 \end{lemma}
 \begin{proof}
   Since $T_L(\top_{m_K*}) = \Sq(m_K)$ (\Cref{lem:lower}), \Cref{prop:push} gives
-  $T_L((\pi_K\top_{m_K})_*) = \im\Sq(\pi_K) \sqcup T_L(\pi_{K*})$, and \Cref{lem:cocycle} applied to
-  $\pi_K\iota_K = x$, with $\iota_K$ order preserving (\Cref{prop:factorisations}), gives
-  $T_L(\pi_{K*}) = T_L(x_*)$.
+  $T_L((\pi_K\top_{m_K})_*) = \im\Sq(\pi_K) \sqcup T_L(\pi_{K*})$, and $\pi_{K*} = x_*$ because
+  $\iota_K$ is order preserving (\Cref{prop:factorisations}).
 
   For the second claim, $\im\Sq(\pi_K)$ is the set of pairs of events inside one of the sets
-  $\pi_{K*}(B)$, for $B$ a block of $m_K$ (\Cref{lem:sq-coords}). Since $\iota_{K*} = \id$ we have
-  $\pi_{K*} = x_*$. Write $B = \{u, \dots, u+k\}$ and $p_i := x_*(u+i)$; then
+  $\pi_{K*}(B) = x_*(B)$, for $B$ a block of $m_K$ (\Cref{lem:sq-coords}). Write $B = \{u, \dots, u+k\}$ and $p_i := x_*(u+i)$; then
   $p_0 < \cdots < p_k$, as the elements of $B \cap \cut(m_K) \subseteq K$ are ascents of $x$, and
   each $(p_i, p_{i+1})$ lies in $T_L(z_*)$. So $z$ fires $p_k, \dots, p_0$ in this order, and every
   pair of them lies in $T_L(z_*)$. The last sentence follows, since $\pi_K\top_{m_K}$ is itself
@@ -659,7 +663,7 @@ middle of \Cref{prop:factorisations} for $x$.
 \begin{proof}
   Write $m = m_{\{t\}}$, $\pi = \pi_{\{t\}}$ and $\iota = \iota_{\{t\}}$. By \Cref{lem:cover}, $t$ is
   an ascent of $x$, so $\iota$ is order preserving (\Cref{prop:factorisations}), hence equals
-  $\bot_m$ (\Cref{prop:push}). So $\pi\bot_m = x$, $\dom\bot_m = \dom x$ and $\deg m = 1$. The one
+  $\bot_m$ (\Cref{lem:bot}). So $\pi\bot_m = x$, $\dom\bot_m = \dom x$ and $\deg m = 1$. The one
   block of $m$ of dimension $2$ is $\{t, t+1\}$, so $\top_{m*} = s_t$, and $\pi_* = x_*$; hence
   $(\pi\top_m)_* = x_*s_t$, so $\pi\top_m = y$ and $\dom\top_m = \dom y$.
 
@@ -747,7 +751,7 @@ The two species are drawn in \Cref{fig:species-sq} and \Cref{fig:species-cube}.
   $j := \pi_K\top_{m_K}$ satisfies $j \le z$ (\Cref{lem:closure}).
 
   Since $\iota_K$ is order preserving it equals $\bot_{m_K}$ (\Cref{prop:factorisations},
-  \Cref{prop:push}), so composition with $\pi_K$ carries $\bot_{m_K}$ to $x$, $\top_{m_K}$ to $j$
+  \Cref{lem:bot}), so composition with $\pi_K$ carries $\bot_{m_K}$ to $x$, $\top_{m_K}$ to $j$
   and $\bot_{m_K}s_{t_i}$ to $xs_{t_i} = y_i$, and it carries covers to covers and keeps the
   $1$-cell each cover reads as (\Cref{cor:covercell}). So the two maximal chains of
   $\RunOver(m_K)$ (\Cref{prop:polygon}) become two paths from $x$ to $j$, leaving by $y_1$ and by
@@ -821,7 +825,7 @@ $\bot_\alpha$, we may set
   $\bot_d \le u\bot_c \le uv\bot_b$, and $\Gamma_d$ being a functor,
   $\Theta(uv) = \Gamma_d(u\bot_c \le uv\bot_b) \circ \Theta(u)$; the left factor is
   $\Gamma_c(\bot_c \le v\bot_b) = \Theta(v)$ by the last clause of \Cref{prop:closes}. If $u$
-  is order preserving then $u\bot_c = \bot_d$ (\Cref{prop:push}), so the comparison is an identity.
+  is order preserving then $u\bot_c = \bot_d$ (\Cref{lem:bot}), so the comparison is an identity.
   The descent is \Cref{prop:loc}.
 \end{proof}
 
@@ -830,7 +834,7 @@ $\bot_\alpha$, we may set
   $\pres{\Art(K)} \to \Br(K)$, with $\Phi$ inverse to it.
 \end{theorem}
 \begin{proof}
-  On a $0$-cell, $\Phi(E(X)) = \Theta(X) = \dom\bot_X = X$ (\Cref{prop:push}). On a $1$-cell
+  On a $0$-cell, $\Phi(E(X)) = \Theta(X) = \dom\bot_X = X$ (\Cref{lem:bot}). On a $1$-cell
   $\alpha$, applying $\Phi$ to the defining composite gives
   $\Phi(E(\alpha)) = \Theta(\top_\alpha) \circ \Theta(\bot_\alpha)\inv$, whose second
   factor is an identity because $\bot_\alpha$ is order preserving (\Cref{lem:theta}). Since
@@ -879,12 +883,10 @@ runs are a skeleton of $\Br(K)$.}
   Both composites send a run $X$ to $Q(\Ch(f)X)$. Let $\alpha$ be a $1$-generator of $\Art(K)$.
   By \Cref{lem:pres-functor}, $E_L \circ \pres{\Art(f)}$ sends $q(\alpha)$ to
   $E_L(\Ch(f)\alpha)$. On the other side, $\Br(f)$ is the
-  descent of the functor induced by $\Ch(f)$, so it sends $E_K(\alpha)$ to
-  $Q(\Ch(f)\top_\alpha) \circ Q(\Ch(f)\bot_\alpha)\inv$. Here $\Ch(f)\bot_\alpha$
-  is an order-preserving refinement into $\Ch(f)\alpha$ out of a run, hence is
-  $\bot_{\Ch(f)\alpha}$ (\Cref{prop:push}), and
-  $\Ch(f)\top_\alpha = \top_{\Ch(f)\alpha}$ because both have permutation $\top_{\alpha*}$. So $\Br(f) \circ E_K$ also sends $q(\alpha)$ to
-  $E_L(\Ch(f)\alpha)$. Precomposed with $q$, the two composites agree on generators, so they
+  descent of the functor induced by $\Ch(f)$ (\Cref{prop:W}), so it sends $E_K(\alpha)$ to
+  $Q(\Ch(f)\top_\alpha) \circ Q(\Ch(f)\bot_\alpha)\inv$, which is
+  $Q(\top_{\Ch(f)\alpha}) \circ Q(\bot_{\Ch(f)\alpha})\inv = E_L(\Ch(f)\alpha)$ as $\Ch(f)$
+  preserves $\bot$ and $\top$. Precomposed with $q$, the two composites agree on generators, so they
   are equal by the uniqueness in \Cref{prop:present-univ}(i) and (ii).
 \end{proof}
 
@@ -899,31 +901,6 @@ Since $Z$ is terminal, every serial wedge has exactly one bipointed map to it an
 wedges commutes over it, so $\Ch(Z)$ is the category of shapes and maps of wedges. Write $Z_N$ for
 the run of $Z$ on $N$ events. Both $\bot_e$ and $\top_e$ have source a run on $|e|$ events, so
 every cell of $Z$ is a loop at $Z_{|e|}$.
-
-\begin{lemma}\label{lem:zcells}
-  Sending a chain to its cut set is a bijection from the $n$-cells at $Z_N$ onto the $n$-element
-  subsets of $[N-1]$.
-\end{lemma}
-\begin{proof}
-  A chain of $Z$ is determined by its shape, every chain on $N$ events is a cell at $Z_N$, and
-  \Cref{lem:cuts} identifies the shapes of degree $n$ on $N$ events with the $n$-element subsets
-  of $[N-1]$.
-\end{proof}
-
-Write $\sigma_k$ for the $1$-cell at $Z_N$ with $\cut = \{k\}$.
-
-\begin{proposition}\label{prop:alternate}
-  Let $e$ be a chain of $Z$ with $\deg e = 2$ and $\cut(e) = \{i<k\}$. Then
-  \[
-    \src(e) = \sigma_i\sigma_k\sigma_i\cdots, \qquad \tgt(e) = \sigma_k\sigma_i\sigma_k\cdots,
-  \]
-  both of length $\cox(i,k)$.
-\end{proposition}
-\begin{proof}
-  A cover $u \lessdot us_t$ of $\RunOver(e)$ reads as $\gamma(u \lessdot us_t) = m_{\{t\}}$, a
-  $1$-cell at $Z_N$ with cut $\{t\}$ (\Cref{prop:factorisations}), which is $\sigma_t$
-  (\Cref{lem:zcells}). So this is \Cref{prop:polygon}, read letter by letter.
-\end{proof}
 
 \begin{definition}\label{def:artin-poly}
   \textbf{Artin's braid polygraph} $\ArtBraid$ has one $0$-generator for each $N \in \N$; at $N$,
@@ -943,10 +920,18 @@ $\End(N) = B_N^+$ composed left to right, as we read words.
 \end{theorem}
 \begin{proof}
   The runs of $Z$ are the $Z_N$ and every cell of $Z$ is a loop, so both polygraphs are disjoint
-  unions over $N$ and it suffices to compare at each $N$. There the $1$-generators are indexed by
-  $[N-1]$ and the $2$-generators by the pairs $i<k$ (\Cref{lem:zcells}), and by \Cref{prop:alternate}
-  $\src$ and $\tgt$ of the $2$-generator at $\{i<k\}$ are those of \Cref{def:artin-poly}. The
-  resulting morphism of $2$-polygraphs is bijective on generators in every dimension, hence an isomorphism
+  unions over $N$ and it suffices to compare at each $N$. A chain of $Z$ is determined by its
+  shape and every chain on $N$ events is a cell at $Z_N$, so by \Cref{lem:cuts} sending a cell to
+  its cut set is a bijection from the $n$-cells at $Z_N$ onto the $n$-element subsets of $[N-1]$.
+  Send the $1$-cell with cut $\{t\}$ to $\sigma_t$, and the $2$-cell $e$ with cut $\{i<k\}$ to the
+  $2$-generator at $\{i<k\}$. A cover $u \lessdot us_t$ of $\RunOver(e)$ reads as
+  $\gamma(u \lessdot us_t) = m_{\{t\}}$, the $1$-cell with cut $\{t\}$
+  (\Cref{prop:factorisations}), so by \Cref{prop:polygon}
+  \[
+    \src(e) = \sigma_i\sigma_k\sigma_i\cdots, \qquad \tgt(e) = \sigma_k\sigma_i\sigma_k\cdots,
+  \]
+  both of length $\cox(i,k)$, as in \Cref{def:artin-poly}. The resulting morphism of
+  $2$-polygraphs is bijective on generators in every dimension, hence an isomorphism
   (\Cref{prop:present-univ}(iii)).
 \end{proof}
 
