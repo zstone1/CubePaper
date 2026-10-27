@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage{preamble}
 
-\title{Matsumoto's theorem with coefficients}
+\title{Theorem 1.1 of \texttt{mainv2} from Tits's word property}
 \date{\today}
 
 \newcommand{\EN}{\mathcal{E}_N}
@@ -12,7 +12,7 @@
 \begin{document}
 \maketitle
 
-\noindent Locators for \cite{Paris} and \cite{PZ} are to arXiv v1.
+\noindent Locators for \cite{Paris}, \cite{PZ} and \cite{Z2} are to arXiv v1. Labels in \texttt{typewriter} refer to \texttt{mainv2}.
 
 \section{Coxeter background}
 
@@ -95,7 +95,8 @@ By \cite[Def.~6.11]{PZ}, (x) $\iff$ (x$'$): $i \le b' < j$ for some $b' \in B'$ 
 \end{lemma}
 \begin{proof}
   (y) for $B(J')$ says $\phi(t) < \phi(t+1)$ for $s_t \in J'$; use \Cref{lem:ascent,prop:min}(2).
-  (x) for $B(J)$: each $s_t \in J$ satisfies (x). Conversely, induct on $\ell(\phi)$: if $\phi \neq 1$,
+  (x) for $B(J)$: each $s_t \in J$ satisfies (x), and (x) is closed under products, so $W_J$ satisfies
+  (x). Conversely, induct on $\ell(\phi)$: if $\phi \neq 1$,
   pick $s_t \in D_R(\phi)$; (x$'$) forces $s_t \in J$; $\phi s_t$ satisfies (x) and is shorter.
 \end{proof}
 
@@ -146,7 +147,7 @@ $\rho^d_w : d\cdot w \to d$ is the morphism $w \in W_J$; $\rho^d_1 \in W_P$.
   \cite[Lem.~2.1.3, Lem.~2.3.4]{Polygraphs}.
 \end{proof}
 
-\begin{theorem}[Matsumoto with coefficients]\label{thm:matsumoto}
+\begin{theorem}[reduced words in $P$]\label{thm:matsumoto}
   $(x,\sigma) \mapsto (x,a)$, $a_\alpha := \sigma_\alpha(s)$, is a bijection $\Coc_P(D) \to
   \Fam_P(D)$, compatible with functors.
 \end{theorem}
@@ -210,20 +211,115 @@ $\rho^d_w : d\cdot w \to d$ is the morphism $w \in W_J$; $\rho^d_1 \in W_P$.
 
 \section{Precubical sets}\label{sec:cubes}
 
-$B_a := [N-1] \setminus \cut(a)$.
-
-\begin{proposition}\label{prop:cubes}
-  $a \mapsto B_a$, $f \mapsto f_*$ is an isomorphism from shapes on $N$ events in $\Ch(Z)$ to $\EN$.
+\begin{proposition}\label{prop:z2}
+  \begin{enumerate}
+    \item \cite[\S2.4]{Z2} $\cube{n}[k]$ is the set of functions $\{1,\dots,n\} \to \{0,1,*\}$ that take value $*$
+      for exactly $k$ arguments; the face map $d^\varepsilon_i$ converts the $i$-th occurrence of
+      $*$ into $\varepsilon$; $u_n$ is the only element of $\cube{n}[n]$; for $c \in K[n]$ there
+      is a unique map $f_c : \cube{n} \to K$ with $f_c(u_n) = c$; $d^\varepsilon :=
+      d^\varepsilon_{\{1,\dots,n\}}$.
+    \item \cite[Def.~7.1, Def.~7.2]{Z2} $(K \vee L)[n] = K[n] \amalg L[n]$ for $n > 0$, $(K \vee L)[0] = (K[0] \amalg L[0])/1_K
+      \sim 0_L$, $0_{K\vee L} = 0_K$, $1_{K \vee L} = 1_L$; $\cube{n}$ is bipointed by $0 =
+      (0,\dots,0)$, $1 = (1,\dots,1)$.
+    \item \cite[\S7, after Def.~7.3]{Z2} Cube chains $c : \cube{n_1} \vee \cdots \vee \cube{n_l} \to K$ correspond $1$-$1$ to
+      sequences of cubes $(c_1,\dots,c_l)$ with $d^0(c_1) = 0_K$, $d^1(c_l) = 1_K$ and $d^1(c_i) =
+      d^0(c_{i+1})$, via $c_i = c(u_{n_i})$.
+  \end{enumerate}
 \end{proposition}
+
+So $d^0(x)$, $d^1(x)$ replace every $*$ of $x$ by $0$, $1$, and the face embedding $f_x :
+\cube{k} \to \cube{n}$ leaves free the positions of $*$ in $x$; hence $\Ev(f_x)$ is the monotone
+injection onto them (\S2 of \texttt{mainv2}).
+
+Fix shapes $a = (a_1,\dots,a_r)$, $b = (b_1,\dots,b_q)$ on $N$ events, with blocks $A_i$, $B_j$
+(intervals of $[N]$, in order). A cube of $\bigvee b$ of dimension $a_i > 0$ is an $x \in
+\cube{b_j}[a_i]$ for one $j$; write $X(x), O(x) \subseteq B_j$ for the positions of $*$ and of
+$1$, shifted into $B_j$.
+
+\begin{lemma}\label{lem:chains}
+  Cubes $x_i \in \cube{b_{j(i)}}[a_i]$, $i \le r$, form a cube chain in $\bigvee b$ if and only if
+  $j$ is non-decreasing and, for each $j$, the $X(x_i)$ with $j(i) = j$ partition $B_j$ and $O(x_i)
+  = \bigcup\{X(x_{i'}) : i' < i,\ j(i') = j(i)\}$.
+\end{lemma}
 \begin{proof}
-  Objects: \texttt{lem:cuts}. Functor: $\Ev$. Injective: \texttt{prop:coords}(i). $B_a \supseteq
-  B_b$ and (x): \texttt{lem:young}. (y): \texttt{prop:coords}(ii). TODO: surjective on morphisms
-  (Lean: \texttt{exists\_crossPerm}).
+  $d^0(x_i)$, $d^1(x_i)$ are the vertices of $\cube{b_{j(i)}}$ with $1$s at $O(x_i)$, at
+  $O(x_i) \sqcup X(x_i)$. By \Cref{prop:z2}(2), a vertex of $\cube{b_j}$ is identified with a
+  vertex of another block only if it is $1$ of $\cube{b_j}$ and $0$ of $\cube{b_{j+1}}$, or
+  conversely. ($\Leftarrow$): $d^0(x_1) = 0$, $d^1(x_r) = 1$, and
+  $d^1(x_i) = d^0(x_{i+1})$, either inside one block or as $1$ of $\cube{b_j}$ $=$ $0$ of
+  $\cube{b_{j+1}}$; apply \Cref{prop:z2}(3). ($\Rightarrow$):
+  $d^0(x_1) = 0$ forces $j(1) = 1$, $O(x_1) = \emptyset$. Given $x_i$, if $O(x_i) \sqcup X(x_i) \neq
+  B_{j(i)}$ then $d^0(x_{i+1})$ lies only in block $j(i)$, so $j(i+1) = j(i)$ and $O(x_{i+1}) =
+  O(x_i) \sqcup X(x_i)$. If $O(x_i) \sqcup X(x_i) = B_{j(i)}$, then $j(i+1) = j(i)$ is impossible,
+  as $X(x_{i+1}) \neq \emptyset$ is disjoint from $O(x_{i+1})$; so $j(i+1) = j(i)+1$ and
+  $O(x_{i+1}) = \emptyset$, or $i = r$ and $j(i) = q$ by $d^1(x_r) = 1$. So within block $j$ the $O(x_i)$ grow from
+  $\emptyset$ to $B_j$ by the disjoint $X(x_i)$.
 \end{proof}
 
-$N(K) := \BPSet(\bigvee -, K)$ on $\EN$ via \Cref{prop:cubes}. $\Ch(K) = \int N(K)$; order-preserving
-$=$ over $1$, so $\Br(K) = \Br(N(K))$; $\Art(K) := \Art(N(K))$. Theorem~1.1(i),(ii): \Cref{thm:A};
-(iii): \Cref{cor:artin}, $N(Z) = 1$.
+\begin{proposition}\label{prop:cubes}
+  Let $B_a := \{t \in [N-1] : \blk_a(t) \neq \blk_a(t+1)\}$. Then $a \mapsto B_a$, $f \mapsto f_*$ is
+  an isomorphism from the full subcategory of $\Ch(Z)$ on shapes on $N$ events onto $\EN$.
+\end{proposition}
+\begin{proof}
+  Objects: \texttt{lem:cuts}. Functoriality: $\Ev$. Let $f : \bigvee a \to \bigvee b$ have cubes
+  $x_i = f(u_{a_i})$ (\Cref{prop:z2}(3)). Then $f_*$ is $\Ev(f_{x_i})$ on the summand $[a_i]$, so it
+  maps $A_i$ increasingly onto $X(x_i)$. By \Cref{lem:chains}, the $A_i$ with $j(i) = j$ are
+  consecutive with total size $b_j$, so their union is $B_j$: hence $B_a \supseteq B_b$, (x) and
+  (y). Injective: $f$ is determined by the $x_i$ (\Cref{prop:z2}(3)), and $x_i$ by $j(i)$, $X(x_i) =
+  f_*(A_i)$ and $O(x_i)$, which \Cref{lem:chains} determines from the $X$s. Surjective: given $\phi
+  \in \EN(B_a,B_b)$, let $j(i)$ be the block of $b$ containing $A_i$, and $x_i$ the cube with $X(x_i) =
+  \phi(A_i) \subseteq B_{j(i)}$ (by (x)) and $O(x_i)$ as in \Cref{lem:chains}; its hypotheses hold as
+  $\phi$ is a bijection preserving each $B_j$. The resulting $f$ has $f_* = \phi$ on each $A_i$ by
+  (y).
+\end{proof}
+
+For a chain $d : \bigvee b \to K$ on $N$ events and $\phi \in \EN(B_a,B_b)$, write $d\cdot\phi :=
+d \circ f$ for the $f$ with $f_* = \phi$.
+
+\begin{definition}\label{def:artK}
+  $\Art(K)$: $0$-generators the runs of $K$; $1$-generators the chains $\alpha$ of degree $1$, from
+  $\alpha\cdot1$ to $\alpha\cdot s_t$, where $\cut(\alpha) = \{t\}$; $2$-generators the chains $e$
+  of degree $2$, $\cut(e) = \{i < k\}$, $m := \cox(i,k)$, with
+  \[
+    \src(e) = \bigl(e\cdot\altw{s_i}{s_k}j\bigr)_{j<m}, \qquad \tgt(e) =
+    \bigl(e\cdot\altw{s_k}{s_i}j\bigr)_{j<m} .
+  \]
+  For $f : K \to L$, $\Art(f) := \Ch(f)$ on generators. $\Br(K)$, $Q$, $W_K$, $\Br(f)$ are as in
+  \texttt{def:W}, \texttt{prop:W}. $E_K(X) := Q(X)$, $E_K(\alpha) := Q(\top_\alpha)\,Q(\bot_\alpha)\inv$,
+  where $\bot_\alpha$, $\top_\alpha$ are the refinements from $\alpha\cdot1$, $\alpha\cdot s_t$.
+\end{definition}
+
+\begin{theorem}[Theorem~1.1 of \texttt{mainv2}]\label{thm:main}
+  Let $K$ be a bipointed precubical set.
+  \begin{enumerate}
+    \item $\Art(K)$ presents $\Br(K)$: $E_K : \pres{\Art(K)} \to \Br(K)$ is an equivalence.
+    \item $\Art : \BPSet \to \Polygraph$ and $\Br : \BPSet \to \Cat$ are functors, and for every $f :
+      K \to L$, $E_L \circ \pres{\Art(f)} = \Br(f) \circ E_K$.
+    \item $\Art(Z) \cong \ArtBraid$ (\texttt{def:artin-poly}). Consequently $\Br(Z) \simeq
+      \BraidPos$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  Let $P^N_K := \BPSet(\bigvee -, K)$ on shapes on $N$ events, a presheaf on $\EN$ by
+  \Cref{prop:cubes}. By \cite[Def.~7.4]{Z2}, $\Ch(K) = \coprod_N \Ch(K;N)$ with $\Ch(K;N)$ the slice
+  over $K$, which is $\int P^N_K$; $W_K$ corresponds to $\coprod_N W_{P^N_K}$, as $f_* = 1$ means
+  $\phi = 1$. A functor out of a coproduct is a family of functors, so \cite[Lem.~I.1.2]{GZ} gives
+  $\Br(K) = \coprod_N \Br(P^N_K)$. Also $\Art(K) = \coprod_N \Art(P^N_K)$ (\Cref{def:art}), and $E_K$
+  is $\coprod_N E_{P^N_K}$ (\Cref{thm:A}), since $\top_\alpha = \rho^\alpha_s$ and $\bot_\alpha =
+  \rho^\alpha_1$.
+
+  (i) \Cref{thm:A}. (ii) $f$ induces $P^N_f : P^N_K \to P^N_L$ by composition, functorially in $f$,
+  with $\int P^N_f = \Ch(f)$; so $\Art(f) = \coprod_N \Art(P^N_f)$, $\Br(f) = \coprod_N
+  \Br(P^N_f)$, and the square is the naturality in \Cref{thm:A}.
+
+  (iii) $Z$ is terminal, so $P^N_Z = 1$, and by \Cref{cor:artin} sending $s_t \mapsto \sigma_t$ is a
+  bijection on generators in each dimension, compatible with $\src$ and $\tgt$; it is an
+  isomorphism by \texttt{prop:present-univ}(iii). Then $\Br(Z) \simeq \pres{\ArtBraid}$ by (i) and
+  \texttt{lem:pres-functor}. Finally $\pres{\ArtBraid}$ has objects $N$, no arrows between distinct
+  objects, and $\End(N)$ the free monoid on $\sigma_1,\dots,\sigma_{N-1}$, a path read left to right,
+  modulo the congruence generated by Artin's relations; this is $B_N^+$ as in \texttt{mainv2}
+  \cite{Artin}. So $\pres{\ArtBraid} \cong \BraidPos$.
+\end{proof}
 
 \printbibliography
 
